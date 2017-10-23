@@ -17,6 +17,7 @@ protocol RWebViewProtocol {
 
 public class RWebView: UIView,RWebViewProtocol {
     
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -32,8 +33,10 @@ public class RWebView: UIView,RWebViewProtocol {
         }
     }
     
+    static let  INIT_SCRIPT = "function getJsBridge(){window._dsf=window._dsf||{};return{call:function(b,a,c){'function'==typeof a&&(c=a,a={});if('function'==typeof c){window.dscb=window.dscb||0;var d='dscb'+window.dscb++;window[d]=c;a._dscbstub=d}a=JSON.stringify(a||{});return window._dswk?prompt(window._dswk+b,a):'function'==typeof _dsbridge?_dsbridge(b,a):_dsbridge.call(b,a)},register:function(b,a){'object'==typeof b?Object.assign(window._dsf,b):window._dsf[b]=a}}}dsBridge=getJsBridge()"
+    
     public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     public override init(frame: CGRect) {
@@ -44,6 +47,7 @@ public class RWebView: UIView,RWebViewProtocol {
         }else{
             wv = RUIWebView(frame: frame)
         }
+        
         let uv = wv as! UIView
         self.addSubview(uv)
     }
