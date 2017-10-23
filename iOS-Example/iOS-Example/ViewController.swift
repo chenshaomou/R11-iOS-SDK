@@ -14,7 +14,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        Rainboweleven.load("http://www.jianshu.com/p/7f6a7e1b3235")
+        let rwv = Rainboweleven.load("https://www.baidu.com/")
+        self.view.addSubview(rwv)
         
     }
 

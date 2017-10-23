@@ -9,7 +9,8 @@
 import Foundation
 
 public func load(_ url: String,hash: String = "",scheme: String = "default") -> RWebView{
- 
-    return RWebView()
+    let rwebview = RWebView(frame: UIScreen.main.bounds)
+    rwebview.loadURL(url: url, hash: hash)
+    return rwebview
 }
 

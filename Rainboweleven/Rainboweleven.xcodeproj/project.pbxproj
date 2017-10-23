@@ -10,6 +10,8 @@
 		B6D894841F9D8ACE00ABF4C0 /* Rainboweleven.h in Headers */ = {isa = PBXBuildFile; fileRef = B6D894821F9D8ACE00ABF4C0 /* Rainboweleven.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6D8948B1F9D8B0400ABF4C0 /* Rainboweleven.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D8948A1F9D8B0400ABF4C0 /* Rainboweleven.swift */; };
 		B6E92C711F9DABF60044A349 /* RWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E92C701F9DABF60044A349 /* RWebView.swift */; };
+		B6E92C741F9DBF850044A349 /* RUIWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E92C731F9DBF850044A349 /* RUIWebView.swift */; };
+		B6E92C761F9DBFB30044A349 /* RWKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E92C751F9DBFB30044A349 /* RWKWebView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,6 +20,8 @@
 		B6D894831F9D8ACE00ABF4C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6D8948A1F9D8B0400ABF4C0 /* Rainboweleven.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rainboweleven.swift; sourceTree = "<group>"; };
 		B6E92C701F9DABF60044A349 /* RWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWebView.swift; sourceTree = "<group>"; };
+		B6E92C731F9DBF850044A349 /* RUIWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RUIWebView.swift; sourceTree = "<group>"; };
+		B6E92C751F9DBFB30044A349 /* RWKWebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWKWebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,8 @@
 			isa = PBXGroup;
 			children = (
 				B6E92C701F9DABF60044A349 /* RWebView.swift */,
+				B6E92C731F9DBF850044A349 /* RUIWebView.swift */,
+				B6E92C751F9DBFB30044A349 /* RWKWebView.swift */,
 			);
 			name = webkit;
 			sourceTree = "<group>";
@@ -146,6 +152,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6E92C761F9DBFB30044A349 /* RWKWebView.swift in Sources */,
+				B6E92C741F9DBF850044A349 /* RUIWebView.swift in Sources */,
 				B6E92C711F9DABF60044A349 /* RWebView.swift in Sources */,
 				B6D8948B1F9D8B0400ABF4C0 /* Rainboweleven.swift in Sources */,
 			);
