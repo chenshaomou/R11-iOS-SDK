@@ -20,10 +20,10 @@ class RWKWebView: WKWebView ,RWebViewProtocol{
     */
     
     override init(frame: CGRect, configuration: WKWebViewConfiguration) {
-        let js = "_dswk='_dsbridge=';".appending(RWebView.INIT_SCRIPT)
+        let js = "_jswk='_jsbridge=';".appending(RWebView.INIT_SCRIPT)
         let script = WKUserScript(source: js, injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
         configuration.userContentController.addUserScript(script)
-        let scriptDomReady = WKUserScript(source: ";prompt('_dsinited');", injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
+        let scriptDomReady = WKUserScript(source: ";prompt('_jsinited');", injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
         configuration.userContentController.addUserScript(scriptDomReady)
         super.init(frame: frame, configuration: configuration)
     }
@@ -49,10 +49,10 @@ class RWKWebView: WKWebView ,RWebViewProtocol{
     
     func callHandler(methodName:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
         if let _args = arguments?.objectToJSONString(){
-            let script = "(window._dsf.\(methodName)||window.\(methodName)).call(window._dsf||window,\(_args))"
+            let script = "(window._jsf.\(methodName)||window.\(methodName)).call(window._jsf||window,\(_args))"
             self.evaluateJavaScript(script, completionHandler: completionHandler)
         }else{
-            let script = "(window._dsf.\(methodName)||window.\(methodName)).call(window._dsf||window,{})"
+            let script = "(window._jsf.\(methodName)||window.\(methodName)).call(window._jsf||window,{})"
             self.evaluateJavaScript(script, completionHandler: completionHandler)
         }
     }
