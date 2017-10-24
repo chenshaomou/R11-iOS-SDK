@@ -60,8 +60,21 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
     
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         
-        NSLog("here!")
-        completionHandler("")
+        let _prefix = "_jsbridge="
+        let _jsinited = "_jsinited"
+        
+        if prompt.hasPrefix(_jsinited){
+            //TODO: jsbridge 完成初始化
+            completionHandler("")
+        }else if prompt.hasPrefix(_prefix){
+            let method = String(prompt.suffix(from: _prefix.endIndex))
+            if let _args = defaultText{
+                let _dic = _args.stringToDictionary()
+                RWebkitPluginsHub.shared.runPluginSync(name: method, args: _dic, jsCallback: completionHandler)
+            }else{
+                RWebkitPluginsHub.shared.runPluginSync(name: method, args: [String:Any](), jsCallback: completionHandler)
+            }
+        }
         
     }
     

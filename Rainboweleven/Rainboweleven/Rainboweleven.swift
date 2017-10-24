@@ -32,6 +32,19 @@ extension Array{
     }
 }
 
+extension String{
+    func stringToDictionary() -> Dictionary<String, Any>{
+        if let _data = self.data(using: String.Encoding.utf8){
+            if let _json = try? JSONSerialization.jsonObject(with: _data, options: JSONSerialization.ReadingOptions.allowFragments){
+                if let _dic = _json as? Dictionary<String, Any>{
+                    return _dic
+                }
+            }
+        }
+        return Dictionary();
+    }
+}
+
 public func loadRemoteURL(_ url: String,hash: String = "",scheme: String = "defaultRemote") -> RWebView{
     let rwebview = RWebView(frame: UIScreen.main.bounds)
     rwebview.loadRemoteURL(url: url)

@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias JsCallback = (_ result : String)->Void
+typealias JsCallback = (_ result : String?)->Void
 typealias PluginAction = (_ args:[String:Any],_ jsCallback:JsCallback) ->Void
 
 class RWebkitPlugin {
@@ -31,11 +31,17 @@ class RWebkitPluginsHub {
         //添加存储插件
         self.addPlugin(name: "setValue") { (args, jsCallback) in
             NSLog("setValue...")
+            jsCallback("")
         }
     }
     
     func addPlugin(name:String,action:@escaping PluginAction ) {
         plugins[name] = RWebkitPlugin(name,action)
+    }
+    
+    func runPluginSync(name:String,args:[String:Any],jsCallback:JsCallback){
+        guard let _plugin = plugins[name] else { return}
+        _plugin.action(args,jsCallback)
     }
     
 }
