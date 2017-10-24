@@ -8,9 +8,27 @@
 
 import Foundation
 
-public func load(_ url: String,hash: String = "",scheme: String = "default") -> RWebView{
+extension Dictionary{
+    
+    func objectToJSONString() -> String {
+        if let jsonData = try? JSONSerialization .data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted){
+            if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8){
+                return jsonString
+            }
+        }
+        return "{}"
+    }
+}
+
+public func loadRemoteURL(_ url: String,hash: String = "",scheme: String = "defaultRemote") -> RWebView{
     let rwebview = RWebView(frame: UIScreen.main.bounds)
-    rwebview.loadURL(url: url, hash: hash)
+    rwebview.loadRemoteURL(url: url)
+    return rwebview
+}
+
+public func loadLocalURL(_ url: String,hash: String = "",scheme: String = "defaultRemote") -> RWebView{
+    let rwebview = RWebView(frame: UIScreen.main.bounds)
+    rwebview.loadLocalURL(url: url)
     return rwebview
 }
 

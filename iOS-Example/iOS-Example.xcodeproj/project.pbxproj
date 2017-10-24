@@ -14,6 +14,7 @@
 		B66F96881F9D85B10092018C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B66F96861F9D85B10092018C /* LaunchScreen.storyboard */; };
 		B6D8948D1F9D8B1800ABF4C0 /* Rainboweleven.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6D8948C1F9D8B1800ABF4C0 /* Rainboweleven.framework */; };
 		B6D8948E1F9D8B1800ABF4C0 /* Rainboweleven.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6D8948C1F9D8B1800ABF4C0 /* Rainboweleven.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B6E92C7A1F9EDD280044A349 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = B6E92C791F9EDD280044A349 /* test.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,7 @@
 		B66F96871F9D85B10092018C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B66F96891F9D85B10092018C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B6D8948C1F9D8B1800ABF4C0 /* Rainboweleven.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Rainboweleven.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B6E92C791F9EDD280044A349 /* test.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				B66F96841F9D85B10092018C /* Assets.xcassets */,
 				B66F96861F9D85B10092018C /* LaunchScreen.storyboard */,
 				B66F96891F9D85B10092018C /* Info.plist */,
+				B6E92C791F9EDD280044A349 /* test.html */,
 			);
 			path = "iOS-Example";
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6E92C7A1F9EDD280044A349 /* test.html in Resources */,
 				B66F96881F9D85B10092018C /* LaunchScreen.storyboard in Resources */,
 				B66F96851F9D85B10092018C /* Assets.xcassets in Resources */,
 				B66F96831F9D85B10092018C /* Main.storyboard in Resources */,

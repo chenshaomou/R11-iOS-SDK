@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 
 class RWKWebView: WKWebView ,RWebViewProtocol{
-
+    
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -32,12 +32,28 @@ class RWKWebView: WKWebView ,RWebViewProtocol{
         fatalError("init(coder:) has not been implemented")
     }
     
-    func loadURL(url: String, hash: String) {
-        if let url = URL(string: url){
-            let request = URLRequest(url: url)
+    func loadRemoteURL(url: String, hash: String? = nil) {
+        if let _url = URL(string: url){
+            let request = URLRequest(url: _url)
             self.load(request)
         }else{
             //TODO: 读取出错界面
+        }
+        
+    }
+    
+    func loadLocalURL(url: String, hash: String?) {
+        let _url = URL(fileURLWithPath: url)
+        self.loadFileURL(_url, allowingReadAccessTo: _url)
+    }
+    
+    func callHandler(methodName:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
+        if let _args = arguments?.objectToJSONString(){
+            let script = "(window._dsf.\(methodName)||window.\(methodName)).call(window._dsf||window,\(_args))"
+            self.evaluateJavaScript(script, completionHandler: completionHandler)
+        }else{
+            let script = "(window._dsf.\(methodName)||window.\(methodName)).call(window._dsf||window,{})"
+            self.evaluateJavaScript(script, completionHandler: completionHandler)
         }
     }
 }

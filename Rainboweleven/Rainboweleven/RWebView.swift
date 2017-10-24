@@ -10,9 +10,10 @@ import UIKit
 import WebKit
 
 protocol RWebViewProtocol {
-    func loadURL(url: String,hash: String) -> Void
+    func loadRemoteURL(url: String,hash: String?) -> Void
+    func loadLocalURL(url: String,hash: String?) -> Void
     var scrollView: UIScrollView { get }
-    
+    func callHandler(methodName:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)?)
 }
 
 public class RWebView: UIView,RWebViewProtocol {
@@ -33,7 +34,7 @@ public class RWebView: UIView,RWebViewProtocol {
         }
     }
     
-    static let  INIT_SCRIPT = "function getJsBridge(){window._dsf=window._dsf||{};return{call:function(b,a,c){'function'==typeof a&&(c=a,a={});if('function'==typeof c){window.dscb=window.dscb||0;var d='dscb'+window.dscb++;window[d]=c;a._dscbstub=d}a=JSON.stringify(a||{});return window._dswk?prompt(window._dswk+b,a):'function'==typeof _dsbridge?_dsbridge(b,a):_dsbridge.call(b,a)},register:function(b,a){'object'==typeof b?Object.assign(window._dsf,b):window._dsf[b]=a}}}dsBridge=getJsBridge()"
+    static let  INIT_SCRIPT = "function getJsBridge(){window._dsf=window._dsf||{};return{call:function(b,a,c){'function'==typeof a&&(c=a,a={});if('function'==typeof c){window.dscb=window.dscb||0;var d='dscb'+window.dscb++;window[d]=c;a._dscbstub=d}a=JSON.stringify(a||{});return window._dswk?prompt(window._dswk+b,a):'function'==typeof _jsBridge?_jsBridge(b,a):_jsBridge.call(b,a)},register:function(b,a){'object'==typeof b?Object.assign(window._dsf,b):window._dsf[b]=a}}}jsBridge=getJsBridge()"
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -52,8 +53,15 @@ public class RWebView: UIView,RWebViewProtocol {
         self.addSubview(uv)
     }
     
-    func loadURL(url: String, hash: String) {
-        wv.loadURL(url:url, hash: hash)
+    public func loadRemoteURL(url: String, hash: String? = nil) {
+        wv.loadRemoteURL(url:url, hash: hash)
     }
-
+    
+    public func loadLocalURL(url: String, hash: String? = nil) {
+        wv.loadLocalURL(url:url, hash: hash)
+    }
+    
+    public func callHandler(methodName:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
+        wv.callHandler(methodName: methodName, arguments: arguments, completionHandler: completionHandler)
+    }
 }
