@@ -9,7 +9,7 @@
 import UIKit
 import WebKit
 
-class RWKWebView: WKWebView ,RWebViewProtocol{
+class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
     
     /*
     // Only override draw() if you perform custom drawing.
@@ -26,6 +26,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol{
         let scriptDomReady = WKUserScript(source: ";prompt('_jsinited');", injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
         configuration.userContentController.addUserScript(scriptDomReady)
         super.init(frame: frame, configuration: configuration)
+        self.uiDelegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -48,7 +49,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol{
     }
     
     func callHandler(methodName:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
-        if let _args = arguments?.objectToJSONString(){
+        if let _args = arguments?.dictionaryToJSONString(){
             let script = "(window._jsf.\(methodName)||window.\(methodName)).call(window._jsf||window,\(_args))"
             self.evaluateJavaScript(script, completionHandler: completionHandler)
         }else{
@@ -56,4 +57,12 @@ class RWKWebView: WKWebView ,RWebViewProtocol{
             self.evaluateJavaScript(script, completionHandler: completionHandler)
         }
     }
+    
+    func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
+        
+        NSLog("here!")
+        completionHandler("")
+        
+    }
+    
 }

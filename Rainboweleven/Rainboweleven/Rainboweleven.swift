@@ -10,13 +10,25 @@ import Foundation
 
 extension Dictionary{
     
-    func objectToJSONString() -> String {
+    func dictionaryToJSONString() -> String {
         if let jsonData = try? JSONSerialization .data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted){
             if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8){
                 return jsonString
             }
         }
         return "{}"
+    }
+}
+
+extension Array{
+    
+    func arrayToJSONString() -> String {
+        if let jsonData = try? JSONSerialization .data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted){
+            if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8){
+                return jsonString
+            }
+        }
+        return "[]"
     }
 }
 

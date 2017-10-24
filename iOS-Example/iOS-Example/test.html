@@ -2,9 +2,27 @@
 <head>
     <meta charset="utf-8">
     <title>iOS SDK 测试</title>
+    <style>
+        .btn {
+            text-align: center;
+            background: dodgerblue;
+            color: white;
+            padding: 20px;
+            margin: 30px;
+            font-size: 24px;
+            border-radius: 4px;
+            box-shadow: 4px 2px 10px #999;
+        }
+    
+        .btn:active {
+            opacity: .7;
+            box-shadow: 4px 2px 10px #555;
+        }
+    </style>
 </head>
 <body>
     <h1>Hello RainbowEleven</h1>
+        <div class="btn" onclick="callSyn()">同步调用</div>
     <div id="content"></div>
 </body>
 <script type="text/javascript">
@@ -13,7 +31,14 @@
       var contentDiv = document.getElementById('content')
       contentDiv.innerHTML = contentDiv.innerHTML + "<div>原生调用JS成功,obj:" + JSON.stringify(obj) + "</div>"
       return 'success'
-      })
+
+      });
+  
+  function callSyn(){
+      jsBridge.call('setValue',{"foo":"bar"},function(v){
+                    
+        })
+  }
     
 </script>
 </html>
