@@ -22,23 +22,36 @@
 </head>
 <body>
     <h1>Hello RainbowEleven</h1>
-        <div class="btn" onclick="callSyn()">同步调用</div>
+        <div class="btn" onclick="callSyn()">同步调用(不带参数)</div>
+        <div class="btn" onclick="callSynArgs()">同步调用(带参数)</div>
+        <div class="btn" onclick="callASyn()">异步调用(不带参数)</div>
+        <div class="btn" onclick="callASynArgs()">异步调用(参数)</div>
     <div id="content"></div>
 </body>
 <script type="text/javascript">
     
     jsBridge.register('testNavCall',function(obj){
-      var contentDiv = document.getElementById('content')
-      contentDiv.innerHTML = contentDiv.innerHTML + "<div>原生调用JS成功,obj:" + JSON.stringify(obj) + "</div>"
-      return 'success'
-
+          var contentDiv = document.getElementById('content')
+          contentDiv.innerHTML = contentDiv.innerHTML + "<div>原生调用JS成功,obj:" + JSON.stringify(obj) + "</div>"
+          return 'success'
       });
-  
-  function callSyn(){
-      jsBridge.call('setValue',{"foo":"bar"},function(v){
-                    
-        })
-  }
+          
+      function callSyn(){
+          jsBridge.call('getValue')
+      }
+
+      function callSynArgs(){
+          jsBridge.call('setValue',{"foo":"bar"})
+      }
+
+    function callASyn(){
+        jsBridge.call('getValue',function(r){})
+        
+    }
+
+    function callASynArgs(){
+        jsBridge.call('getValue',{"foo":"bar"},function(r){})
+    }
     
 </script>
 </html>
