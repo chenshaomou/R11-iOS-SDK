@@ -37,13 +37,15 @@
       });
           
       function callSyn(){
-          console.log('call sync get Value')
-          jsBridge.call('getValue')
-          console.log('success')
+          console.log('call sync getValue')
+          var _result = jsBridge.call('getValue')
+          console.log('success,' + _result)
       }
 
       function callSynArgs(){
-          jsBridge.call('setValue',{"foo":"bar"})
+          console.log('call sync with args getValue')
+          var _result = jsBridge.call('getValue',{"foo":"bar"})
+          console.log('success,' + _result)
       }
 
     function callASyn(){
