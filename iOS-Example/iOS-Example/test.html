@@ -30,14 +30,16 @@
 </body>
 <script type="text/javascript">
     
-    jsBridge.register('testNavCall',function(obj){
+        jsBridge.register('testNavCall',function(obj){
           var contentDiv = document.getElementById('content')
           contentDiv.innerHTML = contentDiv.innerHTML + "<div>原生调用JS成功,obj:" + JSON.stringify(obj) + "</div>"
           return 'success'
       });
           
       function callSyn(){
+          console.log('call sync get Value')
           jsBridge.call('getValue')
+          console.log('success')
       }
 
       function callSynArgs(){

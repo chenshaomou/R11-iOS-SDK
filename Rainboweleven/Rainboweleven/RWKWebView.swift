@@ -19,6 +19,8 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
     }
     */
     
+    weak open var ruiDelegate: WKUIDelegate?
+    
     override init(frame: CGRect, configuration: WKWebViewConfiguration) {
         let js = "_jswk='_jsbridge=';".appending(RWebView.INIT_SCRIPT)
         let script = WKUserScript(source: js, injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
@@ -68,12 +70,19 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
             completionHandler("")
         }else if prompt.hasPrefix(_prefix){
             let method = String(prompt.suffix(from: _prefix.endIndex))
-            if let _args = defaultText{
-                let _dic = _args.stringToDictionary()
-                RWebkitPluginsHub.shared.runPluginSync(name: method, args: _dic, jsCallback: completionHandler)
+            guard let _dic = defaultText?.stringToDictionary() else { return }
+            if _dic["_jscbstub"] != nil{
+                //异步调用
             }else{
-                RWebkitPluginsHub.shared.runPluginSync(name: method, args: [String:Any](), jsCallback: completionHandler)
+                //同步调用
+                let result = RWebkitPluginsHub.shared.runPluginSync(name: method, args: _dic)
+                //TODO: 处理报错
+                completionHandler(result)
             }
+        }else if let _ruiDelegate = self.ruiDelegate{
+            _ruiDelegate.webView!(webView, runJavaScriptTextInputPanelWithPrompt: prompt, defaultText: defaultText, initiatedByFrame: frame, completionHandler: completionHandler)
+        }else{
+            //TODO: 普通的 js prompt
         }
         
     }

@@ -9,15 +9,22 @@
 import Foundation
 
 typealias JsCallback = (_ result : String?)->Void
-typealias PluginAction = (_ args:[String:Any],_ jsCallback:JsCallback) ->Void
+typealias AsyncPluginAction = (_ args:[String:Any],_ jsCallback:JsCallback) ->Void
+typealias SyncPluginAction = (_ args:[String:Any]) -> String
 
 class RWebkitPlugin {
     let name : String
-    let action : PluginAction
+    var asyncAction : AsyncPluginAction?
+    var syncAction : SyncPluginAction?
     
-    init(_ n:String,_ a:@escaping PluginAction) {
+    init(_ n:String,_ a:@escaping AsyncPluginAction) {
         self.name = n
-        self.action = a
+        self.asyncAction = a
+    }
+    
+    init(_ n:String,_ a:@escaping SyncPluginAction) {
+        self.name = n
+        self.syncAction = a
     }
 }
 
@@ -25,23 +32,49 @@ class RWebkitPlugin {
 class RWebkitPluginsHub {
     
     static let shared = RWebkitPluginsHub.init()
-    var plugins = [String : RWebkitPlugin]()
+    var asyncPlugins = [String : RWebkitPlugin]() //存储异步插件
+    var syncPlugins = [String : RWebkitPlugin]() //存储同步插件
     
     private init(){
         //添加存储插件
-        self.addPlugin(name: "setValue") { (args, jsCallback) in
+        self.addASyncPlugin(name: "setValue") { (args, jsCallback) in
             NSLog("setValue...")
             jsCallback("")
         }
+        
+        self.addSyncPlugin(name: "getValue") { (args) -> String in
+            return "Hello"
+        }
     }
     
-    func addPlugin(name:String,action:@escaping PluginAction ) {
-        plugins[name] = RWebkitPlugin(name,action)
+    func addASyncPlugin(name:String,action:@escaping AsyncPluginAction ) {
+        asyncPlugins[name] = RWebkitPlugin(name,action)
     }
     
-    func runPluginSync(name:String,args:[String:Any],jsCallback:JsCallback){
-        guard let _plugin = plugins[name] else { return}
-        _plugin.action(args,jsCallback)
+    func addSyncPlugin(name:String,action:@escaping SyncPluginAction){
+        syncPlugins[name] = RWebkitPlugin(name,action)
     }
+    
+    func runPluginSync(name:String,args:[String:Any]) -> String {
+        //TODO: 不存在，报错
+        guard let _plugin = syncPlugins[name] else { return ""}
+        if let _syncAction = _plugin.syncAction{
+            return _syncAction(args)
+        }else{
+            //TODO: 不存在，报错
+            return ""
+        }
+    }
+    
+    func runPluginASync(name:String,args:[String:Any],jsCallback:JsCallback){
+        guard let _plugin = asyncPlugins[name] else { return}
+        if let _asyncAction = _plugin.asyncAction{
+            _asyncAction(args,jsCallback)
+        }else{
+            //TODO: 不存在，报错
+        }
+    }
+    
+    
     
 }
