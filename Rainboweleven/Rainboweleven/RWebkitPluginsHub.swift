@@ -52,8 +52,18 @@ class RWebkitPluginsHub {
     
     func runPlugin(name:String,args:Any) -> String {
         //TODO: 不存在，报错
-        guard let _plugin = plugins[name] else { return ""}
-        return _plugin.action(args)
+        if let _plugin = plugins[name]{
+            return _plugin.action(args)
+        }else if let _userPlugin = plugins["userDefault.\(name)"]{
+            return _userPlugin.action(args)
+        }else{
+            return ""
+        }
+    }
+    
+    func runPlugin(name:String,module:String,args:Any) -> String {
+        let _name = "\(module).\(name)"
+        return runPlugin(name: _name, args: args)
     }
     
     func getJSBridgeBuiltInScript()  -> String{
