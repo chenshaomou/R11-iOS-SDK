@@ -49,12 +49,20 @@
       }
 
     function callASyn(){
-        jsBridge.call('getValue',function(r){})
+        console.log('call async getValue begin')
+        jsBridge.call('getValue',function(r){
+               console.log('success,' + r)
+      })
+      console.log('call async getValue end')
         
     }
 
     function callASynArgs(){
-        jsBridge.call('getValue',{"foo":"bar"},function(r){})
+        console.log('call async getValue with args begin')
+        jsBridge.call('getValue',{"foo":"bar"},function(r){
+                      console.log('success,' + r)
+                      })
+      console.log('call async getValue with args end')
     }
     
 </script>

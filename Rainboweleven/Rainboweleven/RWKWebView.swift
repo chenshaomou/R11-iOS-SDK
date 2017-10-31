@@ -76,11 +76,11 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
             guard let _dic = defaultText?.stringToDictionary() else { return }
             if let _jscallback = _dic["_jscbstub"]{
                 //异步调用
-                //马上返回
+                //马上返回 TODO:// 可以返回啥
                 completionHandler("")
-                let _value = RWebkitPluginsHub.shared.runPlugin(name: method, args: _dic).addingPercentEncoding(withAllowedCharacters: .whitespacesAndNewlines)
+                let _value = RWebkitPluginsHub.shared.runPlugin(name: method, args: _dic).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                 let _del = "delete window.\(_jscallback)"
-                let _js = "try {\(_jscallback)(decodeURIComponent(\"\(_value)\"));\(_del); } catch(e){};"
+                let _js = "try {\(_jscallback)(decodeURIComponent(\"\(_value ?? "")\"));\(_del); } catch(e){};"
                 objc_sync_enter(webView)
                 let _now:UInt64 = UInt64(Date().timeIntervalSince1970 * 1000)
                 g_r_js_cache = "\(g_r_js_cache)\(_js)"
@@ -89,10 +89,17 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
                     _delay = 50.0
                     g_r_have_pending = true
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + _delay/1000.0 , execute: {
-                    
+                DispatchQueue.main.asyncAfter(deadline: .now() + _delay/1000.0 , execute: {[unowned self] in
+                    objc_sync_enter(webView)
+                    if (self.g_r_js_cache.count != 0){
+                        //TODO:执行完成可以弄些啥
+                        webView.evaluateJavaScript(self.g_r_js_cache, completionHandler: nil)
+                        self.g_r_have_pending = false
+                        self.g_r_js_cache = "";
+                        self.g_r_last_call_time = UInt64(Date().timeIntervalSince1970 * 1000)
+                    }
+                    objc_sync_exit(webView)
                 })
-                
                 objc_sync_exit(webView)
             }else{
                 //同步调用
