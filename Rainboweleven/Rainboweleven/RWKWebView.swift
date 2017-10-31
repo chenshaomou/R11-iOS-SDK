@@ -19,7 +19,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
     }
     */
     
-    weak open var ruiDelegate: WKUIDelegate?
+    weak open var theUIDelegate: WKUIDelegate?
     
     //
     var g_r_last_call_time:UInt64 = 0;
@@ -107,10 +107,11 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
                 //TODO: 处理报错
                 completionHandler(result)
             }
-        }else if let _ruiDelegate = self.ruiDelegate{
-            _ruiDelegate.webView!(webView, runJavaScriptTextInputPanelWithPrompt: prompt, defaultText: defaultText, initiatedByFrame: frame, completionHandler: completionHandler)
+        }else if let _theUIDelegate = self.theUIDelegate{
+            _theUIDelegate.webView!(webView, runJavaScriptTextInputPanelWithPrompt: prompt, defaultText: defaultText, initiatedByFrame: frame, completionHandler: completionHandler)
         }else{
             //TODO: 普通的 js prompt
+            
         }
     }
     

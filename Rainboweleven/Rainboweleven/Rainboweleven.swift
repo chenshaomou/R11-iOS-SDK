@@ -51,7 +51,7 @@ public func loadRemoteURL(_ url: String,hash: String = "",scheme: String = "defa
     return rwebview
 }
 
-public func loadLocalURL(_ url: String,hash: String = "",scheme: String = "defaultRemote") -> RWebView{
+public func loadLocalURL(_ url: String,hash: String = "",scheme: String = "defaultLocal") -> RWebView{
     let rwebview = RWebView(frame: UIScreen.main.bounds)
     rwebview.loadLocalURL(url: url)
     return rwebview

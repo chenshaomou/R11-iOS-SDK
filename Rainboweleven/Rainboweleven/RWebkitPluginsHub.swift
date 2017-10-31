@@ -29,7 +29,6 @@ class RWebkitPluginsHub {
     
     private init(){
         //添加存储插件
-        
         self.addPlugin(name: "getValue") { (args) -> String in
             return "Hello,\(args.dictionaryToJSONString())"
         }

@@ -14,10 +14,6 @@
             box-shadow: 4px 2px 10px #999;
         }
     
-        .btn:active {
-            opacity: .7;
-            box-shadow: 4px 2px 10px #555;
-        }
     </style>
 </head>
 <body>
@@ -37,15 +33,15 @@
       });
           
       function callSyn(){
-          console.log('call sync getValue')
+          console.log('call sync getValue begin')
           var _result = jsBridge.call('getValue')
-          console.log('success,' + _result)
+          console.log('call sync getValue end ,' + _result)
       }
 
       function callSynArgs(){
-          console.log('call sync with args getValue')
+          console.log('call sync with args getValue begin')
           var _result = jsBridge.call('getValue',{"foo":"bar"})
-          console.log('success,' + _result)
+          console.log('call sync with args getValue end ,' + _result)
       }
 
     function callASyn(){
