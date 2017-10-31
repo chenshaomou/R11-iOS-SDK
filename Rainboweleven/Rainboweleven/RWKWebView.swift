@@ -27,11 +27,19 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
     var g_r_have_pending = false;
     
     override init(frame: CGRect, configuration: WKWebViewConfiguration) {
+        
+        //将插件转化为js内置对象
         let js = "_jswk='_jsbridge=';".appending(RWebView.INIT_SCRIPT)
         let script = WKUserScript(source: js, injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
         configuration.userContentController.addUserScript(script)
+        
+        let buildInJsObj = RWebkitPluginsHub.shared.getJSBridgeBuiltInScript()
+        let buildInJsObjScript = WKUserScript(source: buildInJsObj, injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
+        configuration.userContentController.addUserScript(buildInJsObjScript)
+        
         let scriptDomReady = WKUserScript(source: ";prompt('_jsinited');", injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
         configuration.userContentController.addUserScript(scriptDomReady)
+        
         super.init(frame: frame, configuration: configuration)
         self.uiDelegate = self
     }
@@ -78,7 +86,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
                 //异步调用
                 //马上返回 TODO:// 可以返回啥
                 completionHandler("")
-                let _value = RWebkitPluginsHub.shared.runPlugin(name: method, args: _dic).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                let _value = RWebkitPluginsHub.shared.runPlugin(name: method, args: _dic["param"] ?? "").addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
                 let _del = "delete window.\(_jscallback)"
                 let _js = "try {\(_jscallback)(decodeURIComponent(\"\(_value ?? "")\"));\(_del); } catch(e){};"
                 objc_sync_enter(webView)
@@ -103,7 +111,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
                 objc_sync_exit(webView)
             }else{
                 //同步调用
-                let result = RWebkitPluginsHub.shared.runPlugin(name: method, args: _dic)
+                let result = RWebkitPluginsHub.shared.runPlugin(name: method, args: _dic["param"] ?? "")
                 //TODO: 处理报错
                 completionHandler(result)
             }

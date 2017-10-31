@@ -34,7 +34,7 @@ public class RWebView: UIView,RWebViewProtocol {
         }
     }
     
-    static let  INIT_SCRIPT = "function getJsBridge(){window._jsf=window._jsf||{};return{call:function(b,a,c){'function'==typeof a&&(c=a,a={});if('function'==typeof c){window.jscb=window.jscb||0;var d='jscb'+window.jscb++;window[d]=c;a._jscbstub=d}a=JSON.stringify(a||{});return window._jswk?prompt(window._jswk+b,a):'function'==typeof _jsBridge?_jsBridge(b,a):_jsBridge.call(b,a)},register:function(b,a){'object'==typeof b?Object.assign(window._jsf,b):window._jsf[b]=a}}}jsBridge=getJsBridge()"
+    static let  INIT_SCRIPT = "function getJsBridge(){window._jsf=window._jsf||{};return{call:function(b,a,c){if('function'==typeof a){c=a;a={}}else{a={'param':a}}if('function'==typeof c){window.jscb=window.jscb||0;var d='jscb'+window.jscb++;window[d]=c;a._jscbstub=d}a=JSON.stringify(a||{});return window._jswk?prompt(window._jswk+b,a):'function'==typeof _jsBridge?_jsBridge(b,a):_jsBridge.call(b,a)},register:function(b,a){'object'==typeof b?Object.assign(window._jsf,b):window._jsf[b]=a}}}jsBridge=getJsBridge()"
     
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
