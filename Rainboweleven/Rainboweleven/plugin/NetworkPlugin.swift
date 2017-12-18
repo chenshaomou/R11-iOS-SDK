@@ -13,6 +13,6 @@ public class NetWorking {
     
     func runAlmofire() {
         
-        
+        print("\(AlamofireVersionNumber)")
     }
 }
