@@ -11,9 +11,8 @@ $ brew install carthage
 ```SHELL
 github "chenshaomou/R11-iOS-SDK" "master"
 
-## 该项目需要进入第三库 Alamofire
-
-建议使用carthage
+## 该项目引入了第三库 Alamofire， 目前Carthage版本2.7可以兼容项目依赖冲突问题，请更新最新版本Carthage
 ```SHELL
-github "Alamofire/Alamofire" ~> 4.5
+$ brew update carthage
+
 
