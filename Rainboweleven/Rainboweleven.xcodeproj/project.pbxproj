@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		929D1D101FE7457B001F4D14 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 929D1D0F1FE7457B001F4D14 /* Alamofire.framework */; };
+		929D1D121FE74DE6001F4D14 /* NetworkPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929D1D111FE74DE6001F4D14 /* NetworkPlugin.swift */; };
 		B6D894841F9D8ACE00ABF4C0 /* Rainboweleven.h in Headers */ = {isa = PBXBuildFile; fileRef = B6D894821F9D8ACE00ABF4C0 /* Rainboweleven.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6D8948B1F9D8B0400ABF4C0 /* Rainboweleven.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D8948A1F9D8B0400ABF4C0 /* Rainboweleven.swift */; };
 		B6E92C711F9DABF60044A349 /* RWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6E92C701F9DABF60044A349 /* RWebView.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		929D1D0F1FE7457B001F4D14 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = ../Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		929D1D111FE74DE6001F4D14 /* NetworkPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPlugin.swift; sourceTree = "<group>"; };
 		B6D8947F1F9D8ACE00ABF4C0 /* Rainboweleven.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rainboweleven.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6D894821F9D8ACE00ABF4C0 /* Rainboweleven.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Rainboweleven.h; sourceTree = "<group>"; };
 		B6D894831F9D8ACE00ABF4C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -31,17 +35,45 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				929D1D101FE7457B001F4D14 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		929D1D0C1FE7453F001F4D14 /* plugin */ = {
+			isa = PBXGroup;
+			children = (
+				929D1D111FE74DE6001F4D14 /* NetworkPlugin.swift */,
+			);
+			path = plugin;
+			sourceTree = "<group>";
+		};
+		929D1D0D1FE7454D001F4D14 /* configure */ = {
+			isa = PBXGroup;
+			children = (
+				B6D894821F9D8ACE00ABF4C0 /* Rainboweleven.h */,
+				B6D894831F9D8ACE00ABF4C0 /* Info.plist */,
+				B6D8948A1F9D8B0400ABF4C0 /* Rainboweleven.swift */,
+			);
+			path = configure;
+			sourceTree = "<group>";
+		};
+		929D1D0E1FE7457B001F4D14 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				929D1D0F1FE7457B001F4D14 /* Alamofire.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B6D894751F9D8ACE00ABF4C0 = {
 			isa = PBXGroup;
 			children = (
 				B6D894811F9D8ACE00ABF4C0 /* Rainboweleven */,
 				B6D894801F9D8ACE00ABF4C0 /* Products */,
+				929D1D0E1FE7457B001F4D14 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,9 +88,8 @@
 		B6D894811F9D8ACE00ABF4C0 /* Rainboweleven */ = {
 			isa = PBXGroup;
 			children = (
-				B6D894821F9D8ACE00ABF4C0 /* Rainboweleven.h */,
-				B6D894831F9D8ACE00ABF4C0 /* Info.plist */,
-				B6D8948A1F9D8B0400ABF4C0 /* Rainboweleven.swift */,
+				929D1D0D1FE7454D001F4D14 /* configure */,
+				929D1D0C1FE7453F001F4D14 /* plugin */,
 				B6E92C721F9DAC0D0044A349 /* webkit */,
 			);
 			path = Rainboweleven;
@@ -160,6 +191,7 @@
 				B6E92C711F9DABF60044A349 /* RWebView.swift in Sources */,
 				B6E92C7C1F9F11350044A349 /* RWebkitPluginsHub.swift in Sources */,
 				B6D8948B1F9D8B0400ABF4C0 /* Rainboweleven.swift in Sources */,
+				929D1D121FE74DE6001F4D14 /* NetworkPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,7 +322,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Rainboweleven/Info.plist;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/Carthage/Build/iOS";
+				INFOPLIST_FILE = "$(SRCROOT)/Rainboweleven/configure/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.Rainboweleven;
@@ -314,7 +347,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Rainboweleven/Info.plist;
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/Carthage/Build/iOS";
+				INFOPLIST_FILE = "$(SRCROOT)/Rainboweleven/configure/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.Rainboweleven;
