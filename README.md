@@ -11,7 +11,12 @@ $ brew install carthage
 ```SHELL
 github "chenshaomou/R11-iOS-SDK" "master"
 
-<<<<<<< HEAD
+## 该项目引入了第三库 Alamofire， 目前Carthage版本2.7可以兼容项目依赖冲突问题，请更新最新版本Carthage
+```SHELL
+$ brew update carthage
+
+***
+
 #Native API
 ###获取jsbridge对象
 +获取SDK对象（单例），这个时候进行初始化事件和插件：jsbridge=getInstance/share
@@ -55,10 +60,3 @@ github "chenshaomou/R11-iOS-SDK" "master"
 -监听事件：jsbridge.on(eventName:String,function(jsobject))
 -解除监听：jsbridge.off(eventName:String)
 -发送事件：jsbridge.send(eventName:String,jsobject)
-=======
-## 该项目引入了第三库 Alamofire， 目前Carthage版本2.7可以兼容项目依赖冲突问题，请更新最新版本Carthage
-```SHELL
-$ brew update carthage
-
-
->>>>>>> e162ac75198678abbbd420328685bcb938f498cc
