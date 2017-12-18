@@ -9,10 +9,9 @@
 import Foundation
 import Alamofire
 
-public class NetWorking {
+open class NetWorking {
     
-    func runAlmofire() {
-        
+    open func runAlmofire() {
         print("\(AlamofireVersionNumber)")
     }
 }
