@@ -40,17 +40,17 @@ $ brew update carthage
 # JavaScript API
 ## 当用SDK的webview打开的时候，SDK的webview将会给window自动绑定一个jsbridge的对象
 + 注册插件可以让原生调用：jsbridge.register(module:String,method:String,callfn:function(jsobject))
-+ 同步调用原生的插件：jsbridge.call(module:String,method:String,params:String)
-+ 异步调用原生的插件：jsbridge.call(module:String,method:String,params:String,callback:function(jsobject))
-+ 异步调用原生的插件（基于promise）：jsbridge.promise(module:String,method:String,params:String)
++ 同步调用原生的插件：jsbridge.call(module:String,method:jsobject,params:String)
++ 异步调用原生的插件：jsbridge.call(module:String,method:jsobject,params:String,callback:function(jsobject))
++ 异步调用原生的插件（基于promise）：jsbridge.promise(module:String,method:String,params:jsobject)
 
-##非自定义的插件（我们提供的插件）有直接生成的对象可以调用，如存储组件
+## 非自定义的插件（我们提供的插件）有直接生成的对象可以调用，如存储组件
 - 同步调用网络的插件：jsbridge.call(‘store’,’set’,object)
 - 同步调用网络的插件：jsbridge.store.set(object)
 - 异步调用网络的插件：jsbridge.call(store’,’set’,object,function(jsobject))
 - 异步调用网络的插件（基于promise）：jsbridge.store.set.promise(object)
 
-##event bus事件总线
+## event bus事件总线
 - 事件监听器，事件总线通过事件插件实现：jsbridge.register(module:’event',method:’on',function(jsobject)->String)
 - 监听事件：jsbridge.on(eventName:String,function(jsobject))
 - 解除监听：jsbridge.off(eventName:String)
