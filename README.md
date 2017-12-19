@@ -45,10 +45,10 @@ $ brew update carthage
 + 异步调用原生的插件（基于promise）：jsbridge.promise(module:String,method:String,params:jsobject)
 
 ## 非自定义的插件（我们提供的插件）有直接生成的对象可以调用，如存储组件
-- 同步调用存储的插件：jsbridge.call(‘store’,’set’,object)
-- 同步调用存储的插件：jsbridge.store.set(object)
+- 同步调用存储的插件：jsbridge.call(‘store’,’set’,jsobject)
+- 同步调用存储的插件：jsbridge.store.set(jsobject,ture)
+- 异步调用存储的插件，返回一个promise：jsbridge.store.set(jsobject) 或 jsbridge.store.set(jsobject,false)
 - 异步调用存储的插件：jsbridge.call(store’,’set’,object,function(jsobject))
-- 异步调用存储的插件（基于promise）：jsbridge.store.set.promise(object)
 
 ## event bus事件总线
 - 事件监听器，事件总线通过事件插件实现：jsbridge.register(module:’event',method:’on',function(jsobject)->String)
