@@ -26,7 +26,7 @@ $ brew update carthage
 + 注册插件：jsbridge.register(module:String,method:String,action:(object)->String)
 
 ## 调用js插件
-- 异步调用js插件：jsbridge.call(module:String,method:String,callback:function(kvobject)
+- 异步调用js插件：jsbridge.call(module:String,method:String,params:kvmap,callback:function(kvobject)
 - 原生调js暂时不做同步
 
 ## event bus事件总线
@@ -40,8 +40,8 @@ $ brew update carthage
 # JavaScript API
 ## 当用SDK的webview打开的时候，SDK的webview将会给window自动绑定一个jsbridge的对象
 + 注册插件可以让原生调用：jsbridge.register(module:String,method:String,callfn:function(jsobject))
-+ 同步调用原生的插件：jsbridge.call(module:String,method:jsobject,params:String)
-+ 异步调用原生的插件：jsbridge.call(module:String,method:jsobject,params:String,callback:function(jsobject))
++ 同步调用原生的插件：jsbridge.call(module:String,method:String,params:jsobject)
++ 异步调用原生的插件：jsbridge.call(module:String,method:String,params:jsobject,callback:function(jsobject))
 + 异步调用原生的插件（基于promise）：jsbridge.promise(module:String,method:String,params:jsobject)
 
 ## 非自定义的插件（我们提供的插件）有直接生成的对象可以调用，如存储组件
