@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		929BE5FF2005ACDD00E2DEA7 /* Collection+PrettyPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BE5FE2005ACDD00E2DEA7 /* Collection+PrettyPrint.swift */; };
 		929D1D101FE7457B001F4D14 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 929D1D0F1FE7457B001F4D14 /* Alamofire.framework */; };
 		929D1D121FE74DE6001F4D14 /* NetworkPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929D1D111FE74DE6001F4D14 /* NetworkPlugin.swift */; };
 		B6D894841F9D8ACE00ABF4C0 /* Rainboweleven.h in Headers */ = {isa = PBXBuildFile; fileRef = B6D894821F9D8ACE00ABF4C0 /* Rainboweleven.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		929BE5FE2005ACDD00E2DEA7 /* Collection+PrettyPrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+PrettyPrint.swift"; sourceTree = "<group>"; };
 		929D1D0F1FE7457B001F4D14 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = ../Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		929D1D111FE74DE6001F4D14 /* NetworkPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkPlugin.swift; sourceTree = "<group>"; };
 		B6D8947F1F9D8ACE00ABF4C0 /* Rainboweleven.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rainboweleven.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +44,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		929BE5FD2005ACC600E2DEA7 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				929BE5FE2005ACDD00E2DEA7 /* Collection+PrettyPrint.swift */,
+			);
+			path = utils;
+			sourceTree = "<group>";
+		};
 		929D1D0C1FE7453F001F4D14 /* plugin */ = {
 			isa = PBXGroup;
 			children = (
@@ -88,6 +98,7 @@
 		B6D894811F9D8ACE00ABF4C0 /* Rainboweleven */ = {
 			isa = PBXGroup;
 			children = (
+				929BE5FD2005ACC600E2DEA7 /* utils */,
 				929D1D0D1FE7454D001F4D14 /* configure */,
 				929D1D0C1FE7453F001F4D14 /* plugin */,
 				B6E92C721F9DAC0D0044A349 /* webkit */,
@@ -188,6 +199,7 @@
 			files = (
 				B6E92C761F9DBFB30044A349 /* RWKWebView.swift in Sources */,
 				B6E92C741F9DBF850044A349 /* RUIWebView.swift in Sources */,
+				929BE5FF2005ACDD00E2DEA7 /* Collection+PrettyPrint.swift in Sources */,
 				B6E92C711F9DABF60044A349 /* RWebView.swift in Sources */,
 				B6E92C7C1F9F11350044A349 /* RWebkitPluginsHub.swift in Sources */,
 				B6D8948B1F9D8B0400ABF4C0 /* Rainboweleven.swift in Sources */,

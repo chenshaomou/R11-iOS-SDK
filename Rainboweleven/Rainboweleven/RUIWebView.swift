@@ -8,34 +8,25 @@
 
 import UIKit
 
-class RUIWebView: UIWebView ,RWebViewProtocol{
+internal class RUIWebView: UIWebView ,RWebViewProtocol {
 
-    
-    
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    func loadLocalURL(url: String, hash: String?) {
+        
+        let fileUrl = URL(fileURLWithPath: url)
+        let request = URLRequest(url: fileUrl)
+        self.loadRequest(request)
     }
-    */
     
     func loadRemoteURL(url: String, hash: String? = nil) {
         if let url = URL(string: url){
             let request = URLRequest(url: url)
             self.loadRequest(request)
-        }else{
+        } else {
             //TODO: 读取出错界面
         }
     }
     
     func callHandler(methodName:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
-        
-        
-    }
-    
-    func loadLocalURL(url: String, hash: String?) {
-        
     }
     
 }

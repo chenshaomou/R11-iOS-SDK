@@ -11,14 +11,6 @@ import WebKit
 
 class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
     
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
-    }
-    */
-    
     weak open var theUIDelegate: WKUIDelegate?
     
     //
@@ -49,6 +41,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
     }
     
     func loadRemoteURL(url: String, hash: String? = nil) {
+        
         if let _url = URL(string: url){
             let request = URLRequest(url: _url)
             self.load(request)

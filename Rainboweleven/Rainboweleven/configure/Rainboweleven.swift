@@ -8,44 +8,6 @@
 
 import Foundation
 
-extension Dictionary{
-    
-    internal func dictionaryToJSONString() -> String {
-        if let jsonData = try? JSONSerialization .data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted){
-            if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8){
-                return jsonString
-            }
-        }
-        return "{}"
-    }
-}
-
-extension Array{
-    
-    internal func arrayToJSONString() -> String {
-        if let jsonData = try? JSONSerialization .data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted){
-            if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8){
-                return jsonString
-            }
-        }
-        return "[]"
-    }
-}
-
-extension String{
-    
-    internal func stringToDictionary() -> Dictionary<String, Any>{
-        if let _data = self.data(using: String.Encoding.utf8){
-            if let _json = try? JSONSerialization.jsonObject(with: _data, options: JSONSerialization.ReadingOptions.allowFragments){
-                if let _dic = _json as? Dictionary<String, Any>{
-                    return _dic
-                }
-            }
-        }
-        return Dictionary();
-    }
-}
-
 public func loadRemoteURL(_ url: String,hash: String = "",scheme: String = "defaultRemote") -> RWebView{
     
     let rwebview = RWebView(frame: UIScreen.main.bounds)
@@ -55,7 +17,6 @@ public func loadRemoteURL(_ url: String,hash: String = "",scheme: String = "defa
 
 public func loadLocalURL(_ url: String,hash: String = "",scheme: String = "defaultLocal") -> RWebView{
     let rwebview = RWebView(frame: UIScreen.main.bounds)
-    
     rwebview.loadLocalURL(url: url)
     return rwebview
 }
