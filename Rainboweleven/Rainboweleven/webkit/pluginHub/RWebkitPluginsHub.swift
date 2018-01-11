@@ -64,8 +64,12 @@ public class RWebkitPluginsHub {
     
     // 添加默认插件
     fileprivate func registerDefaultPlugin() {
+        
         AppInfoPlugin.register()
+        
         NetWorkPlugin.register()
+        
+        EventBusPlugin.register()
     }
     
     public func getJSBridgeBuiltInScript() -> String {
