@@ -15,10 +15,9 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-         self.view.translatesAutoresizingMaskIntoConstraints = false
         
-        // Do any additional setup after loading the view, typically from a nib.
-        //let rwv = Rainboweleven.load("https://www.baidu.com/")
+        self.view.translatesAutoresizingMaskIntoConstraints = false
+        
         if let path = Bundle.main.path(forResource: "test", ofType: "html"){
             rwv = Rainboweleven.loadLocalURL(path)
             self.view.addSubview(rwv!)

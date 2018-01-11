@@ -9,9 +9,38 @@
 import Foundation
 import Alamofire
 
-open class NetWorking {
+public class NetWorkPlugin : RWebkitCustomPlugin {
     
-    open func runAlmofire() {
-        print("\(AlamofireVersionNumber)")
+    public var moduleName: String? {
+        return "network"
+    }
+    
+    public var actionMapping: [String : PluginAction]? {
+        return ["get": doGet,
+                "post": doPost]
+    }
+    
+    public var customFuncMapping: [String : String]? {
+        return nil
+    }
+    
+    public static var shared: RWebkitCustomPlugin {
+        return NetWorkPlugin()
+    }
+    
+    fileprivate func doGet(_ args: Any, _ asyncCallBack: PluginResultCallBack?) -> String {
+        
+        let result = PluginResult.terminate("doGet Testing ... ")
+        asyncCallBack?(result)
+        
+        return ""
+    }
+    
+    fileprivate func doPost(_ args: Any, _ asyncCallBack: PluginResultCallBack?) -> String {
+        
+        let result = PluginResult.terminate("doPost Testing ... ")
+        asyncCallBack?(result)
+        
+        return ""
     }
 }

@@ -7,24 +7,27 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		929BE60B20060EAE00E2DEA7 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 929BE60A20060EAD00E2DEA7 /* Alamofire.framework */; };
+		929BE60C20060EAE00E2DEA7 /* Alamofire.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 929BE60A20060EAD00E2DEA7 /* Alamofire.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		92CA5A9420074D2400D5D05C /* Rainboweleven.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92CA5A9320074D2400D5D05C /* Rainboweleven.framework */; };
+		92CA5A9520074D2400D5D05C /* Rainboweleven.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 92CA5A9320074D2400D5D05C /* Rainboweleven.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B66F967E1F9D85B10092018C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F967D1F9D85B10092018C /* AppDelegate.swift */; };
 		B66F96801F9D85B10092018C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F967F1F9D85B10092018C /* ViewController.swift */; };
 		B66F96831F9D85B10092018C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B66F96811F9D85B10092018C /* Main.storyboard */; };
 		B66F96851F9D85B10092018C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B66F96841F9D85B10092018C /* Assets.xcassets */; };
 		B66F96881F9D85B10092018C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B66F96861F9D85B10092018C /* LaunchScreen.storyboard */; };
-		B6D8948D1F9D8B1800ABF4C0 /* Rainboweleven.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6D8948C1F9D8B1800ABF4C0 /* Rainboweleven.framework */; };
-		B6D8948E1F9D8B1800ABF4C0 /* Rainboweleven.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B6D8948C1F9D8B1800ABF4C0 /* Rainboweleven.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B6E92C7A1F9EDD280044A349 /* test.html in Resources */ = {isa = PBXBuildFile; fileRef = B6E92C791F9EDD280044A349 /* test.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		B6D8948F1F9D8B1800ABF4C0 /* Embed Frameworks */ = {
+		929BE60320060D6C00E2DEA7 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				B6D8948E1F9D8B1800ABF4C0 /* Rainboweleven.framework in Embed Frameworks */,
+				92CA5A9520074D2400D5D05C /* Rainboweleven.framework in Embed Frameworks */,
+				929BE60C20060EAE00E2DEA7 /* Alamofire.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -32,6 +35,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		929BE60A20060EAD00E2DEA7 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "iOS-Example/Alamofire.framework"; sourceTree = "<group>"; };
+		92CA5A9320074D2400D5D05C /* Rainboweleven.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Rainboweleven.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B66F967A1F9D85B10092018C /* iOS-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B66F967D1F9D85B10092018C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B66F967F1F9D85B10092018C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -39,7 +44,6 @@
 		B66F96841F9D85B10092018C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B66F96871F9D85B10092018C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B66F96891F9D85B10092018C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B6D8948C1F9D8B1800ABF4C0 /* Rainboweleven.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Rainboweleven.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6E92C791F9EDD280044A349 /* test.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; path = test.html; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -48,7 +52,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B6D8948D1F9D8B1800ABF4C0 /* Rainboweleven.framework in Frameworks */,
+				92CA5A9420074D2400D5D05C /* Rainboweleven.framework in Frameworks */,
+				929BE60B20060EAE00E2DEA7 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,7 +63,8 @@
 		B66F96711F9D85B10092018C = {
 			isa = PBXGroup;
 			children = (
-				B6D8948C1F9D8B1800ABF4C0 /* Rainboweleven.framework */,
+				92CA5A9320074D2400D5D05C /* Rainboweleven.framework */,
+				929BE60A20060EAD00E2DEA7 /* Alamofire.framework */,
 				B66F967C1F9D85B10092018C /* iOS-Example */,
 				B66F967B1F9D85B10092018C /* Products */,
 			);
@@ -96,7 +102,7 @@
 				B66F96761F9D85B10092018C /* Sources */,
 				B66F96771F9D85B10092018C /* Frameworks */,
 				B66F96781F9D85B10092018C /* Resources */,
-				B6D8948F1F9D8B1800ABF4C0 /* Embed Frameworks */,
+				929BE60320060D6C00E2DEA7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -119,7 +125,7 @@
 				TargetAttributes = {
 					B66F96791F9D85B10092018C = {
 						CreatedOnToolsVersion = 9.0.1;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -298,14 +304,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/iOS-Example";
 				INFOPLIST_FILE = "iOS-Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.rainboweleven.iOS-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -313,14 +321,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = "";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/iOS-Example";
 				INFOPLIST_FILE = "iOS-Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.rainboweleven.iOS-Example";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
