@@ -235,11 +235,11 @@ function initJsBridge(webViewType) {
         if (window.jsBridge.webViewType == 'WKWV') {
             // 异步
             if (async) {
-                window.prompt('', requestStr)
+                window.prompt(window.jsBridge.webViewType, requestStr)
             }
             // 同步
             else {
-                return window.prompt('', requestStr);
+                return window.prompt(window.jsBridge.webViewType, requestStr);
             }
         }
         // 其他WebView

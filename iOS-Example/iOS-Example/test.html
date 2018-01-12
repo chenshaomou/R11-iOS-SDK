@@ -160,7 +160,7 @@
             return
         }
         console.log('注册事件(不带参数) begin')
-        jsBridge.on('keyboardUp', function(r){
+        jsBridge.on('onResume', function(r){
                     console.log('注册事件(不带参数) end, 原生返回结果：' + r)
                     })
     }
@@ -179,7 +179,7 @@
             return
         }
         console.log('发送事件(带参数) begin')
-        var _result = jsBridge.send('keyboardUp', {'height': 100})
+        var _result = jsBridge.send('onResume', {'height': 100})
         console.log('发送事件(带参数) end，原生返回结果：' + _result)
     }
     // 取消事件()

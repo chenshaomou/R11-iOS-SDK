@@ -15,31 +15,28 @@ public class NetWorkPlugin : RWebkitCustomPlugin {
         return "network"
     }
     
-    public var actionMapping: [String : PluginAction]? {
+    public var actionMapping: [String : NativeAction]? {
         return ["get": doGet,
                 "post": doPost]
     }
     
-    public var customFuncMapping: [String : String]? {
+    public var customFuncMapping: [String : (String, NativeAction)]? {
         return nil
     }
     
-    public static var shared: RWebkitCustomPlugin {
-        return NetWorkPlugin()
-    }
+    public static var shared: RWebkitCustomPlugin = NetWorkPlugin()
     
-    fileprivate func doGet(_ args: Any, _ asyncCallBack: PluginResultCallBack?) -> String {
+    fileprivate func doGet(_ callbackName: String?, _ args: Any, _ asyncCallBack: NativeCallback?) -> String {
         
-        let result = PluginResult.terminate("doGet Testing ... ")
-        asyncCallBack?(result)
-        
+        //
+        responseDefaultCallback(callbackName: callbackName, "do Get Testing success ...", continuous: false, asyncCallBack: asyncCallBack)
         return ""
     }
     
-    fileprivate func doPost(_ args: Any, _ asyncCallBack: PluginResultCallBack?) -> String {
+    fileprivate func doPost(_ callbackName: String?, _ args: Any, _ asyncCallBack: NativeCallback?) -> String {
         
-        let result = PluginResult.terminate("doPost Testing ... ")
-        asyncCallBack?(result)
+        //
+        responseDefaultCallback(callbackName: callbackName, "do Post Testing success ...", continuous: false, asyncCallBack: asyncCallBack)
         
         return ""
     }

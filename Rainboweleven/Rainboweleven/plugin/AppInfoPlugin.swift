@@ -10,24 +10,22 @@ import Foundation
 
 public class AppInfoPlugin : RWebkitCustomPlugin {
     
-    public static var shared: RWebkitCustomPlugin {
-        return AppInfoPlugin()
-    }
+    public static var shared: RWebkitCustomPlugin = AppInfoPlugin()
     
     public var moduleName: String? {
         return "appInfo"
     }
     
-    public var actionMapping: [String : PluginAction]? {
+    public var actionMapping: [String : NativeAction]? {
         return ["version" : versionAction]
     }
     
-    public var customFuncMapping: [String : String]? {
+    public var customFuncMapping: [String : (String, NativeAction)]? {
         return nil
     }
     
     // 版本插件
-    func versionAction(_ args: Any, _ asyncCallBack: PluginResultCallBack?) -> String {
+    func versionAction(_ callbackName: String?, _ args: Any, _ asyncCallBack: NativeCallback?) -> String {
         return "1.0.1"
     }
     

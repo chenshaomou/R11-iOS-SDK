@@ -26,7 +26,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
         
         // 提前记住桥接对象与方法
         // 将插件转化为js内置对象
-        let js = "\(RWebView.promptInjectPrefix)='\(RWebView.promptPrefix)=';".appending(RWebView.initializedScript)
+        let js = RWebView.initializedScript
         let script = WKUserScript(source: js,
                                   injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
         configuration.userContentController.addUserScript(script)
@@ -36,12 +36,10 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
         let buildInJsObjScript = WKUserScript(source: buildInJsObj, injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
         configuration.userContentController.addUserScript(buildInJsObjScript)
         
-        // 注入成功提示
-        let scriptDomReady = WKUserScript(source: ";prompt('\(RWebView.jsDidInitial)');", injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
-        configuration.userContentController.addUserScript(scriptDomReady)
-        
         super.init(frame: frame, configuration: configuration)
         self.uiDelegate = self
+        
+        EventBus.regiserEvent()
     }
     
     required init?(coder: NSCoder) {
@@ -69,83 +67,70 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
     
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
         
-        let _prefix = "\(RWebView.promptPrefix)="
-        let _jsinited = "\(RWebView.jsDidInitial)"
-        
+        let prefix = "WKWV"
         print("prompt = \(prompt)")
         
-        if prompt.hasPrefix(_jsinited){
-            // jsbridge 完成初始化
-            print("WKWebView did inject bridge script ... ")
-            completionHandler("")
-        
-        } else if prompt.hasPrefix(_prefix){
+        guard prompt.hasPrefix(prefix) else {
             
-            print("defaultText = \(defaultText ?? "")")
-            
-            guard let jsonDict = defaultText?.seriailized() else { return }
-            
-            let plugin = RWebkitPlugin(jsonDic: jsonDict)
-            let args = jsonDict["params"] ?? []
-            
-            let async = plugin.callbackName != nil
-            let callbackName = plugin.callbackName ?? ""
-            
-            if async {
-                // 异步
-                RWebkitPluginsHub.shared.runPlugin(name: plugin.name,
-                                                   module: plugin.module,
-                                                   args: args,
-                                                   asyncCallBack:
-                    { [weak self](result) in
-                    
-                        guard let strongSelf = self else { return }
-                    
-                        guard let callbackResult = result else { return }
-                    
-                        var evaulateScript = ""
-                        switch callbackResult {
-                        case .terminate(let value):
-                    
-                            if let encodeValue = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-                            evaulateScript += NSString(format: RWebView.jsBridgeCallBack as NSString, callbackName,"\(encodeValue)") as String
-                            }
-                        
-                            evaulateScript += NSString(format: RWebView.clearjsBridgeCallBack as NSString, callbackName, "\(callbackName)") as String
-                    
-                        case .continuous(let value):
-                    
-                            if let encodeValue = value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
-                                evaulateScript += NSString(format: RWebView.jsBridgeCallBack as NSString, callbackName,"\(encodeValue)") as String
-                            }
-                        }
-                        
-                        if evaulateScript.isEmpty {
-                            return
-                        }
-                        
-                        let js = "javascript: try { \(evaulateScript)} catch(e){};"
-                        strongSelf.evaluteJavaScriptSafey(webView, javaScript: js)
-                                                    
-                })
-                
+            if let _theUIDelegate = self.theUIDelegate{
+                _theUIDelegate.webView!(webView, runJavaScriptTextInputPanelWithPrompt: prompt, defaultText: defaultText, initiatedByFrame: frame, completionHandler: completionHandler)
             } else {
-                // 同步
-                let result = RWebkitPluginsHub.shared.runPlugin(name: plugin.name, module: plugin.module, args: args)
-                completionHandler(result)
-                return
+                completionHandler("")
             }
             
+            return
+        }
+        
+        print("defaultText = \(defaultText ?? "")")
+        
+        guard let jsonDict = defaultText?.seriailized() else { return }
+        
+        let plugin = RWebkitPlugin(jsonDic: jsonDict)
+        let args = jsonDict["params"] ?? []
+        
+        let async = plugin.callbackName != nil
+        let module = plugin.module
+        let name = plugin.name
+        let callbackName = plugin.callbackName
+        
+        if async {
+            // 异步
+            RWebkitPluginsHub.shared.runPlugin(name: plugin.name,
+                                               module: plugin.module,
+                                               args: args,
+                                               callbackName: callbackName,
+                                               asyncCallBack:
+                { [weak self](result) in
+                    
+                    guard let strongSelf = self else { return }
+                    
+                    guard let callbackResult = result else { return }
+                    
+                    var evaulateScript = ""
+                    
+                    switch callbackResult {
+                    case .success(let script):
+                        evaulateScript += script
+                    case .failure(let error):
+                        print("error in \(module).\(name) : \(error.localizedDescription)")
+                    }
+                    
+                    if evaulateScript.isEmpty {
+                        return
+                    }
+                    
+                    let js = "javascript: try { \(evaulateScript)} catch(e){};"
+                    strongSelf.evaluteJavaScriptSafey(webView, javaScript: js)
+                    
+            })
+        
             completionHandler("")
-            
-        } else if let _theUIDelegate = self.theUIDelegate{
-            
-            _theUIDelegate.webView!(webView, runJavaScriptTextInputPanelWithPrompt: prompt, defaultText: defaultText, initiatedByFrame: frame, completionHandler: completionHandler)
         
         } else {
-        
-            completionHandler("")
-            
+            // 同步
+            let result = RWebkitPluginsHub.shared.runPlugin(name: plugin.name, module: plugin.module, args: args)
+            completionHandler(result)
+            return
         }
     }
     

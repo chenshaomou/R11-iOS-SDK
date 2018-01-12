@@ -10,68 +10,81 @@ import Foundation
 
 public class EventBusPlugin : RWebkitCustomPlugin {
     
-    public static var shared: RWebkitCustomPlugin {
-        return EventBusPlugin()
-    }
+    public static var shared: RWebkitCustomPlugin = EventBusPlugin()
     
     public var moduleName: String? {
         return "event"
     }
     
-    public var actionMapping: [String : PluginAction]? {
+    public var actionMapping: [String : NativeAction]? {
         return ["on": eventOn,
                 "off": eventOff,
                 "send": eventSend]
     }
     
-    private var bus = [String : Event]()
+    // 回调存储  key: evenName value Event对象
+    private var jsEventBus = [String : JSEvent]()
     
-    public var customFuncMapping: [String : String]? {
+    public var customFuncMapping: [String : (String, NativeAction)]? {
         return nil 
     }
     
-    func eventOn(_ args: Any, _ asyncCallBack: PluginResultCallBack?) -> String {
+    func eventOn(_ callbackName: String?, _ args: Any, _ asyncCallBack: NativeCallback?) -> String {
         
-        let event = Event(args, action: asyncCallBack)
-        if !event.name.isEmpty {
-            bus[event.name] = event
-        }
-        return ""
-    }
-    
-    func eventOff(_ args: Any, _ asyncCallBack: PluginResultCallBack?) -> String {
-        
-        let event = Event(args, action: asyncCallBack)
-        if !event.name.isEmpty {
+        let event = JSEvent(args, action: asyncCallBack)
+        event.action = { [weak self] (result) in
             
-            if let eventOnBus = bus[event.name] {
-                eventOnBus.action?(PluginResult.terminate(""))
+            guard let result = result else { return }
+            
+            switch result {
+            case .success(let value):
+              self?.responseDefaultCallback(callbackName: callbackName, value, continuous: true, asyncCallBack: asyncCallBack)
+            case .failure(let error):
+                print("error in eventOn callBackName =\(event.name) : \(error.localizedDescription)")
             }
-            
-            bus[event.name] = nil
         }
+        
+        jsEventBus[event.name] = event
+        
+        let nativeEvent = EventBus.wrap(From: event)
+        nativeEvent?.addJSObserver(jsEvent: event)
+        
         return ""
     }
     
-    func eventSend(_ args: Any, _ asyncCallBack: PluginResultCallBack?) -> String {
+    func eventOff(_ callbackName: String?, _ args: Any, _ asyncCallBack: NativeCallback?) -> String {
         
-        let event = Event(args, action: asyncCallBack)
-        if let eventOnBus = bus[event.name] {
-            //TODO: SEND logic
-            let message = "发送时间  \(event.name): 参数 \(event.params)"
-            eventOnBus.action?(PluginResult.continuous(message))
+        let name = JSEvent(args, action: asyncCallBack).name
+        if let jsEvent = jsEventBus[name] {
+            let nativeEvent = EventBus.wrap(From: jsEvent)
+            nativeEvent?.removeJSObserver(jsEvent: jsEvent)
         }
+        
+        jsEventBus[name] = nil
+        
+        return ""
+    }
+    
+    func eventSend(_ callbackName: String?, _ args: Any, _ asyncCallBack: NativeCallback?) -> String {
+        
+        if let jsEvent = jsEventBus[JSEvent(args, action: asyncCallBack).name] {
+            let nativeEvent = EventBus.wrap(From: jsEvent)
+            nativeEvent?.onJSSend(args: args, jsEvent: jsEvent)
+        }
+        
         return ""
     }
 }
 
-fileprivate class Event {
+public class JSEvent {
     
-    var name = ""
-    var params = [String : Any]()
-    var action:PluginResultCallBack? = nil
+    public var name = ""
     
-    fileprivate init(_ args: Any, action: PluginResultCallBack?) {
+    public var params = [String : Any]()
+    
+    public var action:NativeCallback? = nil
+    
+    public init(_ args: Any, action: NativeCallback?) {
         
         guard let json = args as? String else {
             return
@@ -82,9 +95,6 @@ fileprivate class Event {
         params = (jsonDic["params"] as? [String : Any]) ?? [:]
         self.action = action
     }
-    
 }
-
-
 
 

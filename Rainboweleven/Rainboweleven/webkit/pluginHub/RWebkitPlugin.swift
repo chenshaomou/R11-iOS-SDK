@@ -10,7 +10,7 @@ public class RWebkitPlugin {
     
     public let name : String
     
-    public let action : PluginAction
+    public let action : NativeAction
     
     public let module : String
     
@@ -18,7 +18,7 @@ public class RWebkitPlugin {
     
     public var customFunc : String? = nil
     
-    public init(_ name:String, _ action:@escaping PluginAction, _ module:String = "userDefault", _ customFunc: String? = nil) {
+    public init(_ name:String, _ action:@escaping NativeAction, _ module:String = "userDefault", _ customFunc: String? = nil) {
         self.name = name
         self.action = action
         self.module  = module
@@ -43,7 +43,7 @@ public class RWebkitPlugin {
         
         self.customFunc = nil
         
-        action = { _,_  in
+        action = { _, _ ,_  in
             return ""
         }
     }
