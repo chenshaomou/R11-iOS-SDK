@@ -8,26 +8,17 @@
 
 import Foundation
 
-public class EventBusPlugin : RWebkitCustomPlugin {
+public class EventBusPlugin : RWebkitPlugin {
     
-    public static var shared: RWebkitCustomPlugin = EventBusPlugin()
     
     public var moduleName: String? {
         return "event"
     }
-    
-    public var actionMapping: [String : NativeAction]? {
-        return ["on": eventOn,
-                "off": eventOff,
-                "send": eventSend]
-    }
+
     
     // 回调存储  key: evenName value Event对象
     private var jsEventBus = [String : JSEvent]()
     
-    public var customFuncMapping: [String : (String, NativeAction)]? {
-        return nil 
-    }
     
     func eventOn(_ callbackName: String?, _ args: Any, _ asyncCallBack: NativeCallback?) -> String {
         
@@ -38,7 +29,8 @@ public class EventBusPlugin : RWebkitCustomPlugin {
             
             switch result {
             case .success(let value):
-              self?.responseDefaultCallback(callbackName: callbackName, value, continuous: true, asyncCallBack: asyncCallBack)
+//              self?.responseDefaultCallback(callbackName: callbackName, value, continuous: true, asyncCallBack: asyncCallBack)
+                print("不知道张璋搞什么鬼")
             case .failure(let error):
                 print("error in eventOn callBackName =\(event.name) : \(error.localizedDescription)")
             }

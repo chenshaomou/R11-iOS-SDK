@@ -84,51 +84,21 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
         print("defaultText = \(defaultText ?? "")")
         
         guard let jsonDict = defaultText?.seriailized() else { return }
-        
-        let plugin = RWebkitPlugin(jsonDic: jsonDict)
         let args = jsonDict["params"] ?? []
+        let module = jsonDict["module"] as! String
+        let name = jsonDict["method"] as! String
         
-        let async = plugin.callbackName != nil
-        let module = plugin.module
-        let name = plugin.name
-        let callbackName = plugin.callbackName
-        
-        if async {
+        if let async : String = jsonDict["callbackName"] as? String{
             // 异步
-            RWebkitPluginsHub.shared.runPlugin(name: plugin.name,
-                                               module: plugin.module,
-                                               args: args,
-                                               callbackName: callbackName,
-                                               asyncCallBack:
-                { [weak self](result) in
-                    
-                    guard let strongSelf = self else { return }
-                    
-                    guard let callbackResult = result else { return }
-                    
-                    var evaulateScript = ""
-                    
-                    switch callbackResult {
-                    case .success(let script):
-                        evaulateScript += script
-                    case .failure(let error):
-                        print("error in \(module).\(name) : \(error.localizedDescription)")
-                    }
-                    
-                    if evaulateScript.isEmpty {
-                        return
-                    }
-                    
-                    let js = "javascript: try { \(evaulateScript)} catch(e){};"
-                    strongSelf.evaluteJavaScriptSafey(webView, javaScript: js)
-                    
-            })
-        
             completionHandler("")
-        
-        } else {
+            let callbackResult = RWebkitPluginsHub.shared.runPlugin(name: name, module: module, args: args)
+            let execJsCallBackScript = "window.jsBridge.callbacks.\(async)(\(callbackResult));"
+            let clearJsCallBackScript =  "delete window.jsBridge.callbacks.\(async);"
+            let js = "javascript: try { \(execJsCallBackScript)\(clearJsCallBackScript)} catch(e){};"
+            self.evaluteJavaScriptSafey(webView, javaScript: js)
+        }else{
             // 同步
-            let result = RWebkitPluginsHub.shared.runPlugin(name: plugin.name, module: plugin.module, args: args)
+            let result = RWebkitPluginsHub.shared.runPlugin(name: name, module: module, args: args)
             completionHandler(result)
             return
         }

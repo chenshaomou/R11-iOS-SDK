@@ -40,30 +40,24 @@
                                   deviceReady = true
                                   // 给原生调用(不带参数)
                                   // 原生将会调用到window.jsBridge.userDefault.testNavCall
-                                  jsBridge.register('testNavCall', function (params) {
-                                                    var contentDiv = document.getElementById('content')
-                                                    var paramsStr = JSON.stringify(params)
-                                                    contentDiv.innerHTML = contentDiv.innerHTML + '<div>原生调用JS成功,原生传递参数：' + paramsStr + '</div>'
-                                                    return 'testNavCall被调用，params：' + paramsStr
-                                                    });
                                   }, false)
                                   
-                                  // 同步调用原生插件(不带参数)
-                                  function callSyn() {
-                                      if(!deviceReady){
-                                          return
-                                      }
-                                      console.log('同步调用原生插件(不带参数) begin')
-                                      var _result = jsBridge.call('store', 'getValue', {})
-                                      console.log('同步调用原生插件(不带参数) end，原生返回结果：' + _result)
-                                  }
+      // 同步调用原生插件(不带参数)
+    function callSyn() {
+          if(!deviceReady){
+              return
+          }
+          console.log('同步调用原生插件(不带参数) begin')
+          var _result = jsBridge.call('appInfo', 'version', {})
+          console.log('同步调用原生插件(不带参数) end，原生返回结果：' + _result)
+    }
     // 同步调用原生插件(带参数,字典)
     function callSynArgs() {
         if(!deviceReady){
             return
         }
         console.log('同步调用原生插件(带参数,字典) begin')
-        var _result = jsBridge.call('store', 'getValue', {'foo': 'bar'})
+        var _result = jsBridge.call('appInfo', 'version', {'foo': 'bar'})
         console.log('同步调用原生插件(带参数,字典) end， 原生返回结果：' + _result)
     }
     // 同步调用原生插件(带参数,字符串)
@@ -72,7 +66,7 @@
             return
         }
         console.log('同步调用原生插件(带参数,字符串) begin')
-        var _result = jsBridge.call('store', 'getValue', 'this is a string')
+        var _result = jsBridge.call('appInfo', 'version', 'this is a string')
         console.log('同步调用原生插件(带参数,字符串) end，原生返回结果：' + _result)
     }
     // 异步调用插件(不带参数)
@@ -81,7 +75,7 @@
             return
         }
         console.log('异步调用插件(不带参数) begin')
-        jsBridge.call('network', 'get', {}, function (r) {
+        jsBridge.call('appInfo', 'version', {}, function (r) {
                       console.log('异步调用插件(不带参数) end，原生返回结果：' + r)
                       })
     }
@@ -91,7 +85,7 @@
             return
         }
         console.log('异步调用原生插件(参数,字典) begin')
-        jsBridge.call('network', 'get', {'foo': 'bar'}, function (r) {
+        jsBridge.call('appInfo', 'version', {'foo': 'bar'}, function (r) {
                       console.log('异步调用原生插件(参数,字典) end，原生返回结果：' + r)
                       })
     }
@@ -101,7 +95,7 @@
             return
         }
         console.log('异步调用原生插件(参数,字符串) begin')
-        jsBridge.call('network', 'post', 'this is a string', function (r) {
+        jsBridge.call('appInfo', 'version', 'this is a string', function (r) {
                       console.log('异步调用原生插件(参数,字符串) end，原生返回结果：' + r)
                       })
     }
@@ -111,7 +105,7 @@
             return
         }
         console.log('异步调用原生插件(参数,数字) begin')
-        jsBridge.call('network', 'post', 5, function (r) {
+        jsBridge.call('appInfo', 'version', 5, function (r) {
                       console.log('异步调用原生插件(参数,数字) end，原生返回结果：' + r)
                       })
     }
@@ -121,7 +115,7 @@
             return
         }
         console.log('异步调用原生插件(参数,布尔值) begin')
-        jsBridge.call('network', 'post', true, function (r) {
+        jsBridge.call('appInfo', 'version', true, function (r) {
                       console.log('异步调用原生插件(参数,布尔值) end，原生返回结果：' + r)
                       })
     }
@@ -131,7 +125,7 @@
             return
         }
         console.log('异步调用原生插件(参数,数组) begin')
-        jsBridge.call('network', 'post', ['foo', 'bar'], function (r) {
+        jsBridge.call('appInfo', 'version', ['foo', 'bar'], function (r) {
                       console.log('异步调用原生插件(参数,数组) end，原生返回结果：' + r)
                       })
     }

@@ -6,46 +6,34 @@
 //  Copyright © 2018 chenshaomou. All rights reserved.
 //
 
+// 插件结果枚举
+public enum PluginResult {
+    // 成功并返回JS语句
+    case success(String)
+    // 失败
+    case failure(Error)
+}
+
+// 原生插件函数类型
+// * 若不实现该方法，则插件无效
+// callbackName : js回调函数引用
+// args : js传入的参数
+// asyncCallBack : 原生回调
+public typealias Action = (_ args: Any) -> String
+
 public class RWebkitPlugin {
     
-    public let name : String
-    
-    public let action : NativeAction
-    
+    //插件所属模块
     public let module : String
+    //插件名称
+    public let name : String
+    //插件功能
+    public let action : Action
     
-    public var callbackName : String? = nil
-    
-    public var customFunc : String? = nil
-    
-    public init(_ name:String, _ action:@escaping NativeAction, _ module:String = "userDefault", _ customFunc: String? = nil) {
+    public init(_ name:String, _ action:@escaping Action, _ module:String = "userDefault") {
         self.name = name
         self.action = action
         self.module  = module
-        self.customFunc = customFunc
-    }
-    
-    public init(jsonDic: [String: Any]) {
-        
-        if let name = jsonDic["method"] as? String {
-            self.name = name
-        } else {
-            self.name = ""
-        }
-        
-        if let module = jsonDic["module"] as? String {
-            self.module = module
-        } else {
-            self.module = ""
-        }
-        
-        self.callbackName = jsonDic["callbackName"] as? String
-        
-        self.customFunc = nil
-        
-        action = { _, _ ,_  in
-            return ""
-        }
     }
     
     public func getKey() -> String {
@@ -53,13 +41,17 @@ public class RWebkitPlugin {
     }
     
     public func reginsterPluginScript() -> String {
-        
-        if let customFunc = self.customFunc {
-            return NSString(format: RWebView.createPluginOnJSBrigeWithCustomFunc as NSString, self.module, self.name, customFunc) as String
-        } else {
-            return NSString(format: RWebView.createPluginOnJSBrige as NSString, self.module, self.name) as String
-        }
-        
+        return NSString(format:"window.jsBridge.%@=window.jsBridge.%@||{};Object.assign(window.jsBridge.%@,{%@:function(a,b){if(0===arguments.length)return window.jsBridge.call('%@','%@',{});if(1===arguments.length)return window.jsBridge.call('%@','%@',a);2===arguments.length&&window.jsBridge.call('%@','%@',a,b)}});",self.module,self.module,self.module,self.name,self.module, self.name,self.module, self.name,self.module, self.name) as String
     }
-    
+}
+
+// MARK: - URL Encode
+extension String {
+    // 对返回参数进行 URL Encode 防止中文乱码
+    fileprivate var encodingValue : String? {
+        if let res =  self.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
+            return "decodeURIComponent('\(res)')"
+        }
+        return ""
+    }
 }

@@ -65,82 +65,10 @@ function initJsBridge(webViewType) {
         }
         // 参数为1个或者其它，不支持，抛出异常
         else {
-            throw 'register方法必须是2个或者3个参数'
+            throw 'register method must be 2 or 3 params'
         }
         var action = {}
         action[method] = callFun
-        window.jsBridge[module] = window.jsBridge[module] || {}
-        Object.assign(window.jsBridge[module], action)
-        // window.jsBridge[module] = action
-    }
-    /**
-     * 注册原生插件/方法到window.jsBridge，使JS能通过window.jsBridge调用，原生使用示例：
-     * // 原生带module注册
-     * jsBridge.registerNative('store', 'getValue')
-     * // 不带module注册
-     * jsBridge.register('paySuccess')
-     * // 原生自定义JS function
-     * jsBridge.registerNative('store', 'getValue', function (key,value){var params={\"key\":key,\"value\":value};return window.jsBridge.call(module,method,params)})
-     * @type {Function}
-     * @param module 模块名，可为空，不传默认为userDefault
-     * @param method 方法名，非空
-     * @param customFun 自定义JS方法，可空，适用于对参数做特殊定制的情况，如参数为key和value模式，由原生自行组装js function方法体
-     */
-    window.jsBridge.registerNative = window.jsBridge.registerNative || function (module, method, customFun) {
-        var lastArg = arguments[arguments.length - 1]
-        // 是否含有自定义JS方法
-        var hasCustomFun = typeof lastArg == 'function'
-        // 参数为1个
-        if (arguments.length == 1) {
-            if (hasCustomFun) {
-                throw 'registerNative不支持1个为function的参数'
-            } else {
-                method = module
-                // 没有传递模块名，模块名默认为userDefault
-                module = 'userDefault'
-            }
-        }
-        // 参数为2个
-        else if (arguments.length == 2) {
-            if (hasCustomFun) {
-                customFun = method
-                method = module
-                // 没有传递模块名，模块名默认为userDefault
-                module = 'userDefault'
-            } else {
-                // 支持
-            }
-        }
-        // 参数为3个
-        else if (arguments.length == 3) {
-            // 支持
-        }
-        // 参数为0个或者其它，不支持，抛出异常
-        else {
-            throw 'registerNative方法必须是1~3个参数'
-        }
-        var action = {}
-        // 自定义JS方法
-        if (hasCustomFun) {
-            action[method] = customFun
-        }
-        // 未自定义JS方法
-        else {
-            action[method] = function (params, callback) {
-                // 参数为0个
-                if (arguments.length === 0) {
-                    return window.jsBridge.call(module, method, {})
-                }
-                // 参数为1个
-                if (arguments.length === 1) {
-                    return window.jsBridge.call(module, method, params)
-                }
-                // 参数为2个，含有异步回调
-                if (arguments.length === 2) {
-                    window.jsBridge.call(module, method, params, callback)
-                }
-            }
-        }
         window.jsBridge[module] = window.jsBridge[module] || {}
         Object.assign(window.jsBridge[module], action)
         // window.jsBridge[module] = action
@@ -193,7 +121,7 @@ function initJsBridge(webViewType) {
         }
         // 参数个数为其它，不支持，抛出异常
         else {
-            throw 'register方法必须是3个或者4个参数'
+            throw 'register method must be 3 or 4 params'
         }
         if (typeof params != 'string') {
             // Object或者Array，转成字符串
@@ -270,7 +198,7 @@ function initJsBridge(webViewType) {
             // 没有定义nativeBridge对象或者nativeBridge为其他类型，暂时不支持
             else {
                 // 没有可以调用的原生bridge对象，FIXME H5可以考虑自己吞了通用异常逻辑
-                console.log('无window.nativeBridge被注册')
+                console.log('no window.nativeBridge has been registered')
             }
         }
     }
@@ -360,4 +288,4 @@ function initJsBridge(webViewType) {
     }
 }
 // 初始化
-initJsBridge('ADCRMWV')
+initJsBridge('WKWV')
