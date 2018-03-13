@@ -12,6 +12,7 @@ import WebKit
 class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
     
     weak open var theUIDelegate: WKUIDelegate?
+    
     weak open var theNavigationDelegate : WKNavigationDelegate?
     //
     var groupExecuteLastTime:UInt64 = 0;
@@ -39,7 +40,22 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
         super.init(frame: frame, configuration: configuration)
         self.uiDelegate = self
         
-        EventBus.regiserEvent()
+        //注册事件监听
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNotification(notification:)), name: nil, object: nil)
+    }
+    
+    //收到通知，向js发送事件
+    @objc fileprivate func didReceiveNotification(notification:Notification){
+        switch notification.name {
+        case Notification.Name.UIApplicationDidBecomeActive:
+            let script = String.init(format:RWebView.jsEventTigger, "onResume", notification.userInfo ?? [].jsonString())
+            self.evaluteJavaScriptSafey(javaScript: script)
+        default:
+            let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, notification.userInfo ?? [].jsonString())
+            self.evaluteJavaScriptSafey(javaScript: script)
+            break
+            
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -95,7 +111,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
             let execJsCallBackScript = "window.jsBridge.callbacks.\(async)(\(callbackResult));"
             let clearJsCallBackScript =  "delete window.jsBridge.callbacks.\(async);"
             let js = "javascript: try { \(execJsCallBackScript)\(clearJsCallBackScript)} catch(e){};"
-            self.evaluteJavaScriptSafey(webView, javaScript: js)
+            self.evaluteJavaScriptSafey(javaScript: js)
         }else{
             // 同步
             let result = RWebkitPluginsHub.shared.runPlugin(name: name, module: module, args: args)
@@ -123,9 +139,9 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
 // MARK: - 确保线程安全地调用JS语句
 extension RWKWebView {
     
-    public func evaluteJavaScriptSafey(_ webView : WKWebView, javaScript : String) {
+    public func evaluteJavaScriptSafey(javaScript : String) {
         
-        objc_sync_enter(webView)
+        objc_sync_enter(self)
         let now:UInt64 = UInt64(Date().timeIntervalSince1970 * 1000)
         groupExecuteCache = "\(groupExecuteCache)\(javaScript)"
         var delay = 0.0
@@ -138,13 +154,13 @@ extension RWKWebView {
             
             guard let strongSelf = self else { return }
             
-            objc_sync_enter(webView)
+            objc_sync_enter(strongSelf)
         
             if (strongSelf.groupExecuteCache.count != 0){
                 
-                webView.evaluateJavaScript(strongSelf.groupExecuteCache, completionHandler: { [weak webView] (_ , error) in
+                strongSelf.evaluateJavaScript(strongSelf.groupExecuteCache, completionHandler: { [weak self] (_ , error) in
                     
-                    if webView == nil {
+                    if self == nil {
                         return
                     }
                     
@@ -161,10 +177,10 @@ extension RWKWebView {
                 strongSelf.groupExecuteCache = "";
                 strongSelf.groupExecuteLastTime = UInt64(Date().timeIntervalSince1970 * 1000)
             }
-            objc_sync_exit(webView)
+            objc_sync_exit(strongSelf)
         })
       
-        objc_sync_exit(webView)
+        objc_sync_exit(self)
         
     }
     

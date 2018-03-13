@@ -20,7 +20,7 @@ extension RWebView {
     internal static let clearjsBridgeCallBack = "delete window.\(bridgeName).callbacks.%@;"
     
     // 发送文档事件
-    internal static let sendDocumentEvent = "window.\(bridgeName).sendDocumentEvent('%@');"
+    internal static let jsEventTigger = "window.\(bridgeName).event.tigger('%@','%@');"
     
     // WebView初始化时候注入的初始化JS语句
     // 具体 rJsBridge.js

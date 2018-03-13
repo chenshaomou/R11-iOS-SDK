@@ -9,10 +9,7 @@
 /* Begin PBXBuildFile section */
 		8F3633752052260200E37ADB /* registerNative.js in Resources */ = {isa = PBXBuildFile; fileRef = 8F3633742052260200E37ADB /* registerNative.js */; };
 		8F3633772052528A00E37ADB /* AppInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3633762052528A00E37ADB /* AppInfoModule.swift */; };
-		927D08B22008A407000D6702 /* EventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927D08B12008A407000D6702 /* EventProtocol.swift */; };
-		927D08B42008A774000D6702 /* ApplicationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927D08B32008A774000D6702 /* ApplicationEvent.swift */; };
-		927D08B62008B5A3000D6702 /* DomLoadFinishEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927D08B52008B5A3000D6702 /* DomLoadFinishEvent.swift */; };
-		927D08B82008B612000D6702 /* EventBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927D08B72008B612000D6702 /* EventBus.swift */; };
+		8F630C852057C6250033C33A /* EventsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F630C842057C6250033C33A /* EventsModule.swift */; };
 		929BE5FF2005ACDD00E2DEA7 /* Collection+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BE5FE2005ACDD00E2DEA7 /* Collection+JSON.swift */; };
 		929D1D101FE7457B001F4D14 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 929D1D0F1FE7457B001F4D14 /* Alamofire.framework */; };
 		92CA5A9C20074F7000D5D05C /* RWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA5A9720074F6F00D5D05C /* RWebView.swift */; };
@@ -21,7 +18,6 @@
 		92CA5A9F20074F7000D5D05C /* RWebkitPluginsHub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA5A9A20074F6F00D5D05C /* RWebkitPluginsHub.swift */; };
 		92CA5AA020074F7000D5D05C /* RUIWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA5A9B20074F6F00D5D05C /* RUIWebView.swift */; };
 		92CA5AA62007539A00D5D05C /* RWebkitPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA5AA52007539A00D5D05C /* RWebkitPlugin.swift */; };
-		92CA5AAC2007E9D300D5D05C /* EventBusPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA5AAB2007E9D300D5D05C /* EventBusPlugin.swift */; };
 		B6D894841F9D8ACE00ABF4C0 /* Rainboweleven.h in Headers */ = {isa = PBXBuildFile; fileRef = B6D894821F9D8ACE00ABF4C0 /* Rainboweleven.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B6D8948B1F9D8B0400ABF4C0 /* Rainboweleven.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6D8948A1F9D8B0400ABF4C0 /* Rainboweleven.swift */; };
 /* End PBXBuildFile section */
@@ -29,10 +25,7 @@
 /* Begin PBXFileReference section */
 		8F3633742052260200E37ADB /* registerNative.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = registerNative.js; sourceTree = "<group>"; };
 		8F3633762052528A00E37ADB /* AppInfoModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoModule.swift; sourceTree = "<group>"; };
-		927D08B12008A407000D6702 /* EventProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventProtocol.swift; sourceTree = "<group>"; };
-		927D08B32008A774000D6702 /* ApplicationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationEvent.swift; sourceTree = "<group>"; };
-		927D08B52008B5A3000D6702 /* DomLoadFinishEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomLoadFinishEvent.swift; sourceTree = "<group>"; };
-		927D08B72008B612000D6702 /* EventBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBus.swift; sourceTree = "<group>"; };
+		8F630C842057C6250033C33A /* EventsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsModule.swift; sourceTree = "<group>"; };
 		929BE5FE2005ACDD00E2DEA7 /* Collection+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+JSON.swift"; sourceTree = "<group>"; };
 		929D1D0F1FE7457B001F4D14 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = ../Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		92CA5A9720074F6F00D5D05C /* RWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RWebView.swift; sourceTree = "<group>"; };
@@ -42,7 +35,6 @@
 		92CA5A9B20074F6F00D5D05C /* RUIWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RUIWebView.swift; sourceTree = "<group>"; };
 		92CA5AA220074F7A00D5D05C /* rJsBridge.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = rJsBridge.js; sourceTree = "<group>"; };
 		92CA5AA52007539A00D5D05C /* RWebkitPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RWebkitPlugin.swift; sourceTree = "<group>"; };
-		92CA5AAB2007E9D300D5D05C /* EventBusPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBusPlugin.swift; sourceTree = "<group>"; };
 		B6D8947F1F9D8ACE00ABF4C0 /* Rainboweleven.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Rainboweleven.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6D894821F9D8ACE00ABF4C0 /* Rainboweleven.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Rainboweleven.h; sourceTree = "<group>"; };
 		B6D894831F9D8ACE00ABF4C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -61,17 +53,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		927D08B02008A3D5000D6702 /* eventBus */ = {
-			isa = PBXGroup;
-			children = (
-				927D08B12008A407000D6702 /* EventProtocol.swift */,
-				927D08B72008B612000D6702 /* EventBus.swift */,
-				927D08B32008A774000D6702 /* ApplicationEvent.swift */,
-				927D08B52008B5A3000D6702 /* DomLoadFinishEvent.swift */,
-			);
-			path = eventBus;
-			sourceTree = "<group>";
-		};
 		929BE5FD2005ACC600E2DEA7 /* utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -83,8 +64,8 @@
 		929D1D0C1FE7453F001F4D14 /* plugin */ = {
 			isa = PBXGroup;
 			children = (
-				92CA5AAB2007E9D300D5D05C /* EventBusPlugin.swift */,
 				8F3633762052528A00E37ADB /* AppInfoModule.swift */,
+				8F630C842057C6250033C33A /* EventsModule.swift */,
 			);
 			path = plugin;
 			sourceTree = "<group>";
@@ -169,7 +150,6 @@
 				929BE5FD2005ACC600E2DEA7 /* utils */,
 				92CA5A9620074F6F00D5D05C /* webkit */,
 				929D1D0C1FE7453F001F4D14 /* plugin */,
-				927D08B02008A3D5000D6702 /* eventBus */,
 				92CA5AA120074F7A00D5D05C /* refrences */,
 			);
 			path = Rainboweleven;
@@ -258,18 +238,14 @@
 			files = (
 				92CA5A9E20074F7000D5D05C /* RWKWebView.swift in Sources */,
 				92CA5A9C20074F7000D5D05C /* RWebView.swift in Sources */,
-				92CA5AAC2007E9D300D5D05C /* EventBusPlugin.swift in Sources */,
 				92CA5A9D20074F7000D5D05C /* RWebView+Constants.swift in Sources */,
-				927D08B82008B612000D6702 /* EventBus.swift in Sources */,
-				927D08B62008B5A3000D6702 /* DomLoadFinishEvent.swift in Sources */,
 				8F3633772052528A00E37ADB /* AppInfoModule.swift in Sources */,
 				929BE5FF2005ACDD00E2DEA7 /* Collection+JSON.swift in Sources */,
 				92CA5AA020074F7000D5D05C /* RUIWebView.swift in Sources */,
+				8F630C852057C6250033C33A /* EventsModule.swift in Sources */,
 				92CA5AA62007539A00D5D05C /* RWebkitPlugin.swift in Sources */,
 				B6D8948B1F9D8B0400ABF4C0 /* Rainboweleven.swift in Sources */,
-				927D08B42008A774000D6702 /* ApplicationEvent.swift in Sources */,
 				92CA5A9F20074F7000D5D05C /* RWebkitPluginsHub.swift in Sources */,
-				927D08B22008A407000D6702 /* EventProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

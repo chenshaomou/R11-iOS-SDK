@@ -240,8 +240,10 @@ function initJsBridge(webViewType) {
      * @param callback 回调方法，非空
      */
     window.jsBridge.on = window.jsBridge.on || function (eventName, callback) {
-        // 监听事件，文档规定监听原生事件的module值固定为：event
-        window.jsBridge.call('event', 'on', {'eventName': eventName}, callback)
+        window.jsBridge.events = window.jsBridge.events || {}
+        var action = {}
+        action[eventName] = callback
+        Object.assign(window.jsBridge.events, action)
     }
     /**
      * 解除监听原生事件，使用示例：
@@ -251,7 +253,8 @@ function initJsBridge(webViewType) {
      */
     window.jsBridge.off = window.jsBridge.off || function (eventName) {
         // 解除监听，文档规定解除监听原生事件的module值固定为：event
-        return window.jsBridge.call('event', 'off', {'eventName': eventName})
+        window.jsBridge.events = window.jsBridge.events || {}
+        delete window.jsBridge.event[eventName]
     }
     /**
      * 发送事件到原生，使用示例：
@@ -265,27 +268,12 @@ function initJsBridge(webViewType) {
         return window.jsBridge.call('event', 'send', {'eventName': eventName, 'params': params})
     }
     /**
-     * 发送文档事件，使用示例：
-     * // 1个参数
-     * jsBridge.sendDocumentEvent('deviceready')
-     * // 2个参数
-     * jsBridge.sendDocumentEvent('deviceready', true)
-     * @type {Function}
-     * @param eventName 要发送的事件名，非空
-     * @param cancelable 是否可取消，可为空，不传默认为false
+     * 触发事件
      */
-    window.jsBridge.sendDocumentEvent = window.jsBridge.sendDocumentEvent || function (eventName, cancelable) {
-        // 发送文档事件给JS
-        var event = window.document.createEvent('Event')
-        // 参数为1个
-        if (arguments.length == 1 || typeof cancelable == 'undefined') {
-            // 默认为false
-            cancelable = false
-        }
-        event.initEvent(eventName, false, cancelable)
-        // 发送事件
-        window.document.dispatchEvent(event)
-    }
+    window.jsBridge.register('event','tigger',function(event){
+        window.jsBridge.events = window.jsBridge.events || {}
+        window.jsBridge.events[event.name](event.params)
+    })
 }
 // 初始化
 initJsBridge('WKWV')
