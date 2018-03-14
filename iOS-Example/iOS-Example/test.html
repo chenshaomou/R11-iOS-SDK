@@ -52,20 +52,15 @@
             <div id="content"></div>
             <div class="bts">
                 <div class="btn" onclick="callSyn()">同步调用原生插件(不带参数)</div>
-                
                 <div class="btn" onclick="callSynArgs()">同步调用原生插件(带参数,字典)</div>
                 <div class="btn" onclick="callSynArgsObj()">同步调用原生插件对象(带参数,字典)</div>
                 <div class="btn" onclick="callSynStringArgs()">同步调用原生插件(带参数,字符串)</div>
-                
                 <div class="btn" onclick="callASynStringArgs()">异步调用原生插件(参数,字符串)</div>
-                
                 <div class="btn" onclick="callASyn()">异步调用插件(不带参数)</div>
                 <div class="btn" onclick="callASynArgs()">异步调用原生插件(参数,字典)</div>
-                <div class="btn" onclick="callASynNumberArgs()">异步调用原生插件(参数,数字)</div>
-                <div class="btn" onclick="callASynBooleanArgs()">异步调用原生插件(参数,布尔值)</div>
-                <div class="btn" onclick="callASynArrayArgs()">异步调用原生插件(参数,数组)</div>
-                <div class="btn" onclick="callSynStoreObj()">同步调用原生插件(store对象,字典)</div>
-                <div class="btn" onclick="callASynStoreObj()">异步调用原生插件(store对象,字典)</div>
+
+                <div class="btn" onclick="callASynStoreObj()">异步调用原生插件对象(store对象,字典)</div>
+                
                 <div class="btn" onclick="eventOn()">注册事件(不带参数)</div>
                 <div class="btn" onclick="eventSend()">发送事件(不带参数)</div>
                 <div class="btn" onclick="eventSendArgs()">发送事件(带参数)</div>
@@ -170,55 +165,20 @@
         document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
     }
     
-    // 异步调用原生插件(参数,数字)
-    function callASynNumberArgs() {
-        if(!deviceReady){
-            return
-        }
-        console.log('异步调用原生插件(参数,数字) begin')
-        jsBridge.call('appInfo', 'version', 5, function (r) {
-                      console.log('异步调用原生插件(参数,数字) end，原生返回结果：' + r)
-                      })
-    }
-    // 异步调用原生插件(参数,布尔值)
-    function callASynBooleanArgs() {
-        if(!deviceReady){
-            return
-        }
-        console.log('异步调用原生插件(参数,布尔值) begin')
-        jsBridge.call('appInfo', 'version', true, function (r) {
-                      console.log('异步调用原生插件(参数,布尔值) end，原生返回结果：' + r)
-                      })
-    }
-    // 异步调用原生插件(参数,数组)
-    function callASynArrayArgs() {
-        if(!deviceReady){
-            return
-        }
-        console.log('异步调用原生插件(参数,数组) begin')
-        jsBridge.call('appInfo', 'version', ['foo', 'bar'], function (r) {
-                      console.log('异步调用原生插件(参数,数组) end，原生返回结果：' + r)
-                      })
-    }
-    // 同步调用原生插件(store对象,字典)
-    function callSynStoreObj() {
-        if(!deviceReady){
-            return
-        }
-        console.log('同步调用原生插件(store对象,字典) begin')
-        var _result = jsBridge.store.getValue({'foo': 'bar'})
-        console.log('同步调用原生插件(store对象,字典) end, 原生返回结果：' + _result)
-    }
     // 异步调用原生插件(store对象,字典)
     function callASynStoreObj() {
         if(!deviceReady){
             return
         }
         console.log('异步调用原生插件(store对象,字典) begin')
-        jsBridge.network.get({'foo': 'bar'}, function (r) {
-                             console.log('异步调用原生插件(store对象,字典) end, 原生返回结果：' + r)
-                             })
+        jsBridge.store.set({'foo': 'bar'}, function (r) {
+           var _show = '异步调用原生插件对象 store.set (参数,字符串) end，原生返回结果：' + JSON.stringify(r)
+           console.log(_show)
+           document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
+        })
+        document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
     }
+    
     // 注册事件(不带参数)
     function eventOn() {
         if(!deviceReady){
