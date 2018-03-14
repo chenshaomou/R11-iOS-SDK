@@ -29,17 +29,15 @@ public class StoreModule{
     
     public func getValue() -> RWebkitPlugin {
         return RWebkitPlugin("get",{ (args) -> String in
-            guard let json = args as? String else {
-                return ""
+            if let key = args as? String{
+                if let value = UserDefaults.standard.string(forKey: key){
+                    return value
+                }else{
+                    return "";
+                }
+            } else {
+                return RWebkitPlugin.throwError(reason: "parameter must be a string")
             }
-            let jsonDic = json.seriailized()
-            let key = jsonDic["key"] as! String;
-            if let value = UserDefaults.standard.string(forKey: key){
-                return value
-            }else{
-                return "";
-            }
-
         } , StoreModule.moduleName);
     }
     
