@@ -43,17 +43,15 @@ public class StoreModule{
     
     public func removeValue() -> RWebkitPlugin {
         return RWebkitPlugin("remove",{ (args) -> String in
-            guard let json = args as? String else {
-                return ""
-            }
-            //TODO: 判断没有key值或者key值不存在的情况
-            let jsonDic = json.seriailized()
-            let key = jsonDic["key"] as! String;
-            if let value = UserDefaults.standard.string(forKey: key){
-                UserDefaults.standard.removeObject(forKey: key)
-                return value
-            }else{
-                return ""
+            if let key = args as? String{
+                if let value = UserDefaults.standard.string(forKey: key){
+                    UserDefaults.standard.removeObject(forKey: key)
+                    return value
+                }else{
+                    return "";
+                }
+            } else {
+                return RWebkitPlugin.throwError(reason: "parameter must be a string")
             }
         } , StoreModule.moduleName);
     }

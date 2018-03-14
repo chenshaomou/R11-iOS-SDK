@@ -52,12 +52,15 @@
             <div id="content"></div>
             <div class="bts">
                 <div class="btn" onclick="callSyn()">同步调用原生插件(不带参数)</div>
+                
                 <div class="btn" onclick="callSynArgs()">同步调用原生插件(带参数,字典)</div>
                 <div class="btn" onclick="callSynArgsObj()">同步调用原生插件对象(带参数,字典)</div>
                 <div class="btn" onclick="callSynStringArgs()">同步调用原生插件(带参数,字符串)</div>
+                
+                <div class="btn" onclick="callASynStringArgs()">异步调用原生插件(参数,字符串)</div>
+                
                 <div class="btn" onclick="callASyn()">异步调用插件(不带参数)</div>
                 <div class="btn" onclick="callASynArgs()">异步调用原生插件(参数,字典)</div>
-                <div class="btn" onclick="callASynStringArgs()">异步调用原生插件(参数,字符串)</div>
                 <div class="btn" onclick="callASynNumberArgs()">异步调用原生插件(参数,数字)</div>
                 <div class="btn" onclick="callASynBooleanArgs()">异步调用原生插件(参数,布尔值)</div>
                 <div class="btn" onclick="callASynArrayArgs()">异步调用原生插件(参数,数组)</div>
@@ -125,6 +128,20 @@
         document.getElementById("content").innerHTML=_show
     }
     
+    // 异步调用原生插件(参数,字符串)
+    function callASynStringArgs() {
+        if(!deviceReady){
+            return
+        }
+        console.log('异步调用原生插件 store.remove (参数,字符串) begin')
+        jsBridge.call('store', 'remove', 'foo1', function (r) {
+              var _show = '异步调用原生插件(参数,字符串) end，原生返回结果：' + r
+              console.log(_show)
+              document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
+        })
+        document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
+    }
+    
     // 异步调用插件(不带参数)
     function callASyn() {
         if(!deviceReady){
@@ -143,16 +160,6 @@
         console.log('异步调用原生插件(参数,字典) begin')
         jsBridge.call('appInfo', 'version', {'foo': 'bar'}, function (r) {
                       console.log('异步调用原生插件(参数,字典) end，原生返回结果：' + r)
-                      })
-    }
-    // 异步调用原生插件(参数,字符串)
-    function callASynStringArgs() {
-        if(!deviceReady){
-            return
-        }
-        console.log('异步调用原生插件(参数,字符串) begin')
-        jsBridge.call('appInfo', 'version', 'this is a string', function (r) {
-                      console.log('异步调用原生插件(参数,字符串) end，原生返回结果：' + r)
                       })
     }
     // 异步调用原生插件(参数,数字)
