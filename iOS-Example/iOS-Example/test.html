@@ -148,10 +148,14 @@
             return
         }
         console.log('异步调用插件(不带参数) begin')
-        jsBridge.call('appInfo', 'version', {}, function (r) {
-                      console.log('异步调用插件(不带参数) end，原生返回结果：' + r)
-                      })
+        jsBridge.call('appInfo', 'version', function (r) {
+              var _show = '异步调用原生插件(参数,字符串) end，原生返回结果：' + r
+              console.log(_show)
+              document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
+        })
+        document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
     }
+    
     // 异步调用原生插件(参数,字典)
     function callASynArgs() {
         if(!deviceReady){

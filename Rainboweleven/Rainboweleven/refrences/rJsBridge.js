@@ -105,10 +105,7 @@ function initJsBridge(webViewType) {
             // 异步
             if (async) {
                 callback = params
-                params = method
-                method = module
-                // 没有传递模块名，模块名默认为userDefault
-                module = 'userDefault'
+                params = ''
             }
             // 同步
             else {
