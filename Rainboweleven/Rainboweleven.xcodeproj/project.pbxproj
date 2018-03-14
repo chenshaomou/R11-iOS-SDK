@@ -10,6 +10,7 @@
 		8F3633752052260200E37ADB /* registerNative.js in Resources */ = {isa = PBXBuildFile; fileRef = 8F3633742052260200E37ADB /* registerNative.js */; };
 		8F3633772052528A00E37ADB /* AppInfoModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3633762052528A00E37ADB /* AppInfoModule.swift */; };
 		8F630C852057C6250033C33A /* EventsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F630C842057C6250033C33A /* EventsModule.swift */; };
+		8F630C872058A8970033C33A /* StoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F630C862058A8970033C33A /* StoreModule.swift */; };
 		929BE5FF2005ACDD00E2DEA7 /* Collection+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BE5FE2005ACDD00E2DEA7 /* Collection+JSON.swift */; };
 		929D1D101FE7457B001F4D14 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 929D1D0F1FE7457B001F4D14 /* Alamofire.framework */; };
 		92CA5A9C20074F7000D5D05C /* RWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA5A9720074F6F00D5D05C /* RWebView.swift */; };
@@ -26,6 +27,7 @@
 		8F3633742052260200E37ADB /* registerNative.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = registerNative.js; sourceTree = "<group>"; };
 		8F3633762052528A00E37ADB /* AppInfoModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoModule.swift; sourceTree = "<group>"; };
 		8F630C842057C6250033C33A /* EventsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsModule.swift; sourceTree = "<group>"; };
+		8F630C862058A8970033C33A /* StoreModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModule.swift; sourceTree = "<group>"; };
 		929BE5FE2005ACDD00E2DEA7 /* Collection+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+JSON.swift"; sourceTree = "<group>"; };
 		929D1D0F1FE7457B001F4D14 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = ../Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		92CA5A9720074F6F00D5D05C /* RWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RWebView.swift; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 		929D1D0C1FE7453F001F4D14 /* plugin */ = {
 			isa = PBXGroup;
 			children = (
+				8F630C862058A8970033C33A /* StoreModule.swift */,
 				8F3633762052528A00E37ADB /* AppInfoModule.swift */,
 				8F630C842057C6250033C33A /* EventsModule.swift */,
 			);
@@ -240,6 +243,7 @@
 				92CA5A9C20074F7000D5D05C /* RWebView.swift in Sources */,
 				92CA5A9D20074F7000D5D05C /* RWebView+Constants.swift in Sources */,
 				8F3633772052528A00E37ADB /* AppInfoModule.swift in Sources */,
+				8F630C872058A8970033C33A /* StoreModule.swift in Sources */,
 				929BE5FF2005ACDD00E2DEA7 /* Collection+JSON.swift in Sources */,
 				92CA5AA020074F7000D5D05C /* RUIWebView.swift in Sources */,
 				8F630C852057C6250033C33A /* EventsModule.swift in Sources */,

@@ -44,20 +44,6 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNotification(notification:)), name: nil, object: nil)
     }
     
-    //收到通知，向js发送事件
-    @objc fileprivate func didReceiveNotification(notification:Notification){
-        switch notification.name {
-        case Notification.Name.UIApplicationDidBecomeActive:
-            let script = String.init(format:RWebView.jsEventTigger, "onResume", notification.userInfo ?? [].jsonString())
-            self.evaluteJavaScriptSafey(javaScript: script)
-        default:
-            let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, notification.userInfo ?? [].jsonString())
-            self.evaluteJavaScriptSafey(javaScript: script)
-            break
-            
-        }
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -184,4 +170,21 @@ extension RWKWebView {
         
     }
     
+}
+
+// MARK: - 向js广播消息处理
+extension RWKWebView{
+    
+    //收到通知，向js发送事件
+    @objc fileprivate func didReceiveNotification(notification:Notification){
+        switch notification.name {
+        case Notification.Name.UIApplicationDidBecomeActive:
+            let script = String.init(format:RWebView.jsEventTigger, "onResume", notification.userInfo ?? [].jsonString())
+            self.evaluteJavaScriptSafey(javaScript: script)
+        default:
+            let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, notification.userInfo ?? [].jsonString())
+            self.evaluteJavaScriptSafey(javaScript: script)
+            break
+        }
+    }
 }

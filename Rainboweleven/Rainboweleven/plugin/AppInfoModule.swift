@@ -9,6 +9,9 @@
 import Foundation
 
 public class AppInfoModule{
+    
+    static let moduleName = "appInfo"
+    
     /**
      * 获取系统版本号插件
      */
@@ -19,6 +22,6 @@ public class AppInfoModule{
             let majorVersion = infoDictionary["CFBundleShortVersionString"]//主程序版本号
             let minorVersion = infoDictionary["CFBundleVersion"]//版本号（内部标示）
             return "\(majorVersion ?? "noversioninfo").\(minorVersion ?? "nobuildinfo")"
-        }, "appInfo");
+        }, AppInfoModule.moduleName);
     }
 }

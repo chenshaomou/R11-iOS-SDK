@@ -10,6 +10,8 @@ import Foundation
 
 public class EventsModule{
     
+    static let moduleName = "event"
+    
     /**
      * 接受到js发送来的事件
      */
@@ -23,6 +25,6 @@ public class EventsModule{
             let params = (jsonDic["params"] as? [String : Any]) ?? [:]
             NotificationCenter.default.post(name: NSNotification.Name(name), object: params)
             return ""
-        }, "event")
+        }, EventsModule.moduleName)
     }
 }

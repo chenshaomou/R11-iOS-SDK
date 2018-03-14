@@ -75,10 +75,16 @@ public class RWebkitPluginsHub {
     
     // 添加默认插件
     fileprivate func registerDefaultPlugins() {
+        
         let appInfoModule = AppInfoModule()
         let eventsModule = EventsModule()
+        let storeModule = StoreModule()
+        
         addPlugin(plugin: appInfoModule.version())
         addPlugin(plugin: eventsModule.EventTigger())
+        addPlugin(plugin: storeModule.getValue())
+        addPlugin(plugin: storeModule.setValue())
+        addPlugin(plugin: storeModule.removeValue())
     }
     
 }
