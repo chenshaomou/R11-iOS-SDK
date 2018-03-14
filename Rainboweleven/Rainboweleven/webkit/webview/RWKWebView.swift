@@ -94,7 +94,14 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
             // 异步
             completionHandler("")
             let callbackResult = RWebkitPluginsHub.shared.runPlugin(name: name, module: module, args: args)
-            let execJsCallBackScript = "window.jsBridge.callbacks.\(async)('\(callbackResult)');"
+            var execJsCallBackScript = ""
+            if (callbackResult.starts(with: "{") || callbackResult.starts(with: "[")){
+                //返回结果是对象或者数组
+                execJsCallBackScript = "window.jsBridge.callbacks.\(async)(\(callbackResult));"
+            }else{
+                //返回结果是字符串
+                execJsCallBackScript = "window.jsBridge.callbacks.\(async)('\(callbackResult)');"
+            }
             let clearJsCallBackScript =  "delete window.jsBridge.callbacks.\(async);"
             let js = "javascript: try { \(execJsCallBackScript)\(clearJsCallBackScript)} catch(e){};"
             self.evaluteJavaScriptSafey(javaScript: js)

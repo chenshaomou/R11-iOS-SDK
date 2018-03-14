@@ -121,7 +121,7 @@
         if(!deviceReady){
             return
         }
-        console.log('同步调用原生插件 store.get(带参数,字符串) begin')
+        console.log('同步调用原生插件 store.get (带参数,字符串) begin')
         var _result = jsBridge.call('store', 'get', 'foo')
         var _show = '同步调用原生插件(带参数,字符串) store.get end，原生返回结果：' + _result
         console.log(_show)
@@ -135,7 +135,7 @@
         }
         console.log('异步调用原生插件 store.remove (参数,字符串) begin')
         jsBridge.call('store', 'remove', 'foo1', function (r) {
-              var _show = '异步调用原生插件(参数,字符串) end，原生返回结果：' + r
+              var _show = '异步调用原生插件 store.remove (参数,字符串) end，原生返回结果：' + r
               console.log(_show)
               document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
         })
@@ -149,7 +149,7 @@
         }
         console.log('异步调用插件(不带参数) begin')
         jsBridge.call('appInfo', 'version', function (r) {
-              var _show = '异步调用原生插件(参数,字符串) end，原生返回结果：' + r
+              var _show = '异步调用原生插件 appInfo.version (参数,字符串) end，原生返回结果：' + r
               console.log(_show)
               document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
         })
@@ -161,11 +161,15 @@
         if(!deviceReady){
             return
         }
-        console.log('异步调用原生插件(参数,字典) begin')
-        jsBridge.call('appInfo', 'version', {'foo': 'bar'}, function (r) {
-                      console.log('异步调用原生插件(参数,字典) end，原生返回结果：' + r)
-                      })
+        console.log('异步调用原生插件 store.set (参数,字典) begin')
+        jsBridge.call('store', 'set', {'foo': 'bar'}, function (r) {
+              var _show = '异步调用原生插件 store.set (参数,字符串) end，原生返回结果：' + JSON.stringify(r)
+              console.log(_show)
+              document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
+        })
+        document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
     }
+    
     // 异步调用原生插件(参数,数字)
     function callASynNumberArgs() {
         if(!deviceReady){
