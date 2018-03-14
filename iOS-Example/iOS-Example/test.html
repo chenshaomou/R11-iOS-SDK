@@ -3,63 +3,116 @@
         <meta charset="utf-8">
             <title>R11 SDK 测试</title>
             <style>
-                .btn {
-                    text-align: center;
-                    background: dodgerblue;
-                    color: white;
-                    padding: 20px;
-                    margin: 30px;
-                    font-size: 24px;
-                    border-radius: 4px;
-                    box-shadow: 4px 2px 10px #999;
-                }
+            .box{
+                display: flex;
+                display: -webkit-flex;
+                flex-direction:column;
+                width: 100%;
+                height: 100%;
+            }
+            .btn {
+                text-align: center;
+                background: dodgerblue;
+                color: white;
+                padding: 10px;
+                margin: 10px;
+                border-radius: 4px;
+                box-shadow: 4px 2px 10px #999;
+                flex:0 0 auto;
+                font-size: 28px;
+                word-wrap: break-word;
+            }
+            
+            #content {
+                flex:1 0 30%;
+                background: gainsboro;
+                font-size: 48px;
+            }
+            
+            #title {
+                flex:0 0 auto;
+            }
+            
+            .bts{
+                flex:1 1 auto;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                align-items: center;
+                align-content: flex-start;
+            }
             </style>
     </head>
     <body>
-        <h1>Hello RainbowEleven</h1>
-        <div class="btn" onclick="callSyn()">同步调用原生插件(不带参数)</div>
-        <div class="btn" onclick="callSynArgs()">同步调用原生插件(带参数,字典)</div>
-        <div class="btn" onclick="callSynStringArgs()">同步调用原生插件(带参数,字符串)</div>
-        <div class="btn" onclick="callASyn()">异步调用插件(不带参数)</div>
-        <div class="btn" onclick="callASynArgs()">异步调用原生插件(参数,字典)</div>
-        <div class="btn" onclick="callASynStringArgs()">异步调用原生插件(参数,字符串)</div>
-        <div class="btn" onclick="callASynNumberArgs()">异步调用原生插件(参数,数字)</div>
-        <div class="btn" onclick="callASynBooleanArgs()">异步调用原生插件(参数,布尔值)</div>
-        <div class="btn" onclick="callASynArrayArgs()">异步调用原生插件(参数,数组)</div>
-        <div class="btn" onclick="callSynStoreObj()">同步调用原生插件(store对象,字典)</div>
-        <div class="btn" onclick="callASynStoreObj()">异步调用原生插件(store对象,字典)</div>
-        <div class="btn" onclick="eventOn()">注册事件(不带参数)</div>
-        <div class="btn" onclick="eventSend()">发送事件(不带参数)</div>
-        <div class="btn" onclick="eventSendArgs()">发送事件(带参数)</div>
-        <div class="btn" onclick="eventOff()">取消事件()</div>
-        <div id="content"></div>
+        <div class="box">
+            <div id= "title">
+            <h1 onclick="clean()">点我清除内容</h1>
+            </div>
+            <div id="content"></div>
+            <div class="bts">
+                <div class="btn" onclick="callSyn()">同步调用原生插件(不带参数)</div>
+                <div class="btn" onclick="callSynArgs()">同步调用原生插件(带参数,字典)</div>
+                <div class="btn" onclick="callSynArgsObj()">同步调用原生插件对象(带参数,字典)</div>
+                <div class="btn" onclick="callSynStringArgs()">同步调用原生插件(带参数,字符串)</div>
+                <div class="btn" onclick="callASyn()">异步调用插件(不带参数)</div>
+                <div class="btn" onclick="callASynArgs()">异步调用原生插件(参数,字典)</div>
+                <div class="btn" onclick="callASynStringArgs()">异步调用原生插件(参数,字符串)</div>
+                <div class="btn" onclick="callASynNumberArgs()">异步调用原生插件(参数,数字)</div>
+                <div class="btn" onclick="callASynBooleanArgs()">异步调用原生插件(参数,布尔值)</div>
+                <div class="btn" onclick="callASynArrayArgs()">异步调用原生插件(参数,数组)</div>
+                <div class="btn" onclick="callSynStoreObj()">同步调用原生插件(store对象,字典)</div>
+                <div class="btn" onclick="callASynStoreObj()">异步调用原生插件(store对象,字典)</div>
+                <div class="btn" onclick="eventOn()">注册事件(不带参数)</div>
+                <div class="btn" onclick="eventSend()">发送事件(不带参数)</div>
+                <div class="btn" onclick="eventSendArgs()">发送事件(带参数)</div>
+                <div class="btn" onclick="eventOff()">取消事件()</div>
+            </div>
+        </div>
     </body>
     <script type="text/javascript">
-        var deviceReady = true
-        document.addEventListener("deviceready", function(){
-                                  deviceReady = true
-                                  // 给原生调用(不带参数)
-                                  // 原生将会调用到window.jsBridge.userDefault.testNavCall
-                                  }, false)
-                                  
-      // 同步调用原生插件(不带参数)
+        
+    var deviceReady = true;
+        
+    function clean() {
+        document.getElementById("content").innerHTML=""
+    }
+    
+    // 同步调用原生插件(不带参数)
     function callSyn() {
           if(!deviceReady){
               return
           }
           console.log('同步调用原生插件(不带参数) begin')
           var _result = jsBridge.call('appInfo', 'version', {})
-          console.log('同步调用原生插件(不带参数) end，原生返回结果：' + _result)
+          var _show = '同步调用原生插件 appinfo.version (不带参数) end，原生返回结果：' + _result
+          console.log(_show)
+          document.getElementById("content").innerHTML=_show
     }
     // 同步调用原生插件(带参数,字典)
     function callSynArgs() {
         if(!deviceReady){
             return
         }
-        console.log('同步调用原生插件(带参数,字典) begin')
-        var _result = jsBridge.call('appInfo', 'version', {'foo': 'bar'})
-        console.log('同步调用原生插件(带参数,字典) end， 原生返回结果：' + _result)
+        console.log('同步调用原生插件 store.set (带参数,字典) begin')
+        var _result = jsBridge.call('store', 'set', {'foo': 'bar'})
+        var _show = '同步调用原生插件 store.set (带参数,字典) end， 原生返回结果：' + _result
+        console.log(_show)
+        document.getElementById("content").innerHTML=_show
     }
+    
+    // 同步调用原生插件(带参数,字典)，快捷方式
+    function callSynArgsObj() {
+        if(!deviceReady){
+            return
+        }
+        console.log('同步调用原生插件 store.set (带参数,字典) begin')
+        var _result = jsBridge.store.set({'foo1': 'bar1'})
+        var _show = '同步调用原生插件（插件对象）store.set (带参数,字典) end， 原生返回结果：' + _result
+        console.log(_show)
+        document.getElementById("content").innerHTML=_show
+    }
+    
     // 同步调用原生插件(带参数,字符串)
     function callSynStringArgs() {
         if(!deviceReady){

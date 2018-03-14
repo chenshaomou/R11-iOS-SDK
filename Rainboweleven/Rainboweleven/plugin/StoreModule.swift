@@ -18,10 +18,12 @@ public class StoreModule{
                 return ""
             }
             let jsonDic = json.seriailized()
-            let key = jsonDic["key"] as! String;
-            let value = jsonDic["value"];
-            UserDefaults.standard.set(value, forKey: key)
-            return "";
+            if let _frist = jsonDic.first{
+                UserDefaults.standard.set(_frist.value, forKey: _frist.key)
+                return jsonDic.jsonString();
+            }else{
+                return RWebkitPlugin.throwError(reason: "no 'key' parameter")
+            }
         } , StoreModule.moduleName);
     }
     

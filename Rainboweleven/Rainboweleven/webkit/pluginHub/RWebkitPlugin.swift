@@ -43,6 +43,14 @@ public class RWebkitPlugin {
     public func reginsterPluginScript() -> String {
         return NSString(format:"window.jsBridge.%@=window.jsBridge.%@||{};Object.assign(window.jsBridge.%@,{%@:function(a,b){if(0===arguments.length)return window.jsBridge.call('%@','%@',{});if(1===arguments.length)return window.jsBridge.call('%@','%@',a);2===arguments.length&&window.jsBridge.call('%@','%@',a,b)}});",self.module,self.module,self.module,self.name,self.module, self.name,self.module, self.name,self.module, self.name) as String
     }
+    
+    static public func throwError(reason:String?) -> String {
+        if let _reason = reason{
+            return ["exception":_reason].jsonString()
+        }else{
+            return ["exception":"invoke plugin error"].jsonString()
+        }
+    }
 }
 
 // MARK: - URL Encode

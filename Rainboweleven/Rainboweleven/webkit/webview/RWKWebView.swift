@@ -179,11 +179,11 @@ extension RWKWebView{
     @objc fileprivate func didReceiveNotification(notification:Notification){
         switch notification.name {
         case Notification.Name.UIApplicationDidBecomeActive:
-            let script = String.init(format:RWebView.jsEventTigger, "onResume", notification.userInfo ?? [].jsonString())
-            self.evaluteJavaScriptSafey(javaScript: script)
+            let script = String.init(format:RWebView.jsEventTigger, "onResume", notification.userInfo ?? [:].jsonString())
+//            self.evaluteJavaScriptSafey(javaScript: script)
         default:
-            let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, notification.userInfo ?? [].jsonString())
-            self.evaluteJavaScriptSafey(javaScript: script)
+//            let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, notification.userInfo ?? [:].jsonString())
+//            self.evaluteJavaScriptSafey(javaScript: script)
             break
         }
     }
