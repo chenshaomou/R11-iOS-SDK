@@ -64,12 +64,16 @@ public class RWebkitPluginsHub {
     
     // 插件注入JS语句
     public func getJSBridgeBuiltInScript() -> String {
-        //
+        // 普通插件
         registerDefaultPlugins()
+        
         let _scripts = plugins.reduce("") { (result, arg) -> String in
             let (_, plugin) = arg
             return result.appending(plugin.reginsterPluginScript())
         }
+        
+        // promise 插件
+        
         return ";\(_scripts)"
     }
     

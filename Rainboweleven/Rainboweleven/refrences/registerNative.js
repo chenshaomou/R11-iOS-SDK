@@ -18,20 +18,33 @@
  * @param module 模块名，可为空，不传默认为userDefault
  * @param method 方法名，非空
  */
-window.jsBridge[module] = window.jsBridge[module] || {};
-Object.assign(window.jsBridge[module], {method:
+window.jsBridge['module'] = window.jsBridge['module'] || {};
+Object.assign(window.jsBridge['module'], {'method':
     function (params, callback) {
         // 参数为0个
         if (arguments.length === 0) {
-            return window.jsBridge.call(module, method, {})
+            return window.jsBridge.call('module', 'method', {})
         }
         // 参数为1个
         if (arguments.length === 1) {
-            return window.jsBridge.call(module, method, params)
+            return window.jsBridge.call('module', 'method', params)
         }
         // 参数为2个，含有异步回调
         if (arguments.length === 2) {
-            window.jsBridge.call(module, method, params, callback)
+            window.jsBridge.call('module', 'method', params, callback)
         }
     }
-})
+});
+Object.assign(window.jsBridge['module'], {'methodPromise':
+    function (params) {
+      // 参数为0个
+      if (arguments.length === 0) {
+        return window.jsBridge.promise('module', 'method', {})
+      }
+      // 参数为1个
+      if (arguments.length === 1) {
+        return window.jsBridge.promise('module', 'method', params)
+      }
+    }
+});
+

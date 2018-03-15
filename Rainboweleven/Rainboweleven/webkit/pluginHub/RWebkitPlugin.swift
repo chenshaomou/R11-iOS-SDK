@@ -41,7 +41,8 @@ public class RWebkitPlugin {
     }
     
     public func reginsterPluginScript() -> String {
-        return NSString(format:"window.jsBridge.%@=window.jsBridge.%@||{};Object.assign(window.jsBridge.%@,{%@:function(a,b){if(0===arguments.length)return window.jsBridge.call('%@','%@',{});if(1===arguments.length)return window.jsBridge.call('%@','%@',a);2===arguments.length&&window.jsBridge.call('%@','%@',a,b)}});",self.module,self.module,self.module,self.name,self.module, self.name,self.module, self.name,self.module, self.name) as String
+        //return String(format:RWebView.jsMethodScript,self.module,self.module,self.module,self.name,self.module, self.name,self.module, self.name,self.module, self.name)
+        return RWebView.jsMethodScript.replacingOccurrences(of: "module", with: self.module).replacingOccurrences(of: "method", with: self.name)
     }
     
     static public func throwError(reason:String?) -> String {
