@@ -279,10 +279,15 @@ function initJsBridge(webViewType) {
      */
     window.jsBridge.send = window.jsBridge.send || function (eventName, params) {
         // 发送事件，文档规定解除监听原生事件的module值固定为：events
+        params = params || {}
+        params.webviewid = window.jsBridge.id
         return window.jsBridge.call('events', 'send', {'eventName': eventName, 'params': params})
     }
+    
     /**
      * 触发事件
+     * @eventName 事件名称
+     * @params 事件参数
      */
     window.jsBridge.register('events','tigger',function(eventName,params){
         window.jsBridge.events = window.jsBridge.events || {}
@@ -296,4 +301,6 @@ function initJsBridge(webViewType) {
 }
 // 初始化
 initJsBridge('WKWV');
+window.jsBridge.id="1";
 jsBridge.send('domLoadFinish');
+

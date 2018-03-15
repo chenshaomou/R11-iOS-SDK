@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class EventsModule{
+open class EventsModule{
     
     static let moduleName = "events"
     
@@ -23,7 +23,7 @@ public class EventsModule{
             let jsonDic = json.seriailized()
             let name = (jsonDic["eventName"] as? String) ?? ""
             let params = (jsonDic["params"] as? [String : Any]) ?? [:]
-            NotificationCenter.default.post(name: NSNotification.Name(name), object: params)
+            NotificationCenter.default.post(name: NSNotification.Name(name), object: nil, userInfo: params)
             return ""
         }, EventsModule.moduleName)
     }

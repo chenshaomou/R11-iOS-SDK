@@ -25,6 +25,8 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
     
     var groupExecuteInterval:TimeInterval = 50.0
     
+    let id = UUID.init().uuidString
+    
     override init(frame: CGRect, configuration: WKWebViewConfiguration) {
         
         // 提前记住桥接对象与方法
@@ -38,6 +40,10 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
         let buildInJsObj = RWebkitPluginsHub.shared.getJSBridgeBuiltInScript()
         let buildInJsObjScript = WKUserScript(source: buildInJsObj, injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
         configuration.userContentController.addUserScript(buildInJsObjScript)
+        
+        // 加上webview的id
+        let idScript = WKUserScript(source: String.init(format:RWebView.jsBridgeId, id), injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
+        configuration.userContentController.addUserScript(idScript)
         
         super.init(frame: frame, configuration: configuration)
         self.uiDelegate = self
@@ -193,6 +199,11 @@ extension RWKWebView{
     
     //收到通知，向js发送事件
     @objc fileprivate func didReceiveNotification(notification:Notification){
+        
+        if let userInfo = notification.userInfo, let _webViewId = userInfo["webviewid"] as? String, _webViewId == self.id {
+            return
+        }
+        
         switch notification.name {
         case Notification.Name.UIApplicationDidBecomeActive:
             let script = String.init(format:RWebView.jsEventTigger, "onResume", "")
