@@ -247,6 +247,7 @@ function initJsBridge(webViewType) {
                 callback = observerKey
                 observerKey = "window.jsBridge"
             }
+            window.jsBridge.events.observers[eventName] = window.jsBridge.events.observers[eventName] || {}
             window.jsBridge.events.observers[eventName][observerKey] = callback
         }else{
             throw 'callback must de a function'
@@ -283,12 +284,12 @@ function initJsBridge(webViewType) {
     /**
      * 触发事件
      */
-    window.jsBridge.register('events','tigger',function(event){
+    window.jsBridge.register('events','tigger',function(eventName,params){
         window.jsBridge.events = window.jsBridge.events || {}
         window.jsBridge.events.observers = window.jsBridge.events.observers || {}
-        if (window.jsBridge.events.observers[event.name]){
-            Object.keys(window.jsBridge.events.observers[event.name]).every(function (element, index, array){
-                window.jsBridge.events.observers[event.name][element](event.params)
+        if (window.jsBridge.events.observers[eventName]){
+            Object.keys(window.jsBridge.events.observers[eventName]).every(function (element, index, array){
+                window.jsBridge.events.observers[eventName][element](params)
             })
         }
     })
