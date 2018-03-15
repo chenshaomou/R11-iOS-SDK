@@ -205,7 +205,7 @@
             return
         }
         console.log('发送事件(带参数) begin')
-        var _result = jsBridge.send('onResume', {'height': 100})
+        var _result = jsBridge.send('testEvent', {'height': 100})
         console.log('发送事件(带参数) end，原生返回结果：' + _result)
     }
     // 取消事件()
@@ -214,7 +214,8 @@
             return
         }
         console.log('取消事件() begin')
-        var _result = jsBridge.off('keyboardUp')
+        var _result = jsBridge.off('onResume')
+        document.getElementById("content").innerHTML = "onResume 事件取消<br/>"
         console.log('取消事件() end，原生返回结果：' + _result)
     }
     </script>
