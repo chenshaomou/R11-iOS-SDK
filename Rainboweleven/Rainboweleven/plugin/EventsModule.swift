@@ -10,7 +10,7 @@ import Foundation
 
 public class EventsModule{
     
-    static let moduleName = "event"
+    static let moduleName = "events"
     
     /**
      * 接受到js发送来的事件

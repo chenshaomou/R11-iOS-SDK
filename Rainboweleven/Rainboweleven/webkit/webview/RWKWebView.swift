@@ -151,7 +151,8 @@ extension RWKWebView {
         
             if (strongSelf.groupExecuteCache.count != 0){
                 
-                strongSelf.evaluateJavaScript(strongSelf.groupExecuteCache, completionHandler: { [weak self] (_ , error) in
+                let exec = strongSelf.groupExecuteCache
+                strongSelf.evaluateJavaScript(exec, completionHandler: { [weak self] (_ , error) in
                     
                     if self == nil {
                         return
@@ -159,7 +160,7 @@ extension RWKWebView {
                     
                     if let error = error {
                         //
-                        print("JSBridge: run callback fail \(error.localizedDescription) ")
+                        print("JSBridge: run callback fail \(error.localizedDescription) ; execute cache = \(exec)")
                     } else {
                         print("JSBridge: run callback js success ")
                     }
@@ -186,11 +187,11 @@ extension RWKWebView{
     @objc fileprivate func didReceiveNotification(notification:Notification){
         switch notification.name {
         case Notification.Name.UIApplicationDidBecomeActive:
-            let script = String.init(format:RWebView.jsEventTigger, "onResume", notification.userInfo ?? [:].jsonString())
-//            self.evaluteJavaScriptSafey(javaScript: script)
+            let script = String.init(format:RWebView.jsEventTigger, "onResume", "")
+            self.evaluteJavaScriptSafey(javaScript: script)
         default:
-//            let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, notification.userInfo ?? [:].jsonString())
-//            self.evaluteJavaScriptSafey(javaScript: script)
+            let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, "")
+            self.evaluteJavaScriptSafey(javaScript: script)
             break
         }
     }

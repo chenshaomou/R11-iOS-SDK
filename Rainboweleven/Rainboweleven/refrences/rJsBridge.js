@@ -234,13 +234,23 @@ function initJsBridge(webViewType) {
      * )
      * @type {Function}
      * @param eventName 要监听的事件名，非空
+     * @param observerKey 要监听的对象名称，可以为空
      * @param callback 回调方法，非空
      */
-    window.jsBridge.on = window.jsBridge.on || function (eventName, callback) {
+    window.jsBridge.on = window.jsBridge.on || function (eventName, observerKey, callback) {
+        var lastArg = arguments[arguments.length - 1]
         window.jsBridge.events = window.jsBridge.events || {}
-        var action = {}
-        action[eventName] = callback
-        Object.assign(window.jsBridge.events, action)
+        window.jsBridge.events.observers = window.jsBridge.events.observers || {}
+        if (typeof lastArg == 'function'){
+            if (arguments.length < 3){
+                // observer 没有传，默认 jsBridge 为观察者
+                callback = observerKey
+                observerKey = "window.jsBridge"
+            }
+            window.jsBridge.events.observers[eventName][observerKey] = callback
+        }else{
+            throw 'callback must de a function'
+        }
     }
     /**
      * 解除监听原生事件，使用示例：
@@ -248,10 +258,16 @@ function initJsBridge(webViewType) {
      * @type {Function}
      * @param eventName 取消监听的事件名，非空
      */
-    window.jsBridge.off = window.jsBridge.off || function (eventName) {
-        // 解除监听，文档规定解除监听原生事件的module值固定为：event
+    window.jsBridge.off = window.jsBridge.off || function (eventName, observerKey) {
+        // 解除监听，文档规定解除监听原生事件的module值固定为：events
         window.jsBridge.events = window.jsBridge.events || {}
-        delete window.jsBridge.event[eventName]
+        window.jsBridge.events.observers = window.jsBridge.events.observers || {}
+        if (arguments.length < 2){
+            observerKey = "window.jsBridge"
+        }
+        if (window.jsBridge.events.observers[eventName] && window.jsBridge.events.observers[eventName][observerKey]){
+            delete window.jsBridge.events.observers[eventName][observerKey]
+        }
     }
     /**
      * 发送事件到原生，使用示例：
@@ -261,15 +277,20 @@ function initJsBridge(webViewType) {
      * @param params 参数，非空
      */
     window.jsBridge.send = window.jsBridge.send || function (eventName, params) {
-        // 发送事件，文档规定解除监听原生事件的module值固定为：event
-        return window.jsBridge.call('event', 'send', {'eventName': eventName, 'params': params})
+        // 发送事件，文档规定解除监听原生事件的module值固定为：events
+        return window.jsBridge.call('events', 'send', {'eventName': eventName, 'params': params})
     }
     /**
      * 触发事件
      */
-    window.jsBridge.register('event','tigger',function(event){
+    window.jsBridge.register('events','tigger',function(event){
         window.jsBridge.events = window.jsBridge.events || {}
-        window.jsBridge.events[event.name](event.params)
+        window.jsBridge.events.observers = window.jsBridge.events.observers || {}
+        if (window.jsBridge.events.observers[event.name]){
+            Object.keys(window.jsBridge.events.observers[event.name]).every(function (element, index, array){
+                window.jsBridge.events.observers[event.name][element](event.params)
+            })
+        }
     })
 }
 // 初始化
