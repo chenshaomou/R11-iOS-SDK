@@ -59,12 +59,13 @@
                 <div class="btn" onclick="callASyn()">异步调用插件(不带参数)</div>
                 <div class="btn" onclick="callASynArgs()">异步调用原生插件(参数,字典)</div>
                 <div class="btn" onclick="callASynStoreObj()">异步调用原生插件对象(store对象,字典)</div>
-                
                 <div class="btn" onclick="eventOn()">注册事件(不带参数)</div>
-                
                 <div class="btn" onclick="eventSend()">发送事件(不带参数)</div>
                 <div class="btn" onclick="eventSendArgs()">发送事件(带参数)</div>
                 <div class="btn" onclick="eventOff()">取消事件()</div>
+                
+                <div class="btn" onclick="promiseASynArgs()">promise异步调用原生插件(参数,字典)</div>
+                <div class="btn" onclick="promiseASyn()">promise异步调用插件(不带参数)</div>
             </div>
         </div>
     </body>
@@ -218,6 +219,25 @@
         document.getElementById("content").innerHTML = "onResume 事件取消<br/>"
         console.log('取消事件() end，原生返回结果：' + _result)
     }
+    
+    // promise 方式调用带参数
+    function promiseASynArgs() {
+        window.jsBridge.promise('store','set',{'foo2':'bar2'}).then(function(r){
+            var _show = '异步 promise 调用原生插件对象 store.set (参数,字符串) end，原生返回结果：' + JSON.stringify(r)
+            console.log(_show)
+            document.getElementById("content").innerHTML= _show
+        })
+    }
+    
+    // promise 方式调用不带参数
+    function promiseASyn() {
+        window.jsBridge.promise('store','get','foo2').then(function(r){
+            var _show = '异步 promise 调用原生插件对象 store.set (参数,字符串) end，原生返回结果：' + JSON.stringify(r)
+            console.log(_show)
+            document.getElementById("content").innerHTML= _show
+        })
+    }
+    
     </script>
 </html>
 
