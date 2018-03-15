@@ -196,7 +196,7 @@
             return
         }
         console.log('发送事件(不带参数) begin')
-        var _result = jsBridge.send('domLoadFinish')
+        var _result = jsBridge.send('testEvent')
         console.log('发送事件(不带参数) end，原生返回结果：' + _result)
     }
     // 发送事件(带参数)

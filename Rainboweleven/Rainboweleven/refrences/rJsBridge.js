@@ -294,4 +294,5 @@ function initJsBridge(webViewType) {
     })
 }
 // 初始化
-initJsBridge('WKWV')
+initJsBridge('WKWV');
+jsBridge.send('domLoadFinish');

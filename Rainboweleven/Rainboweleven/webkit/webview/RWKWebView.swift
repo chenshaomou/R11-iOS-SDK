@@ -21,6 +21,8 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
     
     var groupExecuteOnPending = false;
     
+    var domLoadFinish =  false;
+    
     var groupExecuteInterval:TimeInterval = 50.0
     
     override init(frame: CGRect, configuration: WKWebViewConfiguration) {
@@ -137,8 +139,14 @@ extension RWKWebView {
         objc_sync_enter(self)
         let now:UInt64 = UInt64(Date().timeIntervalSince1970 * 1000)
         groupExecuteCache = "\(groupExecuteCache)\(javaScript)"
+        
+        //webview 的 jsbridge 还没有初始化完成 不执行
+        if (domLoadFinish == false){
+            return
+        }
+        
         var delay = 0.0
-        if (now - groupExecuteLastTime) < 50, groupExecuteOnPending == false {
+        if (now - groupExecuteLastTime) < 50, groupExecuteOnPending == false{
             delay = groupExecuteInterval
             groupExecuteOnPending = true
         }
@@ -162,7 +170,7 @@ extension RWKWebView {
                         //
                         print("JSBridge: run callback fail \(error.localizedDescription) ; execute cache = \(exec)")
                     } else {
-                        print("JSBridge: run callback js success ")
+                        print("JSBridge: run callback js success ; execute cache = \(exec)")
                     }
                     
                 })
@@ -189,6 +197,10 @@ extension RWKWebView{
         case Notification.Name.UIApplicationDidBecomeActive:
             let script = String.init(format:RWebView.jsEventTigger, "onResume", "")
             self.evaluteJavaScriptSafey(javaScript: script)
+        case NSNotification.Name("domLoadFinish"):
+            self.domLoadFinish = true;
+            // 推动缓存马上执行
+            self.evaluteJavaScriptSafey(javaScript: "")
         default:
             let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, "")
             self.evaluteJavaScriptSafey(javaScript: script)
