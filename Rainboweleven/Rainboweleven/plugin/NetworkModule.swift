@@ -16,7 +16,7 @@ public class NetworkModule{
     public func EventTigger() -> RWebkitPlugin{
         return RWebkitPlugin("get", { (args) -> Promise in
             guard let json = args as? String else {
-                return Promise()
+                return Promise(Promise.emptyValue)
             }
             
             let p = Promise()
@@ -26,6 +26,7 @@ public class NetworkModule{
             })
             
             return p
+            
         }, NetworkModule.moduleName)
     }
 }

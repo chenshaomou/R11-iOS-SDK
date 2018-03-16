@@ -54,13 +54,10 @@ public class RWebkitPluginsHub {
     private func runPlugin(name: String, args: Any) -> Promise {
         if let plugin = plugins[name] {
             return plugin.action(args)
-            return Promise()
         } else if let defaultPlugin = plugins["userDefault.\(name)"]{
             return defaultPlugin.action(args)
         } else {
-            //
-//            return ""
-            return Promise()
+            return Promise(Promise.emptyValue)
         }
     }
     
@@ -75,7 +72,6 @@ public class RWebkitPluginsHub {
         }
         
         // promise 插件
-        
         return ";\(_scripts)"
     }
     

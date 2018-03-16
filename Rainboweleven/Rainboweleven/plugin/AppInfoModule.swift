@@ -21,10 +21,9 @@ public class AppInfoModule{
             let infoDictionary = Bundle.main.infoDictionary!
             let majorVersion = infoDictionary["CFBundleShortVersionString"]//主程序版本号
             let minorVersion = infoDictionary["CFBundleVersion"]//版本号（内部标示）
-            let p =  Promise()
-            p.result = "\(majorVersion ?? "noversioninfo").\(minorVersion ?? "nobuildinfo")"
-//            return "\(majorVersion ?? "noversioninfo").\(minorVersion ?? "nobuildinfo")"
-            return p
+            
+            return Promise("\(majorVersion ?? "noversioninfo").\(minorVersion ?? "nobuildinfo")")
+            
         }, AppInfoModule.moduleName);
     }
 }

@@ -20,6 +20,7 @@ public enum PluginResult {
 // args : js传入的参数
 // asyncCallBack : 原生回调
 public typealias Action = (_ args: Any) -> Promise
+public typealias ResolveCallback = (String?) -> Void
 
 public class RWebkitPlugin {
     
@@ -58,10 +59,33 @@ public class RWebkitPlugin {
 
 public class Promise{
     
-    var result:String?
+    public static let emptyValue = ""
     
-    public func then(callback:(String?) -> Void){
-        callback(result)
+    public init(){}
+    
+    public init(_ result:String){
+        self.result = result
+    }
+    
+    var result:String?{
+        get{
+            return self.result
+        }
+        set{
+            if let _resolveCallback = resolveCallback{
+                _resolveCallback(self.result)
+            }
+        }
+    }
+
+    var resolveCallback : ResolveCallback?
+    
+    public func then(callback:@escaping (String?) -> Void){
+        if let _result = result{
+            callback(_result)
+        }else{
+            self.resolveCallback = callback
+        }
     }
 }
 
