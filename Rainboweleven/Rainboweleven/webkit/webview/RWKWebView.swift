@@ -102,9 +102,14 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
             // 异步
             completionHandler("")
             let p  = RWebkitPluginsHub.shared.runPlugin(name: name, module: module, args: args)
-            p.then(callback: { (callbackResult) in
+            p.then(callback: { [weak self](callbackResult) in
+                
+                guard let strongSelf = self else { return }
+                
                 let callbackResult = ""
+                
                 var execJsCallBackScript = ""
+                
                 if (callbackResult.starts(with: "{") || callbackResult.starts(with: "[")){
                     //返回结果是对象或者数组
                     execJsCallBackScript = "window.jsBridge.callbacks.\(async)(\(callbackResult));"
@@ -112,9 +117,11 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
                     //返回结果是字符串
                     execJsCallBackScript = "window.jsBridge.callbacks.\(async)('\(callbackResult)');"
                 }
+                
                 let clearJsCallBackScript =  "delete window.jsBridge.callbacks.\(async);"
                 let js = "javascript: try { \(execJsCallBackScript)\(clearJsCallBackScript)} catch(e){};"
-                self.evaluteJavaScriptSafey(javaScript: js)
+                
+                strongSelf.evaluteJavaScriptSafey(javaScript: js)
             })
         }else{
             // 同步
