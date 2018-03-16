@@ -44,21 +44,23 @@ public class RWebkitPluginsHub {
     // callbackName:回调名字
     // asyncCallBack: 原生结果回调
     @discardableResult
-    public func runPlugin(name: String, module:String, args:Any) -> String {
+    public func runPlugin(name: String, module:String, args:Any) -> Promise {
         let _name = "\(module).\(name)"
         return runPlugin(name: _name, args: args)
     }
     
     // 运行插件 - 私有方法
     @discardableResult
-    private func runPlugin(name: String, args: Any) -> String {
+    private func runPlugin(name: String, args: Any) -> Promise {
         if let plugin = plugins[name] {
             return plugin.action(args)
+            return Promise()
         } else if let defaultPlugin = plugins["userDefault.\(name)"]{
             return defaultPlugin.action(args)
         } else {
             //
-            return ""
+//            return ""
+            return Promise()
         }
     }
     

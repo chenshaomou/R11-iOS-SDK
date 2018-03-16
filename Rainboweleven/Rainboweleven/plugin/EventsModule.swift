@@ -16,15 +16,17 @@ open class EventsModule{
      * 接受到js发送来的事件
      */
     public func EventTigger() -> RWebkitPlugin{
-        return RWebkitPlugin("send", { (args) -> String in
+        return RWebkitPlugin("send", { (args) -> Promise in
             guard let json = args as? String else {
-                return ""
+//                return ""
+                return Promise()
             }
             let jsonDic = json.seriailized()
             let name = (jsonDic["eventName"] as? String) ?? ""
             let params = (jsonDic["params"] as? [String : Any]) ?? [:]
             NotificationCenter.default.post(name: NSNotification.Name(name), object: nil, userInfo: params)
-            return ""
+//            return ""
+            return Promise()
         }, EventsModule.moduleName)
     }
 }

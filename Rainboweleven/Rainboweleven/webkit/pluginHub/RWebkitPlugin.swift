@@ -19,7 +19,7 @@ public enum PluginResult {
 // callbackName : js回调函数引用
 // args : js传入的参数
 // asyncCallBack : 原生回调
-public typealias Action = (_ args: Any) -> String
+public typealias Action = (_ args: Any) -> Promise
 
 public class RWebkitPlugin {
     
@@ -51,6 +51,17 @@ public class RWebkitPlugin {
         }else{
             return ["exception":"invoke plugin error"].jsonString()
         }
+    }
+}
+
+// MARK: - Promise
+
+public class Promise{
+    
+    var result:String?
+    
+    public func then(callback:(String?) -> Void){
+        callback(result)
     }
 }
 
