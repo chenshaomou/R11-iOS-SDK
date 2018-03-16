@@ -15,7 +15,7 @@ open class EventsModule{
     /**
      * 接受到js发送来的事件
      */
-    public func EventTigger() -> RWebkitPlugin{
+    public func eventTigger() -> RWebkitPlugin{
         return RWebkitPlugin("send", { (args) -> Promise in
             guard let json = args as? String else {
                 return Promise(Promise.emptyValue)

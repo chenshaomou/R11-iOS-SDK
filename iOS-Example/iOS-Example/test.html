@@ -66,6 +66,8 @@
                 <div class="btn" onclick="promiseASynArgs()">promise异步调用原生插件(参数,字典)</div>
                 <div class="btn" onclick="promiseASyn()">promise异步调用插件(不带参数)</div>
                 <div class="btn" onclick="promiseObjASyn()">promise异步调用对象插件(不带参数)</div>
+                
+                <div class="btn" onclick="netRequest()">异步调用网络(不带参数)</div>
             </div>
         </div>
     </body>
@@ -159,7 +161,7 @@
         }
         console.log('异步调用原生插件 store.set (参数,字典) begin')
         jsBridge.call('store', 'set', {'foo': 'bar'}, function (r) {
-              var _show = '异步调用原生插件 store.set (参数,字符串) end，原生返回结果：' + JSON.stringify(r)
+              var _show = '异步调用原生插件 store.set (参数,字符串) end，原生返回结果：' + r
               console.log(_show)
               document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
         })
@@ -173,7 +175,7 @@
         }
         console.log('异步调用原生插件(store对象,字典) begin')
         jsBridge.store.set({'foo': 'bar'}, function (r) {
-           var _show = '异步调用原生插件对象 store.set (参数,字符串) end，原生返回结果：' + JSON.stringify(r)
+           var _show = '异步调用原生插件对象 store.set (参数,字符串) end，原生返回结果：' + r
            console.log(_show)
            document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
         })
@@ -223,7 +225,7 @@
     // promise 方式调用带参数
     function promiseASynArgs() {
         window.jsBridge.promise('store','set',{'foo2':'bar2'}).then(function(r){
-            var _show = document.getElementById("content").innerHTML + '异步 promise 调用原生插件对象 store.set (参数,字符串) end，原生返回结果：' + JSON.stringify(r)
+            var _show = document.getElementById("content").innerHTML + '异步 promise 调用原生插件对象 store.set (参数,字符串) end，原生返回结果：' + r
             console.log(_show)
             document.getElementById("content").innerHTML= _show
         })
@@ -233,7 +235,7 @@
     // promise 方式调用不带参数
     function promiseASyn() {
         window.jsBridge.promise('store','get','foo2').then(function(r){
-            var _show = document.getElementById("content").innerHTML + '异步 promise 调用原生插件对象 store.get (参数,字符串) end，原生返回结果：' + JSON.stringify(r)
+            var _show = document.getElementById("content").innerHTML + '异步 promise 调用原生插件对象 store.get (参数,字符串) end，原生返回结果：' + r
             console.log(_show)
             document.getElementById("content").innerHTML= _show
         })
@@ -243,10 +245,24 @@
     // promise 对象插件
     function promiseObjASyn() {
         window.jsBridge.appInfo.versionPromise().then(function(r){
-          var _show = document.getElementById("content").innerHTML + '异步 promise 调用原生插件对象 appInfo.versionPromise (参数,字符串) end，原生返回结果：' + JSON.stringify(r)
+          var _show = document.getElementById("content").innerHTML + '异步 promise 调用原生插件对象 appInfo.versionPromise (参数,字符串) end，原生返回结果：' + r
           console.log(_show)
           document.getElementById("content").innerHTML= _show
         })
+        document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
+    }
+    
+    // net Request
+    function netRequest() {
+        if(!deviceReady){
+            return
+        }
+        console.log('异步调用原生插件 network.request (参数，字典) begin')
+        jsBridge.call('network', 'request',{'url':'https://postman-echo.com/get?test=123'} ,function (r) {
+          var _show = '异步调用原生插件 network.request (参数，字典) end，原生返回结果：' + r
+          console.log(_show)
+          document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
+          })
         document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
     }
     

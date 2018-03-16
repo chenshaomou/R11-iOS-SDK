@@ -81,12 +81,14 @@ public class RWebkitPluginsHub {
         let appInfoModule = AppInfoModule()
         let eventsModule = EventsModule()
         let storeModule = StoreModule()
+        let netWorkModule = NetworkModule()
         
         addPlugin(plugin: appInfoModule.version())
-        addPlugin(plugin: eventsModule.EventTigger())
+        addPlugin(plugin: eventsModule.eventTigger())
         addPlugin(plugin: storeModule.getValue())
         addPlugin(plugin: storeModule.setValue())
         addPlugin(plugin: storeModule.removeValue())
+        addPlugin(plugin: netWorkModule.request())
     }
     
 }

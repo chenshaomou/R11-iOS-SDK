@@ -111,12 +111,11 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
                 
                 if (callbackResult.starts(with: "{") || callbackResult.starts(with: "[")){
                     //返回结果是对象或者数组
-                    execJsCallBackScript = "window.jsBridge.callbacks.\(async)(\(callbackResult));"
+                    execJsCallBackScript = String(format:"window.jsBridge.callbacks.%@(JSON.stringify(%@));",async,callbackResult)
                 }else{
-                    //返回结果是字符串
                     execJsCallBackScript = "window.jsBridge.callbacks.\(async)('\(callbackResult)');"
                 }
-                
+
                 let clearJsCallBackScript =  "delete window.jsBridge.callbacks.\(async);"
                 let js = "javascript: try { \(execJsCallBackScript)\(clearJsCallBackScript)} catch(e){};"
                 
@@ -211,6 +210,7 @@ extension RWKWebView{
     //收到通知，向js发送事件
     @objc fileprivate func didReceiveNotification(notification:Notification){
         
+        // 防止js事件发送到原生后又通过原生传播到js
         if let userInfo = notification.userInfo, let _webViewId = userInfo["webviewid"] as? String, _webViewId == self.id {
             return
         }
