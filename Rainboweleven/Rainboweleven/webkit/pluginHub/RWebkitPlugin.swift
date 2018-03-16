@@ -68,10 +68,7 @@ public class Promise{
     }
     
     var result:String?{
-        get{
-            return self.result
-        }
-        set{
+        didSet{
             if let _resolveCallback = resolveCallback{
                 _resolveCallback(self.result)
             }
@@ -81,7 +78,7 @@ public class Promise{
     var resolveCallback : ResolveCallback?
     
     public func then(callback:@escaping (String?) -> Void){
-        if let _result = result{
+        if let _result = self.result{
             callback(_result)
         }else{
             self.resolveCallback = callback

@@ -102,11 +102,10 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
             // 异步
             completionHandler("")
             let p  = RWebkitPluginsHub.shared.runPlugin(name: name, module: module, args: args)
-            p.then(callback: { [weak self](callbackResult) in
+            p.then(callback: { [weak self](data) in
                 
                 guard let strongSelf = self else { return }
-                
-                let callbackResult = ""
+                guard let callbackResult = data else { return }
                 
                 var execJsCallBackScript = ""
                 
