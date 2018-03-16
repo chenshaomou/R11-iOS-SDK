@@ -30,8 +30,8 @@ public class NetworkModule{
             let p = Promise()
             
             Alamofire.request(url, method: _method, parameters: data, encoding: URLEncoding.default, headers: header).responseString(completionHandler: { (data) in
-                let fuck = data.result.value
-                p.result = fuck
+                let _value = data.result.value
+                p.result = _value
             })
             
             return p

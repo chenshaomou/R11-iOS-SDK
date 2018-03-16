@@ -110,7 +110,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
                 var execJsCallBackScript = ""
                 
                 if (callbackResult.starts(with: "{") || callbackResult.starts(with: "[")){
-                    //返回结果是对象或者数组
+                    //返回结果是对象或者数组 都转成字符串 统一输出 swift 实在垃圾到不想用
                     execJsCallBackScript = String(format:"window.jsBridge.callbacks.%@(JSON.stringify(%@));",async,callbackResult)
                 }else{
                     execJsCallBackScript = "window.jsBridge.callbacks.\(async)('\(callbackResult)');"
