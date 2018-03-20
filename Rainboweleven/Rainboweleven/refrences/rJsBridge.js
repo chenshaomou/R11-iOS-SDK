@@ -32,46 +32,21 @@ function initJsBridge(webViewType) {
      */
     window.jsBridge.webViewType = window.jsBridge.webViewType || webViewType
     /**
-     * 注册JS插件/方法到window.jsBridge，使原生能通过window.jsBridge调用，使用示例：
-     * // 带module注册
-     * jsBridge.register('store', 'getValue', function(params){
-     *      var key = params['key']
-     *      return window.localStorage.getItem(key)
-     *   }
-     * )
-     * // 不带module注册
-     * jsBridge.register('paySuccess', function(params){
-     *      var orderNo = params['orderNo']
-     *      notifyPaySuccess(orderNo)
-     *      return true
-     *    }
-     * )
+     * 注册JS插件/方法到window.jsBridge，使原生能通过window.jsBridge.func调用，使用示例：
      * @type {Function}
-     * @param module 模块名，可为空，不传默认为userDefault
      * @param method 方法名，非空
      * @param callFun 方法体，非空
      */
-    window.jsBridge.register = window.jsBridge.register || function (module, method, callFun) {
+    window.jsBridge.register = window.jsBridge.register || function (method, callFun) {
         // 参数为2个
-        if (arguments.length == 2) {
-            callFun = method
-            method = module
-            // 没有传递模块名，模块名默认为userDefault
-            module = 'userDefault'
+        if (arguments.length < 2) {
+            throw 'register method must be 2  params'
         }
         // 参数为3个
-        else if (arguments.length == 3) {
-            //支持
-        }
-        // 参数为1个或者其它，不支持，抛出异常
-        else {
-            throw 'register method must be 2 or 3 params'
-        }
         var action = {}
         action[method] = callFun
-        window.jsBridge[module] = window.jsBridge[module] || {}
-        Object.assign(window.jsBridge[module], action)
-        // window.jsBridge[module] = action
+        window.jsBridge.func = window.jsBridge.func || {}
+        Object.assign(window.jsBridge.func, action)
     }
     /**
      * 调用原生的核心方法，调用原生插件的同步/异步方法，使用示例：
@@ -289,15 +264,15 @@ function initJsBridge(webViewType) {
      * @eventName 事件名称
      * @params 事件参数
      */
-    window.jsBridge.register('events','tigger',function(eventName,params){
-        window.jsBridge.events = window.jsBridge.events || {}
-        window.jsBridge.events.observers = window.jsBridge.events.observers || {}
+    window.jsBridge.events = window.jsBridge.events || {}
+    window.jsBridge.events.observers = window.jsBridge.events.observers || {}
+    window.jsBridge.events.tigger = window.jsBridge.register.tigger || function(eventName,params){
         if (window.jsBridge.events.observers[eventName]){
             Object.keys(window.jsBridge.events.observers[eventName]).every(function (element, index, array){
                 window.jsBridge.events.observers[eventName][element](params)
             })
         }
-    })
+    }
 }
 // 初始化
 initJsBridge('WKWV');

@@ -26,7 +26,7 @@ internal class RUIWebView: UIWebView ,RWebViewProtocol {
         }
     }
     
-    func callHandler(methodName:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
+    func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
     }
     
 }

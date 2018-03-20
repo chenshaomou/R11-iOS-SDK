@@ -22,7 +22,17 @@ public class NetworkModule{
             let jsonDic = json.seriailized()
             let url = (jsonDic["url"] as? String) ?? "";
             let method = (jsonDic["method"] as? String) ?? "get";
-            let _method = HTTPMethod.init(rawValue: method) ?? HTTPMethod.get
+            var _method = HTTPMethod.get
+            
+            switch method {
+            case "get" :
+                _method = HTTPMethod.get
+            case "post" :
+                _method = HTTPMethod.post
+            default:
+                _method = HTTPMethod.get
+            }
+            
             let header = (jsonDic["header"] as? [String:String]) ?? [String:String]();
             let data = (jsonDic["data"] as? [String:Any]) ?? [String:Any]();
 //            let type = (jsonDic["type"] as? String) ?? "raw";
@@ -30,8 +40,17 @@ public class NetworkModule{
             let p = Promise()
             
             Alamofire.request(url, method: _method, parameters: data, encoding: URLEncoding.default, headers: header).responseString(completionHandler: { (data) in
-                let _value = data.result.value
-                p.result = _value
+                if(data.result.isSuccess){
+                    let _value = data.result.value
+                    p.result = _value
+                }else{
+                    if let error = data.result.error{
+                        //网络错误
+                        p.result = ["error":error.localizedDescription].jsonString()
+                    }else{
+                        p.result = ["error":"net work error"].jsonString()
+                    }
+                }
             })
             
             return p

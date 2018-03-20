@@ -43,7 +43,7 @@ class ViewController: UIViewController {
     
     @objc func didClickNativeCallJSButton(button:UIButton){
         
-        rwv?.callHandler(methodName: "testNavCall", arguments: ["foo":"bar"], completionHandler: { (result, error) in
+        rwv?.callHandler(method:"contentappend",arguments: ["foo":"bar"], completionHandler: { (result, error) in
             if let _result = result{
                 NSLog("return result is \(_result)")
             }

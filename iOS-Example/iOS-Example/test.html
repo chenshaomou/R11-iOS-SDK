@@ -67,7 +67,8 @@
                 <div class="btn" onclick="promiseASyn()">promise异步调用插件(不带参数)</div>
                 <div class="btn" onclick="promiseObjASyn()">promise异步调用对象插件(不带参数)</div>
                 
-                <div class="btn" onclick="netRequest()">异步调用网络(不带参数)</div>
+                <div class="btn" onclick="netRequestGet()">异步调用网络get(不带参数)</div>
+                <div class="btn" onclick="netRequestPost()">异步调用网络post(对象)</div>
             </div>
         </div>
     </body>
@@ -78,6 +79,12 @@
     function clean() {
         document.getElementById("content").innerHTML=""
     }
+    
+    window.jsBridge.register('contentappend',function(r){
+        var _show = '原生调用js方法 contentappend ' + r + '</br>'
+        document.getElementById("content").innerHTML=_show
+        return 'call js func success'
+    })
     
     // 同步调用原生插件(不带参数)
     function callSyn() {
@@ -252,18 +259,32 @@
         document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
     }
     
-    // net Request
-    function netRequest() {
+    // net Request get
+    function netRequestGet() {
         if(!deviceReady){
             return
         }
-        console.log('异步调用原生插件 network.request (参数，字典) begin')
+        console.log('异步调用原生插件 network.request get begin')
         jsBridge.call('network', 'request',{'url':'https://postman-echo.com/get?test=123'} ,function (r) {
-          var _show = '异步调用原生插件 network.request (参数，字典) end，原生返回结果：' + r
+          var _show = '异步调用原生插件 network.request get end，原生返回结果：' + r
           console.log(_show)
           document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
           })
         document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
+    }
+    
+    // net Request post
+    function netRequestPost() {
+        if(!deviceReady){
+            return
+        }
+        console.log('异步调用原生插件 network.request post begin')
+        jsBridge.call('network','request',{'url':'https://postman-echo.com/post','data':{'foo':'bar'},'method':'post','header':{'Content-Type':'application/json'}} ,function (r) {
+          var _show = '异步调用原生插件 network.request post end，原生返回结果：' + r
+          console.log(_show)
+          document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
+          })
+          document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
     }
     
     </script>

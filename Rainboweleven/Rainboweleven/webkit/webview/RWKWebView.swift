@@ -72,7 +72,10 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
         self.loadFileURL(_url, allowingReadAccessTo: _url)
     }
     
-    func callHandler(methodName:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
+    func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
+        let argsStr = arguments?.jsonString() ?? ""
+        let js = "window.jsBridge.func.\(method)(JSON.stringify(\(argsStr)))"
+        self.evaluteJavaScriptSafey(javaScript: js,theCompletionHandler: completionHandler)
     }
     
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
@@ -150,7 +153,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
 // MARK: - 确保线程安全地调用JS语句
 extension RWKWebView {
     
-    public func evaluteJavaScriptSafey(javaScript : String) {
+    public func evaluteJavaScriptSafey(javaScript : String,theCompletionHandler: ((Any?, Error?) -> Swift.Void)? = nil) {
         
         objc_sync_enter(self)
         let now:UInt64 = UInt64(Date().timeIntervalSince1970 * 1000)
@@ -176,7 +179,7 @@ extension RWKWebView {
             if (strongSelf.groupExecuteCache.count != 0){
                 
                 let exec = strongSelf.groupExecuteCache
-                strongSelf.evaluateJavaScript(exec, completionHandler: { [weak self] (_ , error) in
+                strongSelf.evaluateJavaScript(exec, completionHandler: { [weak self] (any , error) in
                     
                     if self == nil {
                         return
@@ -187,6 +190,10 @@ extension RWKWebView {
                         print("JSBridge: run callback fail \(error.localizedDescription) ; execute cache = \(exec)")
                     } else {
                         print("JSBridge: run callback js success ; execute cache = \(exec)")
+                    }
+                    
+                    if let _theCompletionHandler = theCompletionHandler{
+                        _theCompletionHandler(any,error)
                     }
                     
                 })

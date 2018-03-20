@@ -17,7 +17,7 @@ public protocol RWebViewProtocol {
     
     var scrollView: UIScrollView { get }
     
-    func callHandler(methodName:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)?)
+    func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)?)
 }
 
 open class RWebView: UIView,RWebViewProtocol {
@@ -59,7 +59,7 @@ open class RWebView: UIView,RWebViewProtocol {
         wv.loadLocalURL(url:url, hash: hash)
     }
     
-    public func callHandler(methodName:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
-        wv.callHandler(methodName: methodName, arguments: arguments, completionHandler: completionHandler)
+    public func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
+        wv.callHandler(method: method,arguments: arguments, completionHandler: completionHandler)
     }
 }
