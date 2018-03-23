@@ -12,7 +12,7 @@ import Rainboweleven
 class ViewController: UIViewController {
     
     var rwv:RWebView?
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,7 +42,7 @@ class ViewController: UIViewController {
     }
     
     @objc func didClickNativeCallJSButton(button:UIButton){
-        
+        //
         rwv?.callHandler(method:"contentappend",arguments: ["foo":"bar"], completionHandler: { (result, error) in
             if let _result = result{
                 NSLog("return result is \(_result)")
@@ -54,7 +54,5 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 

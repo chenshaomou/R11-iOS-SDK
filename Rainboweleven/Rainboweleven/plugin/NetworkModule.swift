@@ -7,54 +7,51 @@
 //
 
 import Foundation
-import Alamofire
-
 public class NetworkModule{
     
     static let moduleName = "network"
-    
     public func request() -> RWebkitPlugin{
+        
         return RWebkitPlugin("request", { (args) -> Promise in
+            // 判断参数
             guard let json = args as? String else {
                 return Promise(Promise.emptyValue)
             }
-            
+            // 获取请求参数
             let jsonDic = json.seriailized()
             let url = (jsonDic["url"] as? String) ?? "";
             let method = (jsonDic["method"] as? String) ?? "get";
-            var _method = HTTPMethod.get
+            let header = (jsonDic["header"] as? [String:String]) ?? [String:String]()
+            let params = (jsonDic["data"] as? [String:Any]) ?? [String:Any]()
+            // let type = (jsonDic["type"] as? String) ?? "raw";
             
-            switch method {
-            case "get" :
-                _method = HTTPMethod.get
-            case "post" :
-                _method = HTTPMethod.post
-            default:
-                _method = HTTPMethod.get
-            }
+            // 采用网络框架 发出请求
+            let network = RBNetworking(baseURL: url)
+            network.headerFields = header
             
-            let header = (jsonDic["header"] as? [String:String]) ?? [String:String]();
-            let data = (jsonDic["data"] as? [String:Any]) ?? [String:Any]();
-//            let type = (jsonDic["type"] as? String) ?? "raw";
-            
+            // 回调promise
             let p = Promise()
             
-            Alamofire.request(url, method: _method, parameters: data, encoding: URLEncoding.default, headers: header).responseString(completionHandler: { (data) in
-                if(data.result.isSuccess){
-                    let _value = data.result.value
-                    p.result = _value
-                }else{
-                    if let error = data.result.error{
-                        //网络错误
-                        p.result = ["error":error.localizedDescription].jsonString()
-                    }else{
-                        p.result = ["error":"net work error"].jsonString()
-                    }
+            let callback: (JSONResult)->() = { (result) in
+                
+                print("==== response ==== \n")
+                print("\(result.toJSONString())")
+                switch (result) {
+                case .success(_):
+                    p.result = result.toJSONString()
+                case .failure(let response):
+                    p.result = ["error": response.error.localizedDescription].jsonString()
                 }
-            })
+            }
             
+            if method == "get" {
+              network.get("", parameters: params, completion: callback)
+            } else if method == "post" {
+              network.post("", parameters: params, completion: callback)
+            }
+            //
             return p
-            
         }, NetworkModule.moduleName)
     }
 }
+

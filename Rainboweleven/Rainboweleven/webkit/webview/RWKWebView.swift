@@ -36,11 +36,11 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
                                   injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
         configuration.userContentController.addUserScript(script)
         
-        // 注册插件
+//         注册插件
         let buildInJsObj = RWebkitPluginsHub.shared.getJSBridgeBuiltInScript()
         let buildInJsObjScript = WKUserScript(source: buildInJsObj, injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
         configuration.userContentController.addUserScript(buildInJsObjScript)
-        
+
         // 加上webview的id
         let idScript = WKUserScript(source: String.init(format:RWebView.jsBridgeId, id), injectionTime: WKUserScriptInjectionTime.atDocumentStart, forMainFrameOnly: true)
         configuration.userContentController.addUserScript(idScript)
@@ -155,7 +155,6 @@ extension RWKWebView {
     
     public func evaluteJavaScriptSafey(javaScript : String,theCompletionHandler: ((Any?, Error?) -> Swift.Void)? = nil) {
         
-        objc_sync_enter(self)
         let now:UInt64 = UInt64(Date().timeIntervalSince1970 * 1000)
         groupExecuteCache = "\(groupExecuteCache)\(javaScript)"
         
@@ -174,39 +173,32 @@ extension RWKWebView {
             
             guard let strongSelf = self else { return }
             
-            objc_sync_enter(strongSelf)
+            objc_sync_enter(strongSelf.id)
         
             if (strongSelf.groupExecuteCache.count != 0){
                 
                 let exec = strongSelf.groupExecuteCache
-                strongSelf.evaluateJavaScript(exec, completionHandler: { [weak self] (any , error) in
+                strongSelf.evaluateJavaScript(exec, completionHandler: { [weak strongSelf] (any , error) in
                     
-                    if self == nil {
-                        return
-                    }
+                    guard let _ = strongSelf else { return }
                     
                     if let error = error {
-                        //
                         print("JSBridge: run callback fail \(error.localizedDescription) ; execute cache = \(exec)")
                     } else {
                         print("JSBridge: run callback js success ; execute cache = \(exec)")
                     }
                     
-                    if let _theCompletionHandler = theCompletionHandler{
+                    if let _theCompletionHandler = theCompletionHandler {
                         _theCompletionHandler(any,error)
                     }
-                    
                 })
                 
                 strongSelf.groupExecuteOnPending = false
                 strongSelf.groupExecuteCache = "";
                 strongSelf.groupExecuteLastTime = UInt64(Date().timeIntervalSince1970 * 1000)
             }
-            objc_sync_exit(strongSelf)
+            objc_sync_exit(strongSelf.id)
         })
-      
-        objc_sync_exit(self)
-        
     }
     
 }
@@ -216,7 +208,6 @@ extension RWKWebView{
     
     //收到通知，向js发送事件
     @objc fileprivate func didReceiveNotification(notification:Notification){
-        
         // 防止js事件发送到原生后又通过原生传播到js
         if let userInfo = notification.userInfo, let _webViewId = userInfo["webviewid"] as? String, _webViewId == self.id {
             return

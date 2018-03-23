@@ -12,8 +12,20 @@
 		8F630C852057C6250033C33A /* EventsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F630C842057C6250033C33A /* EventsModule.swift */; };
 		8F630C872058A8970033C33A /* StoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F630C862058A8970033C33A /* StoreModule.swift */; };
 		8F630C8A205A5ACD0033C33A /* NetworkModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F630C89205A5ACD0033C33A /* NetworkModule.swift */; };
+		92794A662063BD290033E469 /* NetworkActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A592063BD290033E469 /* NetworkActivityIndicator.swift */; };
+		92794A672063BD290033E469 /* Networking+Private.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A5A2063BD290033E469 /* Networking+Private.swift */; };
+		92794A682063BD290033E469 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A5B2063BD290033E469 /* Networking.swift */; };
+		92794A692063BD290033E469 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A5C2063BD290033E469 /* Helpers.swift */; };
+		92794A6A2063BD290033E469 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A5D2063BD290033E469 /* Result.swift */; };
+		92794A6B2063BD290033E469 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A5E2063BD290033E469 /* Image.swift */; };
+		92794A6C2063BD290033E469 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A5F2063BD290033E469 /* JSON.swift */; };
+		92794A6D2063BD290033E469 /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A602063BD290033E469 /* Response.swift */; };
+		92794A6E2063BD290033E469 /* TestCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A612063BD290033E469 /* TestCheck.swift */; };
+		92794A6F2063BD290033E469 /* Networking+HTTPRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A622063BD290033E469 /* Networking+HTTPRequests.swift */; };
+		92794A702063BD290033E469 /* FakeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A632063BD290033E469 /* FakeRequest.swift */; };
+		92794A712063BD290033E469 /* FormDataPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A642063BD290033E469 /* FormDataPart.swift */; };
+		92794A722063BD290033E469 /* Networking.h in Headers */ = {isa = PBXBuildFile; fileRef = 92794A652063BD290033E469 /* Networking.h */; };
 		929BE5FF2005ACDD00E2DEA7 /* Collection+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BE5FE2005ACDD00E2DEA7 /* Collection+JSON.swift */; };
-		929D1D101FE7457B001F4D14 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 929D1D0F1FE7457B001F4D14 /* Alamofire.framework */; };
 		92CA5A9C20074F7000D5D05C /* RWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA5A9720074F6F00D5D05C /* RWebView.swift */; };
 		92CA5A9D20074F7000D5D05C /* RWebView+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA5A9820074F6F00D5D05C /* RWebView+Constants.swift */; };
 		92CA5A9E20074F7000D5D05C /* RWKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA5A9920074F6F00D5D05C /* RWKWebView.swift */; };
@@ -30,6 +42,20 @@
 		8F630C842057C6250033C33A /* EventsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsModule.swift; sourceTree = "<group>"; };
 		8F630C862058A8970033C33A /* StoreModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModule.swift; sourceTree = "<group>"; };
 		8F630C89205A5ACD0033C33A /* NetworkModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModule.swift; sourceTree = "<group>"; };
+		921813782063B05100922F69 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../iOS-Example/Carthage/Build/iOS/Alamofire.framework"; sourceTree = "<group>"; };
+		92794A592063BD290033E469 /* NetworkActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkActivityIndicator.swift; sourceTree = "<group>"; };
+		92794A5A2063BD290033E469 /* Networking+Private.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Networking+Private.swift"; sourceTree = "<group>"; };
+		92794A5B2063BD290033E469 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		92794A5C2063BD290033E469 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		92794A5D2063BD290033E469 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		92794A5E2063BD290033E469 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		92794A5F2063BD290033E469 /* JSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
+		92794A602063BD290033E469 /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		92794A612063BD290033E469 /* TestCheck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestCheck.swift; sourceTree = "<group>"; };
+		92794A622063BD290033E469 /* Networking+HTTPRequests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Networking+HTTPRequests.swift"; sourceTree = "<group>"; };
+		92794A632063BD290033E469 /* FakeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeRequest.swift; sourceTree = "<group>"; };
+		92794A642063BD290033E469 /* FormDataPart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormDataPart.swift; sourceTree = "<group>"; };
+		92794A652063BD290033E469 /* Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Networking.h; sourceTree = "<group>"; };
 		929BE5FE2005ACDD00E2DEA7 /* Collection+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+JSON.swift"; sourceTree = "<group>"; };
 		929D1D0F1FE7457B001F4D14 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = ../Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		92CA5A9720074F6F00D5D05C /* RWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RWebView.swift; sourceTree = "<group>"; };
@@ -50,16 +76,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				929D1D101FE7457B001F4D14 /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		92794A582063BD290033E469 /* network */ = {
+			isa = PBXGroup;
+			children = (
+				92794A592063BD290033E469 /* NetworkActivityIndicator.swift */,
+				92794A5A2063BD290033E469 /* Networking+Private.swift */,
+				92794A5B2063BD290033E469 /* Networking.swift */,
+				92794A5C2063BD290033E469 /* Helpers.swift */,
+				92794A5D2063BD290033E469 /* Result.swift */,
+				92794A5E2063BD290033E469 /* Image.swift */,
+				92794A5F2063BD290033E469 /* JSON.swift */,
+				92794A602063BD290033E469 /* Response.swift */,
+				92794A612063BD290033E469 /* TestCheck.swift */,
+				92794A622063BD290033E469 /* Networking+HTTPRequests.swift */,
+				92794A632063BD290033E469 /* FakeRequest.swift */,
+				92794A642063BD290033E469 /* FormDataPart.swift */,
+				92794A652063BD290033E469 /* Networking.h */,
+			);
+			path = network;
+			sourceTree = "<group>";
+		};
 		929BE5FD2005ACC600E2DEA7 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				92794A582063BD290033E469 /* network */,
 				929BE5FE2005ACDD00E2DEA7 /* Collection+JSON.swift */,
 			);
 			path = utils;
@@ -89,6 +135,7 @@
 		929D1D0E1FE7457B001F4D14 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				921813782063B05100922F69 /* Alamofire.framework */,
 				929D1D0F1FE7457B001F4D14 /* Alamofire.framework */,
 			);
 			name = Frameworks;
@@ -168,6 +215,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92794A722063BD290033E469 /* Networking.h in Headers */,
 				B6D894841F9D8ACE00ABF4C0 /* Rainboweleven.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,16 +290,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				92794A662063BD290033E469 /* NetworkActivityIndicator.swift in Sources */,
+				92794A6B2063BD290033E469 /* Image.swift in Sources */,
 				92CA5A9E20074F7000D5D05C /* RWKWebView.swift in Sources */,
 				92CA5A9C20074F7000D5D05C /* RWebView.swift in Sources */,
+				92794A6D2063BD290033E469 /* Response.swift in Sources */,
 				8F630C8A205A5ACD0033C33A /* NetworkModule.swift in Sources */,
+				92794A702063BD290033E469 /* FakeRequest.swift in Sources */,
 				92CA5A9D20074F7000D5D05C /* RWebView+Constants.swift in Sources */,
+				92794A6F2063BD290033E469 /* Networking+HTTPRequests.swift in Sources */,
+				92794A672063BD290033E469 /* Networking+Private.swift in Sources */,
+				92794A682063BD290033E469 /* Networking.swift in Sources */,
+				92794A6E2063BD290033E469 /* TestCheck.swift in Sources */,
+				92794A6C2063BD290033E469 /* JSON.swift in Sources */,
 				8F3633772052528A00E37ADB /* AppInfoModule.swift in Sources */,
 				8F630C872058A8970033C33A /* StoreModule.swift in Sources */,
 				929BE5FF2005ACDD00E2DEA7 /* Collection+JSON.swift in Sources */,
 				92CA5AA020074F7000D5D05C /* RUIWebView.swift in Sources */,
+				92794A692063BD290033E469 /* Helpers.swift in Sources */,
+				92794A712063BD290033E469 /* FormDataPart.swift in Sources */,
 				8F630C852057C6250033C33A /* EventsModule.swift in Sources */,
 				92CA5AA62007539A00D5D05C /* RWebkitPlugin.swift in Sources */,
+				92794A6A2063BD290033E469 /* Result.swift in Sources */,
 				B6D8948B1F9D8B0400ABF4C0 /* Rainboweleven.swift in Sources */,
 				92CA5A9F20074F7000D5D05C /* RWebkitPluginsHub.swift in Sources */,
 			);
