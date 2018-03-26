@@ -92,6 +92,21 @@ extension RBNetworking {
             }
         }
     }
+    
+    func handleDataRequest(_ requestType: RequestType, path: String, parameterType: ParameterType?, parameters: Any?, parts: [FormDataPart]? = nil, responseType: ResponseType, completion: @escaping (_ result: DataResult) -> Void) -> String {
+        
+        if let fakeRequest = FakeRequest.find(ofType: requestType, forPath: path, in: fakeRequests) {
+            return handleFakeRequest(fakeRequest, path: path) { _, response, error in
+                completion(DataResult(body: fakeRequest.response, response: response, error: error))
+            }
+        } else {
+            return requestData(requestType, path: path, cacheName: nil, parameterType: parameterType, parameters: parameters, parts: parts, responseType: responseType) { data, response, error in
+                TestCheck.testBlock(self.isSynchronous) {
+                    completion(DataResult(body: data, response: response, error: error))
+                }
+            }
+        }
+    }
 
     func handleDataRequest(_ requestType: RequestType, path: String, cacheName: String?, cachingLevel: CachingLevel, responseType: ResponseType, completion: @escaping (_ result: DataResult) -> Void) -> String {
         if let fakeRequests = fakeRequests[requestType], let fakeRequest = fakeRequests[path] {

@@ -12,8 +12,13 @@ public extension RBNetworking {
     @discardableResult
     public func get(_ path: String, parameters: Any? = nil, completion: @escaping (_ result: JSONResult) -> Void) -> String {
         let parameterType: ParameterType = parameters != nil ? .formURLEncoded : .none
-
         return handleJSONRequest(.get, path: path, parameterType: parameterType, parameters: parameters, responseType: .json, completion: completion)
+    }
+    
+    @discardableResult
+    public func get(_ path: String, parameters: Any? = nil, completion: @escaping (_ result: DataResult) -> Void) -> String {
+        let parameterType: ParameterType = parameters != nil ? .formURLEncoded : .none
+        return handleDataRequest(.get, path: path, parameterType: parameterType, parameters: parameters, responseType: .data, completion: completion)
     }
 
     /// Registers a fake GET request for the specified path. After registering this, every GET request to the path, will return the registered response.
@@ -146,6 +151,11 @@ public extension RBNetworking {
     @discardableResult
     public func post(_ path: String, parameterType: ParameterType = .json, parameters: Any? = nil, completion: @escaping (_ result: JSONResult) -> Void) -> String {
         return handleJSONRequest(.post, path: path, parameterType: parameterType, parameters: parameters, responseType: .json, completion: completion)
+    }
+    
+    @discardableResult
+    public func post(_ path: String, parameterType: ParameterType = .json, parameters: Any? = nil, completion: @escaping (_ result: DataResult) -> Void) -> String {
+        return handleDataRequest(.post, path: path, parameterType: parameterType, parameters: parameters, responseType: .data, completion: completion)
     }
 
     /// POST request to the specified path, using the provided parameters.

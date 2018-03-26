@@ -21,9 +21,30 @@ public class NetworkModule{
             let jsonDic = json.seriailized()
             let url = (jsonDic["url"] as? String) ?? "";
             let method = (jsonDic["method"] as? String) ?? "get";
-            let header = (jsonDic["headers"] as? [String:String]) ?? [String:String]()
+            
+            let _header = jsonDic["headers"] as? [String: Any] ?? [String : Any]()
+            
+            var header = [String : String]()
+            
+            _header.forEach({ (key, value) in
+                if let _value = value as? String {
+                    if "content-type" == key{
+                        header["Content-Type"] = _value
+                    }else{
+                        header[key] = _value
+                    }
+                } else if let _value = value as? Bool {
+                    header[key] = String(_value)
+                } else if let _value = value as? Double {
+                    header[key] = String(_value)
+                }else if let _value = value as? Float {
+                    header[key] = String(_value)
+                }
+            })
+
             let params = (jsonDic["data"] as? [String:Any]) ?? [String:Any]()
-            // let type = (jsonDic["type"] as? String) ?? "raw";
+            
+            let contentType = header["Content-Type"] ?? "application/json"
             
             // 采用网络框架 发出请求
             let network = RBNetworking(baseURL: url)
@@ -32,21 +53,29 @@ public class NetworkModule{
             // 回调promise
             let p = Promise()
             
-            let callback: (JSONResult)->() = { (result) in
+            let callback: (DataResult)->() = { (result) in
                 print("==== response ==== \n")
-                print("\(result.toJSONString())")
                 switch (result) {
-                case .success(_):
-                    p.result = ["config":jsonDic,"data":result.toJSONString().seriailized()].jsonString()
+                case .success(let response):
+                    let _string = String(data: response.data, encoding: .utf8) ?? ""
+                    p.result = "{\"config\":\(args),\"data\":\(_string)}"
                 case .failure(let response):
                     p.result = ["error": ["response":["config":jsonDic],"message":response.error.localizedDescription]].jsonString()
                 }
             }
             
             if method == "get" {
-              network.get("", parameters: params, completion: callback)
+                network.get("", parameters: params, completion: callback)
             } else if method == "post" {
-              network.post("", parameters: params, completion: callback)
+                if contentType.contains("json"){
+                    network.post("", parameterType: RBNetworking.ParameterType.json, parameters: params, completion: callback)
+                }else if contentType.contains("form-data"){
+                    network.post("", parameterType: RBNetworking.ParameterType.multipartFormData, parameters: params, completion: callback)
+                }else if contentType.contains("x-www-form-urlencoded"){
+                    network.post("", parameterType: RBNetworking.ParameterType.formURLEncoded, parameters: params, completion: callback)
+                }else{
+                    network.post("", parameterType: RBNetworking.ParameterType.none, parameters: params, completion: callback)
+                }
             }
             //
             return p
