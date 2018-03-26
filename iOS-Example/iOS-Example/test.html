@@ -265,7 +265,7 @@
             return
         }
         console.log('异步调用原生插件 network.request get begin')
-        jsBridge.call('network', 'request',{'url':'https://postman-echo.com/get?test=123'} ,function (r) {
+        jsBridge.call('network', 'request',{'url':'https://postman-echo.com/get1?test=123'} ,function (r) {
           var _show = '异步调用原生插件 network.request get end，原生返回结果：' + r
           console.log(_show)
           document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
@@ -279,7 +279,7 @@
             return
         }
         console.log('异步调用原生插件 network.request post begin')
-        jsBridge.call('network','request',{'url':'https://postman-echo.com/post','data':{'foo':'bar'},'method':'post','header':{'Content-Type':'application/json'}} ,function (r) {
+        jsBridge.call('network','request',{'url':'https://postman-echo.com/post','data':{'foo':'bar'},'method':'post','headers':{'Content-Type':'application/json'}} ,function (r) {
           var _show = '异步调用原生插件 network.request post end，原生返回结果：' + r
           console.log(_show)
           document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show

@@ -21,7 +21,7 @@ public class NetworkModule{
             let jsonDic = json.seriailized()
             let url = (jsonDic["url"] as? String) ?? "";
             let method = (jsonDic["method"] as? String) ?? "get";
-            let header = (jsonDic["header"] as? [String:String]) ?? [String:String]()
+            let header = (jsonDic["headers"] as? [String:String]) ?? [String:String]()
             let params = (jsonDic["data"] as? [String:Any]) ?? [String:Any]()
             // let type = (jsonDic["type"] as? String) ?? "raw";
             
@@ -33,14 +33,13 @@ public class NetworkModule{
             let p = Promise()
             
             let callback: (JSONResult)->() = { (result) in
-                
                 print("==== response ==== \n")
                 print("\(result.toJSONString())")
                 switch (result) {
                 case .success(_):
-                    p.result = result.toJSONString()
+                    p.result = ["config":jsonDic,"data":result.toJSONString().seriailized()].jsonString()
                 case .failure(let response):
-                    p.result = ["error": response.error.localizedDescription].jsonString()
+                    p.result = ["error": ["response":["config":jsonDic],"message":response.error.localizedDescription]].jsonString()
                 }
             }
             

@@ -42,7 +42,7 @@ public class RWebkitPlugin {
     }
     
     public func reginsterPluginScript() -> String {
-        //return String(format:RWebView.jsMethodScript,self.module,self.module,self.module,self.name,self.module, self.name,self.module, self.name,self.module, self.name)
+
         return RWebView.jsMethodScript.replacingOccurrences(of: "module", with: self.module).replacingOccurrences(of: "method", with: self.name)
     }
     

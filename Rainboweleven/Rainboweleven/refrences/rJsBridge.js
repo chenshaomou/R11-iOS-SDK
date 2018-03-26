@@ -133,39 +133,18 @@ function initJsBridge(webViewType) {
         var requestStr = JSON.stringify(request || {})
         // ios WKWebView，执行window.prompt进行插件调用
         if (window.jsBridge.webViewType == 'WKWV') {
-            // 异步
-            if (async) {
-                window.prompt(window.jsBridge.webViewType, requestStr)
-            }
-            // 同步
-            else {
-                return window.prompt(window.jsBridge.webViewType, requestStr);
-            }
+            return window.prompt(window.jsBridge.webViewType, requestStr);
         }
         // 其他WebView
         else {
             // window.nativeBridge是由原生WebView API注册生成，各个平台具体实现可能不一样，android一般是个object，ios一般是个function
             // 如果window.nativeBridge是一个function，那么执行nativeBridge方法进行插件调用，如ios UIWebView
             if (typeof window.nativeBridge == 'function') {
-                // 异步
-                if (async) {
-                    window.nativeBridge(requestStr)
-                }
-                // 同步
-                else {
-                    return window.nativeBridge(requestStr)
-                }
+                return window.nativeBridge(requestStr)
             }
             // 如果nativeBridge是一个object，那么执行nativeBridge的call方法进行插件调用，如android WebView
             else if (typeof window.nativeBridge == 'object') {
-                // 异步
-                if (async) {
-                    window.nativeBridge.call(requestStr)
-                }
-                // 同步
-                else {
-                    return window.nativeBridge.call(requestStr)
-                }
+                return window.nativeBridge.call(requestStr)
             }
             // 没有定义nativeBridge对象或者nativeBridge为其他类型，暂时不支持
             else {
