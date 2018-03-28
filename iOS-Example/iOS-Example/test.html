@@ -69,6 +69,8 @@
                 
                 <div class="btn" onclick="netRequestGet()">异步调用网络get(不带参数)</div>
                 <div class="btn" onclick="netRequestPost()">异步调用网络post(对象)</div>
+                
+                <div class="btn" onclick="netRequestPostArray()">异步调用网络post(对象)</div>
             </div>
         </div>
     </body>
@@ -265,7 +267,7 @@
             return
         }
         console.log('异步调用原生插件 network.request get begin')
-        jsBridge.call('network', 'request',{'url':'https://postman-echo.com/get1?test=123'} ,function (r) {
+        jsBridge.call('network', 'request',{'url':'https://postman-echo.com/get?test=123'} ,function (r) {
           var _show = '异步调用原生插件 network.request get end，原生返回结果：' + r
           console.log(_show)
           document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
@@ -285,6 +287,20 @@
           document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
           })
           document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
+    }
+    
+    // 测试
+    function netRequestPostArray() {
+        if(!deviceReady){
+            return
+        }
+        console.log('异步调用原生插件 network.request post begin')
+        jsBridge.call('network','request',{'url':'http://121.40.220.225/api/Prepare/AddOrUpdateStepRecord','data':[{'RECORD_FLIGHT_ID':'2C5EC88880BD4A18B35B40E8CDDAD252','STEP_ID':'0012'},{'RECORD_FLIGHT_ID':'D5EBC4E6D4F8407FAE29AC0EDF70BFA6','STEP_ID':'0012'},{'RECORD_FLIGHT_ID':'381B2F93078D4DAAB15B5EF8F10B7F86','STEP_ID':'0012'},{'RECORD_FLIGHT_ID':'15DE476EF4FE45F78A2CD96B01B6D3BD','STEP_ID':'0012'},{'RECORD_FLIGHT_ID':'B652C5C6233D47E099C82CDD6CB8A190','STEP_ID':'0012'},{'RECORD_FLIGHT_ID':'349A7252A0BA49BF949351ED4DB68BD3','STEP_ID':'0012'},{'RECORD_FLIGHT_ID':'0D82EA967D26428DBD2B857891FD66AD','STEP_ID':'0012'},{'RECORD_FLIGHT_ID':'3C6DC667D0F54876AB560A14830E4A2D','STEP_ID':'0012'},{'RECORD_FLIGHT_ID':'FBE64D92B62A461DB31AD2A51DC9AD20','STEP_ID':'0012'}],'method':'post','headers':{'Content-Type':'application/json','Authorization':'Bearer Lq8532Aot_TzUvJeJm9M0jdxT7zaktDzQyIoUmjIojqDKm6GEfe9yokETefywOF7a3foca8LdfctCgNwUKqmHA-wpgfa1nZBsyrxzU6rTWr85DEcD1cA3O9vaRa5SjO8eiyDlCFO6jvjB5_-VGtqlfAi7L_URMtarPFJyfA2uxBQ-WB3V6qwI2g4NigyVc-hfOZWZsTE17WZe3d8qkB9AhmQogUt4McX1z1Sf9tm_VLZRJA4QCt0oTNASFl1EDkrFhG6PDo0gsynKT4y7IYS0zsybYMbzZmXOPb-6kN_6hfse-pXfxd1VorNIZlnhxcrIX5ShXdIO2i7EHGDRLHzVm7swnKoWYZhb0zFi5FQPscv7C2NZKm9DLrq-fRmZq3mjDw8ozdRDgFxinG59xHrO0VwW9cZzV4luRyWU8yQPd1ZICc5F-rXsmtQxH6kBHf1aTk8Z2Ns8Z4iUxyFbtIhplCFcITigq4R0ZxbofchntjyJTwDdsYswUv8XteoQ7mXlk9xywzrap8hMHpiMZwL29GuzLi2Z_5xVGuhmWJQIT6RMfmq90cXhE2qEa70s0z-25IEtOjK7ORsb41QSAkSo9KW966ZLk21x0mJiSgLfWe_ihVjoVe5YTEfGvQXqQCJTJyWKR-5LMzfdmNG0JAA9FZstdF3otU7OFbU9T4Moj78nUFVMgZO-WP-cYpcFDACFNN_9hnnLjf15ZITRcDf71uInuxBetSzRNDlorsi7430Q92ZHmNKLcH2Bd4gepjexzxA9d3Uqocx1inP0AgpcTPR1DQwA_6jc42j0mGWm2w'}} ,function (r) {
+                      var _show = '异步调用原生插件 network.request post end，原生返回结果：' + r
+                      console.log(_show)
+                      document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
+                      })
+                      document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
     }
     
     </script>

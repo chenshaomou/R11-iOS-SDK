@@ -42,7 +42,10 @@ public class NetworkModule{
                 }
             })
 
-            let params = (jsonDic["data"] as? [String:Any]) ?? [String:Any]()
+            var params:Any = [String:Any]()
+            if let paramsAny = jsonDic["data"] {
+                params = paramsAny
+            }
             
             let contentType = header["Content-Type"] ?? "application/json"
             
