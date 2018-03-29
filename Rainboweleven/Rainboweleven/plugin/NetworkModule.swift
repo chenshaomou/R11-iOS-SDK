@@ -71,6 +71,14 @@ public class NetworkModule{
                 network.get("", parameters: params, completion: callback)
             } else if method == "post" {
                 if contentType.contains("json"){
+                    
+                    //Fix JSON Error in iOS: Invalid top-level type in JSON write
+                    //顶级对象必须是 Dic / Array
+                    guard params is [Any] || params is [String : Any] else {
+                        p.result = ["error": ["response":["config":jsonDic],"message":"params 参数必须是对象或者数组"]].jsonString()
+                        return p
+                    }
+                    
                     network.post("", parameterType: RBNetworking.ParameterType.json, parameters: params, completion: callback)
                 }else if contentType.contains("form-data"){
                     network.post("", parameterType: RBNetworking.ParameterType.multipartFormData, parameters: params, completion: callback)
