@@ -67,7 +67,7 @@ public class Promise{
         self.result = result
     }
     
-    var result:String?{
+    public var result:String?{
         didSet{
             if let _resolveCallback = resolveCallback{
                 _resolveCallback(self.result)
