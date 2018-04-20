@@ -223,12 +223,13 @@ extension RWKWebView{
             self.evaluteJavaScriptSafey(javaScript: "")
         default:
             var param: String = ""
-            if let userInfo = notification.userInfo{
-                let dictData = try? JSONSerialization.data(withJSONObject: userInfo, options: [])
-                param = String(data: dictData!, encoding: String.Encoding.utf8)!
+            if let userInfo:[String: NSObject] = notification.userInfo as? [String: NSObject]{
+                if JSONSerialization.isValidJSONObject(userInfo){
+                    let dictData = try? JSONSerialization.data(withJSONObject: userInfo, options: [])
+                    param = String(data: dictData!, encoding: String.Encoding.utf8)!
+                }
             }
             let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, param)
-            print("didReceiveNotification.script:\(script)")
             self.evaluteJavaScriptSafey(javaScript: script)
             break
         }
