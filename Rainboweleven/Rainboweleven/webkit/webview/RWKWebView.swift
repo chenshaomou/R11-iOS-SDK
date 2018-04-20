@@ -222,7 +222,12 @@ extension RWKWebView{
             // 推动缓存马上执行
             self.evaluteJavaScriptSafey(javaScript: "")
         default:
-            let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, "")
+            var param: String = ""
+            if let userInfo = notification.userInfo{
+                let dictData = try? JSONSerialization.data(withJSONObject: userInfo, options: [])
+                param = String(data: dictData!, encoding: String.Encoding.utf8)!
+            }
+            let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, param)
             self.evaluteJavaScriptSafey(javaScript: script)
             break
         }
