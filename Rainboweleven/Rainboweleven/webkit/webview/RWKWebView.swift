@@ -228,6 +228,7 @@ extension RWKWebView{
                 param = String(data: dictData!, encoding: String.Encoding.utf8)!
             }
             let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, param)
+            print("didReceiveNotification.script:\(script)")
             self.evaluteJavaScriptSafey(javaScript: script)
             break
         }
