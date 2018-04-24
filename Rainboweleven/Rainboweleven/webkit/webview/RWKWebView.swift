@@ -185,7 +185,7 @@ extension RWKWebView {
                     if let error = error {
                         print("JSBridge: run callback fail \(error.localizedDescription) ; execute cache = \(exec)")
                     } else {
-                        print("JSBridge: run callback js success ; execute cache = \(exec)")
+                        // print("JSBridge: run callback js success ; execute cache = \(exec)")
                     }
                     
                     if let _theCompletionHandler = theCompletionHandler {
