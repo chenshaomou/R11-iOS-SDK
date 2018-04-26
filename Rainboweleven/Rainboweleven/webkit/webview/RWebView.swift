@@ -17,11 +17,13 @@ public protocol RWebViewProtocol {
     
     var scrollView: UIScrollView { get }
     
+    func evaluteJavaScriptSafey(javaScript : String, theCompletionHandler: @escaping ((Any?, Error?) -> Swift.Void))
+    
     func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)?)
 }
 
 open class RWebView: UIView,RWebViewProtocol {
-    
+ 
     internal var wv:RWebViewProtocol!
     open var scrollView: UIScrollView{
         get{
@@ -57,6 +59,10 @@ open class RWebView: UIView,RWebViewProtocol {
     
     public func loadLocalURL(url: String, hash: String? = nil) {
         wv.loadLocalURL(url:url, hash: hash)
+    }
+    
+    public func evaluteJavaScriptSafey(javaScript: String, theCompletionHandler: @escaping ((Any?, Error?) -> Void)) {
+        wv.evaluteJavaScriptSafey(javaScript: javaScript, theCompletionHandler: theCompletionHandler)
     }
     
     public func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){

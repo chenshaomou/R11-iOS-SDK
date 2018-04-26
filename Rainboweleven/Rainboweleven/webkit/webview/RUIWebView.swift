@@ -26,6 +26,10 @@ internal class RUIWebView: UIWebView ,RWebViewProtocol {
         }
     }
     
+    func evaluteJavaScriptSafey(javaScript: String, theCompletionHandler: @escaping ((Any?, Error?) -> Void)) {
+        
+    }
+    
     func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
     }
     
