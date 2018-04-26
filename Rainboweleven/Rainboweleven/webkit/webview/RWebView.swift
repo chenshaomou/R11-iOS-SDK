@@ -45,6 +45,7 @@ open class RWebView: UIView,RWebViewProtocol {
         //如果是iOS 8 以上系统就用 wkwebview 否用用 uiwebview
         if((UIDevice.current.systemVersion as NSString).floatValue >= 8.0){
             wv = RWKWebView(frame: frame)
+            wv.scrollView.bounces = true
         }else{
             wv = RUIWebView(frame: frame)
         }
