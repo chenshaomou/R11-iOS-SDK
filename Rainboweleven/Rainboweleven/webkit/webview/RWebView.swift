@@ -54,6 +54,10 @@ open class RWebView: UIView,RWebViewProtocol {
         self.addSubview(uv)
     }
     
+    public func webView() -> RWebViewProtocol {
+        return wv
+    }
+    
     public func loadRemoteURL(url: String, hash: String? = nil) {
         wv.loadRemoteURL(url:url, hash: hash)
     }
