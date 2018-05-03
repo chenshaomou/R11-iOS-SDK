@@ -17,11 +17,13 @@ public protocol RWebViewProtocol {
     
     var scrollView: UIScrollView { get }
     
+    func evaluteJavaScriptSafey(javaScript : String, theCompletionHandler: @escaping ((Any?, Error?) -> Swift.Void))
+    
     func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)?)
 }
 
 open class RWebView: UIView,RWebViewProtocol {
-    
+ 
     internal var wv:RWebViewProtocol!
     open var scrollView: UIScrollView{
         get{
@@ -43,6 +45,7 @@ open class RWebView: UIView,RWebViewProtocol {
         //如果是iOS 8 以上系统就用 wkwebview 否用用 uiwebview
         if((UIDevice.current.systemVersion as NSString).floatValue >= 8.0){
             wv = RWKWebView(frame: frame)
+            wv.scrollView.bounces = true
         }else{
             wv = RUIWebView(frame: frame)
         }
@@ -51,12 +54,22 @@ open class RWebView: UIView,RWebViewProtocol {
         self.addSubview(uv)
     }
     
+    open var webView: RWebViewProtocol{
+        get{
+            return wv
+        }
+    }
+    
     public func loadRemoteURL(url: String, hash: String? = nil) {
         wv.loadRemoteURL(url:url, hash: hash)
     }
     
     public func loadLocalURL(url: String, hash: String? = nil) {
         wv.loadLocalURL(url:url, hash: hash)
+    }
+    
+    public func evaluteJavaScriptSafey(javaScript: String, theCompletionHandler: @escaping ((Any?, Error?) -> Void)) {
+        wv.evaluteJavaScriptSafey(javaScript: javaScript, theCompletionHandler: theCompletionHandler)
     }
     
     public func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){

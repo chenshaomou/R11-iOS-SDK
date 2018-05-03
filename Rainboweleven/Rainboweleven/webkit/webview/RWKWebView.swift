@@ -10,7 +10,7 @@ import UIKit
 import WebKit
 
 class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
-    
+        
     weak open var theUIDelegate: WKUIDelegate?
     
     weak open var theNavigationDelegate : WKNavigationDelegate?
@@ -72,10 +72,59 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
         self.loadFileURL(_url, allowingReadAccessTo: _url)
     }
     
+    // MARK: - 确保线程安全地调用JS语句
+    public func evaluteJavaScriptSafey(javaScript: String, theCompletionHandler: @escaping ((Any?, Error?) -> Void)) {
+        
+        let now:UInt64 = UInt64(Date().timeIntervalSince1970 * 1000)
+        groupExecuteCache = "\(groupExecuteCache)\(javaScript)"
+        
+        //webview 的 jsbridge 还没有初始化完成 不执行
+        if (domLoadFinish == false){
+            return
+        }
+        
+        var delay = 0.0
+        if (now - groupExecuteLastTime) < 50, groupExecuteOnPending == false{
+            delay = groupExecuteInterval
+            groupExecuteOnPending = true
+        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay/1000.0 , execute: {[weak self] in
+            
+            guard let strongSelf = self else { return }
+            
+            objc_sync_enter(strongSelf.id)
+            
+            if (strongSelf.groupExecuteCache.count != 0){
+                
+                let exec = strongSelf.groupExecuteCache
+                strongSelf.evaluateJavaScript(exec, completionHandler: { [weak strongSelf] (any , error) in
+                    
+                    guard let _ = strongSelf else { return }
+                    
+                    if let error = error {
+                        print("JSBridge: run callback fail \(error.localizedDescription) ; execute cache = \(exec)")
+                    } else {
+                        // print("JSBridge: run callback js success ; execute cache = \(exec)")
+                    }
+                    
+                    if theCompletionHandler != nil {
+                        theCompletionHandler(any,error)
+                    }
+                })
+                
+                strongSelf.groupExecuteOnPending = false
+                strongSelf.groupExecuteCache = "";
+                strongSelf.groupExecuteLastTime = UInt64(Date().timeIntervalSince1970 * 1000)
+            }
+            objc_sync_exit(strongSelf.id)
+        })
+    }
+    
     func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
         let argsStr = arguments?.jsonString() ?? ""
         let js = "window.jsBridge.func.\(method)(JSON.stringify(\(argsStr)))"
-        self.evaluteJavaScriptSafey(javaScript: js,theCompletionHandler: completionHandler)
+        self.evaluteJavaScriptSafey(javaScript: js, theCompletionHandler: completionHandler!)
     }
     
     func webView(_ webView: WKWebView, runJavaScriptTextInputPanelWithPrompt prompt: String, defaultText: String?, initiatedByFrame frame: WKFrameInfo, completionHandler: @escaping (String?) -> Void) {
@@ -120,9 +169,9 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
                 }
 
                 let clearJsCallBackScript =  "delete window.jsBridge.callbacks.\(async);"
-                let js = "javascript: try { \(execJsCallBackScript)\(clearJsCallBackScript)} catch(e){};"
-                
-                strongSelf.evaluteJavaScriptSafey(javaScript: js)
+                // let js = "javascript: try { \(execJsCallBackScript)\(clearJsCallBackScript)} catch(e){};"
+                let js = "try { \(execJsCallBackScript)\(clearJsCallBackScript)} catch(e){};"
+                strongSelf.evaluteJavaScriptSafey(javaScript: js, theCompletionHandler: { (any, error) in })
             })
         }else{
             // 同步
@@ -150,59 +199,6 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
     
 }
 
-// MARK: - 确保线程安全地调用JS语句
-extension RWKWebView {
-    
-    public func evaluteJavaScriptSafey(javaScript : String,theCompletionHandler: ((Any?, Error?) -> Swift.Void)? = nil) {
-        
-        let now:UInt64 = UInt64(Date().timeIntervalSince1970 * 1000)
-        groupExecuteCache = "\(groupExecuteCache)\(javaScript)"
-        
-        //webview 的 jsbridge 还没有初始化完成 不执行
-        if (domLoadFinish == false){
-            return
-        }
-        
-        var delay = 0.0
-        if (now - groupExecuteLastTime) < 50, groupExecuteOnPending == false{
-            delay = groupExecuteInterval
-            groupExecuteOnPending = true
-        }
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay/1000.0 , execute: {[weak self] in
-            
-            guard let strongSelf = self else { return }
-            
-            objc_sync_enter(strongSelf.id)
-        
-            if (strongSelf.groupExecuteCache.count != 0){
-                
-                let exec = strongSelf.groupExecuteCache
-                strongSelf.evaluateJavaScript(exec, completionHandler: { [weak strongSelf] (any , error) in
-                    
-                    guard let _ = strongSelf else { return }
-                    
-                    if let error = error {
-                        print("JSBridge: run callback fail \(error.localizedDescription) ; execute cache = \(exec)")
-                    } else {
-                        print("JSBridge: run callback js success ; execute cache = \(exec)")
-                    }
-                    
-                    if let _theCompletionHandler = theCompletionHandler {
-                        _theCompletionHandler(any,error)
-                    }
-                })
-                
-                strongSelf.groupExecuteOnPending = false
-                strongSelf.groupExecuteCache = "";
-                strongSelf.groupExecuteLastTime = UInt64(Date().timeIntervalSince1970 * 1000)
-            }
-            objc_sync_exit(strongSelf.id)
-        })
-    }
-    
-}
-
 // MARK: - 向js广播消息处理
 extension RWKWebView{
     
@@ -216,14 +212,21 @@ extension RWKWebView{
         switch notification.name {
         case Notification.Name.UIApplicationDidBecomeActive:
             let script = String.init(format:RWebView.jsEventTigger, "onResume", "")
-            self.evaluteJavaScriptSafey(javaScript: script)
+            self.evaluteJavaScriptSafey(javaScript: script, theCompletionHandler: { (any, error) in })
         case NSNotification.Name("domLoadFinish"):
             self.domLoadFinish = true;
             // 推动缓存马上执行
-            self.evaluteJavaScriptSafey(javaScript: "")
+            self.evaluteJavaScriptSafey(javaScript: "", theCompletionHandler: { (any, error) in })
         default:
-            let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, "")
-            self.evaluteJavaScriptSafey(javaScript: script)
+            var param: String = ""
+            if let userInfo:[String: NSObject] = notification.userInfo as? [String: NSObject]{
+                if JSONSerialization.isValidJSONObject(userInfo){
+                    let dictData = try? JSONSerialization.data(withJSONObject: userInfo, options: [])
+                    param = String(data: dictData!, encoding: String.Encoding.utf8)!
+                }
+            }
+            let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, param)
+            self.evaluteJavaScriptSafey(javaScript: script, theCompletionHandler: { (any, error) in })
             break
         }
     }

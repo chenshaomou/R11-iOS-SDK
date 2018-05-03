@@ -2,7 +2,7 @@
 
 ## 项目支持Carthage引入
 ```SHELL
-github "chenshaomou/R11-iOS-SDK" "master"
+github "chenshaomou/R11-iOS-SDK" "0.0.3"
 ```
 
 ## Carthage安装
