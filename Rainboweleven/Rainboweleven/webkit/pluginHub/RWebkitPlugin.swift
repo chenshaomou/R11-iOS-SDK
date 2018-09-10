@@ -61,6 +61,9 @@ public class Promise{
     
     public static let emptyValue = ""
     
+    // 是否继续回调
+    public var continuous = false
+    
     public init(){}
     
     public init(_ result:String){

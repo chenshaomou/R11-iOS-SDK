@@ -167,8 +167,10 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
                 }else{
                     execJsCallBackScript = "window.jsBridge.callbacks.\(async)('\(callbackResult)');"
                 }
-
-                let clearJsCallBackScript =  "delete window.jsBridge.callbacks.\(async);"
+                var clearJsCallBackScript =  "delete window.jsBridge.callbacks.\(async);"
+                if (p.continuous) {
+                    clearJsCallBackScript = ""
+                }
                 // let js = "javascript: try { \(execJsCallBackScript)\(clearJsCallBackScript)} catch(e){};"
                 let js = "try { \(execJsCallBackScript)\(clearJsCallBackScript)} catch(e){};"
                 strongSelf.evaluteJavaScriptSafey(javaScript: js, theCompletionHandler: { (any, error) in })
