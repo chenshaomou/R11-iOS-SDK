@@ -4,6 +4,26 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeName</key>
+			<string>com.myapp.common-data</string>
+			<key>LSHandlerRank</key>
+			<string>Default</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.adobe.pdf</string>
+				<string>com.microsoft..powerpoint.pptx</string>
+				<string>com.microsoft.powerpoint.ppt</string>
+				<string>com.microsoft.word.docx</string>
+				<string>com.microsoft.word.doc</string>
+				<string>com.microsoft.excel.xlsx</string>
+				<string>com.microsoft.excel.xls</string>
+				<string>com.adobe.pdf</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

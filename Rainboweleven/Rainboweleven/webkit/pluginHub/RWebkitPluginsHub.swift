@@ -82,6 +82,7 @@ public class RWebkitPluginsHub {
         let eventsModule = EventsModule()
         let storeModule = StoreModule()
         let netWorkModule = NetworkModule()
+        let documentModule = DocumentModule()
         
         addPlugin(plugin: appInfoModule.version())
         addPlugin(plugin: eventsModule.eventTigger())
@@ -89,6 +90,8 @@ public class RWebkitPluginsHub {
         addPlugin(plugin: storeModule.setValue())
         addPlugin(plugin: storeModule.removeValue())
         addPlugin(plugin: netWorkModule.request())
+        addPlugin(plugin: netWorkModule.download())
+        addPlugin(plugin: documentModule.open())
     }
     
 }

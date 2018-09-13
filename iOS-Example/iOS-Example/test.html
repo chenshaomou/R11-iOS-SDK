@@ -55,9 +55,11 @@
                 <div class="btn" onclick="callSynArgs()">同步调用原生插件(带参数,字典)</div>
                 <div class="btn" onclick="callSynArgsObj()">同步调用原生插件对象(带参数,字典)</div>
                 <div class="btn" onclick="callSynStringArgs()">同步调用原生插件(带参数,字符串)</div>
-                <div class="btn" onclick="callASynStringArgs()">异步调用原生插件(参数,字符串)</div>
+                <div class="btn" onclick="callASynStringArgs()">异步调用原生插件打开(参数,字符串)</div>
                 <div class="btn" onclick="callASyn()">异步调用插件(不带参数)</div>
                 <div class="btn" onclick="callASynArgs()">异步调用原生插件(参数,字典)</div>
+                <div class="btn" onclick="callASynArgsDown()">异步调用原生插件下载(参数,字典)</div>
+                <div class="btn" onclick="callASynArgsOpen()">异步调用原生插件打开文档(参数,字典)</div>
                 <div class="btn" onclick="callASynStoreObj()">异步调用原生插件对象(store对象,字典)</div>
                 <div class="btn" onclick="eventOn()">注册事件(不带参数)</div>
                 <div class="btn" onclick="eventSend()">发送事件(不带参数)</div>
@@ -141,7 +143,7 @@
             return
         }
         console.log('异步调用原生插件 store.remove (参数,字符串) begin')
-        jsBridge.call('store', 'remove', 'foo1', function (r) {
+        jsBridge.call('document', 'open', 'foo1', function (r) {
               var _show = '异步调用原生插件 store.remove (参数,字符串) end，原生返回结果：' + r
               console.log(_show)
               document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
@@ -162,7 +164,6 @@
         })
         document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
     }
-    
     // 异步调用原生插件(参数,字典)
     function callASynArgs() {
         if(!deviceReady){
@@ -170,11 +171,38 @@
         }
         console.log('异步调用原生插件 store.set (参数,字典) begin')
         jsBridge.call('store', 'set', {'foo': 'bar'}, function (r) {
-              var _show = '异步调用原生插件 store.set (参数,字符串) end，原生返回结果：' + r
-              console.log(_show)
-              document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
+        var _show = '异步调用原生插件 store.set (参数,字符串) end，原生返回结果：' + r
+        console.log(_show)
+        document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
+
+    })
+    document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
+    }
+    
+    // 异步调用原生插件下载(参数,字典)
+    function callASynArgsDown() {
+        if(!deviceReady){
+            return
+        }
+        jsBridge.call('network', 'download', {'url': 'http://61.139.73.62:9092/Admin/UserControl/upload/Impo1425740.pdf'}, function (r) {
+              var _show = JSON.parse(r)
+              console.log(_show.downloading)
+              document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + (_show.data.precent || _show.data.url ||_show.error.msg)
         })
         document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
+    }
+    
+    // 异步调用原生插件打开文档(参数,字典)
+    function callASynArgsOpen() {
+        if(!deviceReady){
+            return
+        }
+        jsBridge.call('document', 'open', {'url': '/Documents/Impo1425740.pdf'}, function (r) {
+                      var _show = JSON.parse(r)
+                      console.log(_show.downloading)
+                      document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + (_show.data.present || _show.data.url ||_show.error.msg)
+                      })
+                      document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
     }
     
     // 异步调用原生插件(store对象,字典)

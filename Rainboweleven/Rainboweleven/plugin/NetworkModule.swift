@@ -10,6 +10,7 @@ import Foundation
 public class NetworkModule{
     
     static let moduleName = "network"
+    let downloader = Downloader()
     public func request() -> RWebkitPlugin{
         
         return RWebkitPlugin("request", { (args) -> Promise in
@@ -88,6 +89,65 @@ public class NetworkModule{
                     network.post("", parameterType: RBNetworking.ParameterType.none, parameters: params, completion: callback)
                 }
             }
+            //
+            return p
+        }, NetworkModule.moduleName)
+    }
+    // 下载
+    public func download() -> RWebkitPlugin{
+        
+        return RWebkitPlugin("download", { (args) -> Promise in
+            // 判断参数
+            guard let json = args as? String else {
+                return Promise(Promise.emptyValue)
+            }
+            // 获取请求参数
+            let jsonDic = json.seriailized()
+            let url = (jsonDic["url"] as? String) ?? "";
+//            let method = (jsonDic["method"] as? String) ?? "get";
+            
+            let _header = jsonDic["headers"] as? [String: Any] ?? [String : Any]()
+            
+            var header = [String : String]()
+            
+            _header.forEach({ (key, value) in
+                if let _value = value as? String {
+                    if "content-type" == key{
+                        header["Content-Type"] = _value
+                    }else{
+                        header[key] = _value
+                    }
+                } else if let _value = value as? Bool {
+                    header[key] = String(_value)
+                } else if let _value = value as? Double {
+                    header[key] = String(_value)
+                }else if let _value = value as? Float {
+                    header[key] = String(_value)
+                }
+            })
+            
+            // 回调promise
+            let p = Promise()
+            // 设置持续回调
+            p.continuous = true
+            let callback: (String)->() = { (result) in
+                let resJson = result.seriailized()
+                // 若非下载中，切已完成下载，则证明已经下载完成。设置持续回调为false
+                let downloading = (resJson["downloading"] as? Bool) ?? false
+                let successed = (resJson["successed"] as? Bool) ?? false
+                if (!downloading) {
+                    if (successed) {
+                        // 下载完成后停止持续回调
+                        p.continuous = false
+                    }
+                }
+                print(resJson.jsonString())
+                p.result = resJson.jsonString()
+            }
+            
+            // 采用网络框架 发出下载文件请求
+            self.downloader.download(url: url,callBack:callback)
+            
             //
             return p
         }, NetworkModule.moduleName)
