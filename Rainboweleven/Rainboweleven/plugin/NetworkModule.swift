@@ -129,7 +129,7 @@ public class NetworkModule{
             // 回调promise
             let p = Promise()
             // 设置持续回调
-            p.continuous = true
+            // p.continuous = true
             let callback: (String)->() = { (result) in
                 let resJson = result.seriailized()
                 // 若非下载中，切已完成下载，则证明已经下载完成。设置持续回调为false
@@ -138,11 +138,17 @@ public class NetworkModule{
                 if (!downloading) {
                     if (successed) {
                         // 下载完成后停止持续回调
-                        p.continuous = false
+                        // p.continuous = false
+                        
                     }
+                    print("download finish ....")
+                    p.result = resJson.jsonString()
+                } else {
+                    print("push to downloading ...")
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "onDownload"), object: nil, userInfo: ["result" : resJson])
                 }
                 print(resJson.jsonString())
-                p.result = resJson.jsonString()
+                
             }
             
             // 采用网络框架 发出下载文件请求

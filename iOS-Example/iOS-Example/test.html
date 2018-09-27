@@ -184,11 +184,20 @@
         if(!deviceReady){
             return
         }
+        //
         jsBridge.call('network', 'download', {'url': 'http://61.139.73.62:9092/Admin/UserControl/upload/Impo1425740.pdf'}, function (r) {
               var _show = JSON.parse(r)
               console.log(_show.downloading)
               document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + (_show.data.precent || _show.data.url ||_show.error.msg)
+              jsBridge.off('onDownload')
         })
+        //
+        jsBridge.on('onDownload', function(r){
+            console.log('--- onDownload - Result = ' + r)
+            var _show = JSON.parse(r)
+            document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + (_show.result.data.precent)
+        })
+        //
         document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
     }
     
@@ -202,6 +211,8 @@
                       console.log(_show.downloading)
                       document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + (_show.data.present || _show.data.url ||_show.error.msg)
                       })
+        // 采用事件来做回调
+        // 事件回调
                       document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
     }
     

@@ -54,7 +54,9 @@ public class Downloader : NSObject, URLSessionDownloadDelegate {
         } catch let e {
             result = ["successed":false,"downloading":false,"data":[],"error":["msg":"\(e)"]].jsonString()
         }
-        self.downloadCallBack!(result)
+        if let callback = self.downloadCallBack {
+            callback(result)
+        }
     }
     
     // 监听进度代理方法，多次调用
@@ -65,6 +67,8 @@ public class Downloader : NSObject, URLSessionDownloadDelegate {
         let precent = String.init(format: "%0.2f", written/total * 100)
         // 返回结果
         let result = ["successed":false,"downloading":true,"data":["precent":precent],"error":[]].jsonString()
-        self.downloadCallBack!(result)
+        if let callback = self.downloadCallBack {
+            callback(result)
+        }
     }
 }
