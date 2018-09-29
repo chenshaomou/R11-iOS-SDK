@@ -50,7 +50,7 @@ public class Downloader : NSObject, URLSessionDownloadDelegate {
         do {
             try fileManager.moveItem(atPath: location.path, toPath: self.documentDir)
             print("文件移动到沙盒：\(self.documentDir)")
-            result = ["successed":true,"downloading":false,"data":["url":"/Documents/\(self.fileName)"],"error":[]].jsonString()
+            result = ["successed":true,"downloading":false,"data":["url":"/\(self.fileName)"],"error":[]].jsonString()
         } catch let e {
             result = ["successed":false,"downloading":false,"data":[],"error":["msg":"\(e)"]].jsonString()
         }
