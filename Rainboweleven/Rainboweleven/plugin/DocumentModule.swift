@@ -52,7 +52,7 @@ public class DocumentModule {
                 p.result = resJson.jsonString()
             }
             // 拼接文件沙盒路径
-            url = NSHomeDirectory() + url
+            url = NSHomeDirectory() + "/Documents/" + url
             print("拼接后的路径为：\(url)")
             // 调用文件处理工具弹出提示窗
             DocumentModule.documentHandler.openFile(urlString: url, callBack: callback)
