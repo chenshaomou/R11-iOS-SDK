@@ -8,9 +8,15 @@
 
 import Foundation
 
+// 文档处理插件
 public class DocumentModule {
+    
+    // 插件模块名称
     static let moduleName = "document"
+    // 文件处理类
     static let documentHandler = DocumentHandler()
+    
+    // 打开文件
     public func open() -> RWebkitPlugin{
         
         return RWebkitPlugin("open", { (args) -> Promise in
@@ -21,8 +27,6 @@ public class DocumentModule {
             // 获取请求参数
             let jsonDic = json.seriailized()
             var url = (jsonDic["url"] as? String) ?? "";
-            //            let method = (jsonDic["method"] as? String) ?? "get";
-            
             let _header = jsonDic["headers"] as? [String: Any] ?? [String : Any]()
             
             var header = [String : String]()

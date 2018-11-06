@@ -184,8 +184,10 @@
         if(!deviceReady){
             return
         }
-        //
-        jsBridge.call('network', 'download', {'url': 'http://61.139.73.62:9092/Admin/UserControl/upload/Impo1425740.pdf'}, function (r) {
+        // http://61.139.73.62:9092/Education/Documents/飞行部管理手册第二版（2016-03-29）.pdf
+        // http://61.139.73.62:9092/Admin/UserControl/upload/Impo1425740.pdf
+        var url = "http://61.139.73.62:9092/Education/Documents/飞行部管理手册第二版（2016-03-29）.pdf"
+        jsBridge.call('network', 'download', {'url': url}, function (r) {
               var _show = JSON.parse(r)
               console.log(_show.downloading)
               document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + (_show.data.precent || _show.data.url ||_show.error.msg)

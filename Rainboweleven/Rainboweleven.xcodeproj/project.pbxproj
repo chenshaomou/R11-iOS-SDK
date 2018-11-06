@@ -26,6 +26,7 @@
 		92794A712063BD290033E469 /* FormDataPart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A642063BD290033E469 /* FormDataPart.swift */; };
 		92794A722063BD290033E469 /* Networking.h in Headers */ = {isa = PBXBuildFile; fileRef = 92794A652063BD290033E469 /* Networking.h */; };
 		929BE5FF2005ACDD00E2DEA7 /* Collection+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929BE5FE2005ACDD00E2DEA7 /* Collection+JSON.swift */; };
+		92B8242D21919B3200871A83 /* Number+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B8242C21919B3200871A83 /* Number+Extension.swift */; };
 		92CA5A9C20074F7000D5D05C /* RWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA5A9720074F6F00D5D05C /* RWebView.swift */; };
 		92CA5A9D20074F7000D5D05C /* RWebView+Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA5A9820074F6F00D5D05C /* RWebView+Constants.swift */; };
 		92CA5A9E20074F7000D5D05C /* RWKWebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92CA5A9920074F6F00D5D05C /* RWKWebView.swift */; };
@@ -61,6 +62,7 @@
 		92794A652063BD290033E469 /* Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Networking.h; sourceTree = "<group>"; };
 		929BE5FE2005ACDD00E2DEA7 /* Collection+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+JSON.swift"; sourceTree = "<group>"; };
 		929D1D0F1FE7457B001F4D14 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = ../Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
+		92B8242C21919B3200871A83 /* Number+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Number+Extension.swift"; sourceTree = "<group>"; };
 		92CA5A9720074F6F00D5D05C /* RWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RWebView.swift; sourceTree = "<group>"; };
 		92CA5A9820074F6F00D5D05C /* RWebView+Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RWebView+Constants.swift"; sourceTree = "<group>"; };
 		92CA5A9920074F6F00D5D05C /* RWKWebView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RWKWebView.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 			children = (
 				92794A582063BD290033E469 /* network */,
 				929BE5FE2005ACDD00E2DEA7 /* Collection+JSON.swift */,
+				92B8242C21919B3200871A83 /* Number+Extension.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 				92CA5A9E20074F7000D5D05C /* RWKWebView.swift in Sources */,
 				92CA5A9C20074F7000D5D05C /* RWebView.swift in Sources */,
 				92794A6D2063BD290033E469 /* Response.swift in Sources */,
+				92B8242D21919B3200871A83 /* Number+Extension.swift in Sources */,
 				8F630C8A205A5ACD0033C33A /* NetworkModule.swift in Sources */,
 				B4D8F5CF2148BA20008CF2C0 /* DocumentHandler.swify.swift in Sources */,
 				92794A702063BD290033E469 /* FakeRequest.swift in Sources */,
