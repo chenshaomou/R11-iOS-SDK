@@ -97,7 +97,7 @@ public class Downloader : NSObject, URLSessionDownloadDelegate {
     public func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
         // 计算下载百分比
         let written: Float = totalBytesWritten.toFloat()
-        let total: Float = totalBytesWritten.toFloat()
+        let total: Float = totalBytesExpectedToWrite.toFloat()
         let precent = String(format: "%0.2f", written/total * 100)
         // 返回结果
         let result = ["successed": false,
