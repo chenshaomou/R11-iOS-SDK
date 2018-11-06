@@ -30,21 +30,34 @@ public class Downloader : NSObject, URLSessionDownloadDelegate {
     func download(url: String, callBack: @escaping DownloadCallBack){
         // 判断 url 是否正确
         var result:String = ""
-        //
-        guard let requestUrl = URL(string: url) else {
+        // 中文处理
+        guard let encodingUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             result = ["successed": false,
                       "downloading": false,
                       "data": [],
-                      "error": ["msg":"url不合法"]].jsonString()
+                      "error": ["msg": "url不合法, url :" + url]].jsonString()
             callBack(result)
             return
         }
+        //
+        guard let requestUrl = URL(string: encodingUrl) else {
+            result = ["successed": false,
+                      "downloading": false,
+                      "data": [],
+                      "error": ["msg": "url不合法 url :" + url]].jsonString()
+            callBack(result)
+            return
+        }
+        //
+        // let appStoreURL = "https://itunes.apple.com/cn/app/我的应用/id1291676834?mt=8"
+        // let url = appStoreURL.addingPercentEscapes(using: String.Encoding.utf8) /
+        // let url = appStoreURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         // 用传入的url初始化请求
         let request = URLRequest(url: requestUrl)
         // 初始化下载任务
         let downloadTast = session.downloadTask(with: request)
         // 根据url获取文件名
-        self.fileName = URL(string: url)!.lastPathComponent
+        self.fileName = requestUrl.lastPathComponent
         // 根据url获取文件名然后拼接到下载目标路径上
         self.documentDir = "\(NSHomeDirectory())/Documents/" + self.fileName
         // 判断要下载的文件是否存在

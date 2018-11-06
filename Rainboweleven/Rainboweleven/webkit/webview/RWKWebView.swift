@@ -212,7 +212,7 @@ extension RWKWebView{
         }
         
         switch notification.name {
-        case Notification.Name.UIApplicationDidBecomeActive:
+        case UIApplication.didBecomeActiveNotification:
             let script = String.init(format:RWebView.jsEventTigger, "onResume", "")
             self.evaluteJavaScriptSafey(javaScript: script, theCompletionHandler: { (any, error) in })
         case NSNotification.Name("domLoadFinish"):

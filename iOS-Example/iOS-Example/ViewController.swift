@@ -26,18 +26,18 @@ class ViewController: UIViewController {
         let bt = UIButton()
         self.view.addSubview(bt)
         bt.translatesAutoresizingMaskIntoConstraints = false
-        bt.setTitle("原生button按钮，原生调用JS方法", for: UIControlState.normal)
+        bt.setTitle("原生button按钮，原生调用JS方法", for: UIControl.State.normal)
         bt.backgroundColor = UIColor.red
-        let high = NSLayoutConstraint(item: bt, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1.0, constant: 44)
+        let high = NSLayoutConstraint(item: bt, attribute: NSLayoutConstraint.Attribute.height, relatedBy: NSLayoutConstraint.Relation.equal, toItem: nil, attribute: NSLayoutConstraint.Attribute.notAnAttribute, multiplier: 1.0, constant: 44)
         //自身约束自己添加
         bt.addConstraint(high)
         //与其它的约束父节点添加
-        let bottom = NSLayoutConstraint(item: bt, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: -20.0)
-        let left = NSLayoutConstraint(item: bt, attribute: NSLayoutAttribute.left, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.left, multiplier: 1.0, constant: 10.0)
-        let right = NSLayoutConstraint(item: bt, attribute: NSLayoutAttribute.right, relatedBy: NSLayoutRelation.equal, toItem: self.view, attribute: NSLayoutAttribute.right, multiplier: 1.0, constant: -10.0)
+        let bottom = NSLayoutConstraint(item: bt, attribute: NSLayoutConstraint.Attribute.bottom, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.view, attribute: NSLayoutConstraint.Attribute.bottom, multiplier: 1.0, constant: -20.0)
+        let left = NSLayoutConstraint(item: bt, attribute: NSLayoutConstraint.Attribute.left, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.view, attribute: NSLayoutConstraint.Attribute.left, multiplier: 1.0, constant: 10.0)
+        let right = NSLayoutConstraint(item: bt, attribute: NSLayoutConstraint.Attribute.right, relatedBy: NSLayoutConstraint.Relation.equal, toItem: self.view, attribute: NSLayoutConstraint.Attribute.right, multiplier: 1.0, constant: -10.0)
         self.view.addConstraints([bottom,left,right])
         
-        bt.addTarget(self, action: #selector(didClickNativeCallJSButton(button:)), for: UIControlEvents.touchUpInside)
+        bt.addTarget(self, action: #selector(didClickNativeCallJSButton(button:)), for: UIControl.Event.touchUpInside)
         
     }
     

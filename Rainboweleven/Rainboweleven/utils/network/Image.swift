@@ -32,7 +32,7 @@ extension Image {
         #if os(OSX)
             return data(.png)
         #else
-            return UIImagePNGRepresentation(self)
+            return self.pngData()
         #endif
     }
 
@@ -40,7 +40,7 @@ extension Image {
         #if os(OSX)
             return data(.jpeg)
         #else
-            return UIImageJPEGRepresentation(self, 1)
+            return self.jpegData(compressionQuality: 1)
         #endif
     }
 }
