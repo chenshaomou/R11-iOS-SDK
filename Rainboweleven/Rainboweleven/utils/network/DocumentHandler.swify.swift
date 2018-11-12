@@ -7,41 +7,39 @@
 //
 
 import Foundation
+
+// 文件打开处理类
 public class DocumentHandler: UIViewController, UIDocumentInteractionControllerDelegate {
+    // 文件处理视图
     private var documentVC: UIDocumentInteractionController?
+    // 类型回调
     typealias DocumentCallBack = (String) -> ()
+    // 回调
     var documentCallBack: DocumentCallBack?
+    // 打开文件
     func openFile(urlString: String, callBack: @escaping DocumentCallBack) {
-        print("要打开的文件路径为： \(urlString)")
+        print("DocumentHandler --- > open file urlString = \(urlString)")
+        //
         let url = URL(fileURLWithPath: urlString)
+        //
         self.documentVC = UIDocumentInteractionController(url: url)
-        if self.documentVC != nil {
-            self.documentVC!.delegate = self
+        //
+        if let documentVC = self.documentVC {
+            documentVC.delegate = self
             let topView = UIApplication.shared.keyWindow?.rootViewController?.view
             // 弹出预览界面
-//            self.documentVC!.presentPreview(animated: true)
             // 弹出分享对话框
-            self.documentVC!.presentOpenInMenu(from: UIScreen.main.bounds, in: topView!, animated: true)
+            documentVC.presentOpenInMenu(from: UIScreen.main.bounds, in: topView!, animated: true)
         }
-        let result = ["successed":true,"downloading":false,"data":[],"error":[]].jsonString()
+        let result = [
+            "successed" : true,
+            "downloading" : false,
+            "data" :[],
+            "error":[]].jsonString()
         callBack(result)
     }
+    //
     public func documentInteractionControllerDidDismissOpenInMenu(_ controller: UIDocumentInteractionController) {
-        print("代理方法2: \(controller)")
+        print("DocumentHandler | DocumentInteractionControllerDidDismissOpenInMenu : \(controller)")
     }
-//    public func documentInteractionControllerWillPresentOptionsMenu(_ controller: UIDocumentInteractionController) {
-//        print("代理方法1")
-//    }
-//    public func documentInteractionControllerViewForPreview(_ controller: UIDocumentInteractionController) -> UIView? {
-//        let topView = UIApplication.shared.keyWindow?.rootViewController?.view
-//        return topView
-//    }
-//    public func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
-//        let topVC = UIApplication.shared.keyWindow?.rootViewController
-//        return topVC!
-//    }
-//    public func documentInteractionControllerRectForPreview(_ controller: UIDocumentInteractionController) -> CGRect {
-//        let topView = UIApplication.shared.keyWindow?.rootViewController?.view
-//        return topView!.frame
-//    }
 }

@@ -186,7 +186,8 @@
         }
         // http://61.139.73.62:9092/Education/Documents/飞行部管理手册第二版（2016-03-29）.pdf
         // http://61.139.73.62:9092/Admin/UserControl/upload/Impo1425740.pdf
-        var url = "http://61.139.73.62:9092/Education/Documents/飞行部管理手册第二版（2016-03-29）.pdf"
+        // http://61.139.73.62:9092/Education/Documents/A320模拟机训练课件.part1.rar
+        var url = "http://61.139.73.62:9092/Education/Documents/A320模拟机训练课件.part1.rar"
         jsBridge.call('network', 'download', {'url': url}, function (r) {
               var _show = JSON.parse(r)
               console.log(_show.downloading)
@@ -208,7 +209,7 @@
         if(!deviceReady){
             return
         }
-        jsBridge.call('document', 'open', {'url': '/Documents/Impo1425740.pdf'}, function (r) {
+        jsBridge.call('document', 'open', {'url': '/Documents/A320模拟机训练课件.part1.rar'}, function (r) {
                       var _show = JSON.parse(r)
                       console.log(_show.downloading)
                       document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + (_show.data.present || _show.data.url ||_show.error.msg)
