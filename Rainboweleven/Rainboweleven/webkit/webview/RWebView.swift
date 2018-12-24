@@ -22,9 +22,17 @@ public protocol RWebViewProtocol {
     func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)?)
 }
 
+public enum RWebKitType{
+    case UIWebView
+    case WKWebView
+}
+
 open class RWebView: UIView,RWebViewProtocol {
  
     internal var wv:RWebViewProtocol!
+    // 可指定WebKit类型
+    open var customWebKit: RWebKitType?
+    
     open var scrollView: UIScrollView{
         get{
             return wv.scrollView
@@ -42,14 +50,29 @@ open class RWebView: UIView,RWebViewProtocol {
     }
     
     fileprivate func setUpWebView() {
-        //如果是iOS 8 以上系统就用 wkwebview 否用用 uiwebview
-        if((UIDevice.current.systemVersion as NSString).floatValue >= 8.0){
-            wv = RWKWebView(frame: frame)
-            wv.scrollView.bounces = true
-        }else{
-            wv = RUIWebView(frame: frame)
+        //
+        if let type = self.customWebKit {
+            //
+            switch type {
+            case .UIWebView:
+                wv = RUIWebView(frame: frame)
+                break
+            case .WKWebView:
+                wv = RWKWebView(frame: frame)
+                wv.scrollView.bounces = true
+                break
+            }
+        //
+        } else {
+            //如果是iOS 8 以上系统就用 WKWebview 否用用 UIWebview
+            if((UIDevice.current.systemVersion as NSString).floatValue >= 8.0){
+                wv = RWKWebView(frame: frame)
+                wv.scrollView.bounces = true
+            }else{
+                wv = RUIWebView(frame: frame)
+            }
         }
-        
+        //
         let uv = wv as! UIView
         self.addSubview(uv)
     }
