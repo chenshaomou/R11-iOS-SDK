@@ -37,6 +37,16 @@ open class RWebView: UIView,RWebViewProtocol {
     }
     // 可指定WebKit类型
     open var customWebKit: RWebKitType?
+    open var uiwebView: UIWebView? {
+        get {
+            return wv as? UIWebView
+        }
+    }
+    open var wkwebView: WKWebView? {
+        get {
+            return wv as? WKWebView
+        }
+    }
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
