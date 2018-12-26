@@ -202,24 +202,28 @@
         })
     }
     
-    // 发送事件(不带参数)
-    function eventSend() {
-        if(!deviceReady){
-            return
-        }
-        console.log('发送事件(不带参数) begin')
-        var _result = jsBridgeUIWV.send('testEvent')
-        console.log('发送事件(不带参数) end，原生返回结果：' + _result)
-    }
     // 发送事件(带参数)
     function eventSendArgs() {
         if(!deviceReady){
             return
         }
         console.log('发送事件(带参数) begin')
-        var _result = rjsBridge.send('testEvent', {'height': 100})
+        var sendBridge = jsBridgeUIWV || window.jsBridge
+        var _result = sendBridge.send('testEvent', {'height': 100})
         console.log('发送事件(带参数) end，原生返回结果：' + _result)
     }
+    
+    // 发送事件(不带参数)
+    function eventSend() {
+        if(!deviceReady){
+            return
+        }
+        console.log('发送事件(不带参数) begin')
+        var sendBridge = jsBridgeUIWV || window.jsBridge
+        var _result = sendBridge.send('testEvent')
+        console.log('发送事件(不带参数) end，原生返回结果：' + _result)
+    }
+    
     // 取消事件()
     function eventOff() {
         if(!deviceReady){
