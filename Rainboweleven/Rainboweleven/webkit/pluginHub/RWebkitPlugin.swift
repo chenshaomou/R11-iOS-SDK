@@ -41,7 +41,7 @@ public class RWebkitPlugin {
         return "\(module).\(name)"
     }
     
-    public func reginsterPluginScript() -> String {
+    public func registerPluginScript() -> String {
 
         return RWebView.jsMethodScript.replacingOccurrences(of: "module", with: self.module).replacingOccurrences(of: "method", with: self.name)
     }
