@@ -62,6 +62,7 @@
                 <div class="btn" onclick="eventOn()">注册事件(不带参数)</div>
                 <div class="btn" onclick="eventSend()">发送事件(不带参数)</div>
                 <div class="btn" onclick="eventSendArgs()">发送事件(带参数)</div>
+                <div class="btn" onclick="uiwebViewSync()">测试UIWebView同步</div>
                 <div class="btn" onclick="eventOff()">取消事件()</div>
                 <div class="btn" onclick="promiseASynArgs()">promise异步调用原生插件(参数,字典)</div>
                 <div class="btn" onclick="promiseASyn()">promise异步调用插件(不带参数)</div>
@@ -208,7 +209,7 @@
             return
         }
         console.log('发送事件(带参数) begin')
-        var sendBridge = jsBridgeUIWV || window.jsBridge
+        var sendBridge = window.jsBridge
         var _result = sendBridge.send('testEvent', {'height': 100})
         console.log('发送事件(带参数) end，原生返回结果：' + _result)
     }
@@ -219,7 +220,7 @@
             return
         }
         console.log('发送事件(不带参数) begin')
-        var sendBridge = jsBridgeUIWV || window.jsBridge
+        var sendBridge = window.jsBridge
         var _result = sendBridge.send('testEvent')
         console.log('发送事件(不带参数) end，原生返回结果：' + _result)
     }
@@ -305,6 +306,12 @@
                       document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + _show
                       })
                       document.getElementById("content").innerHTML = "此处js方法执行完毕，等待异步执行结果...<br/>"
+    }
+    // 测试 UIWebView同步
+    function uiwebViewSync() {
+      var sendBridge = jsBridgeUIWV || window.jsBridge
+      var res = sendBridge.test()
+      alert(res)
     }
     
     </script>

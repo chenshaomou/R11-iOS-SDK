@@ -68,7 +68,7 @@ public class RWebkitPluginsHub {
         
         let _scripts = plugins.reduce("") { (result, arg) -> String in
             let (_, plugin) = arg
-            return result.appending(plugin.reginsterPluginScript())
+            return result.appending(plugin.registerPluginScript())
         }
         
         // promise 插件
