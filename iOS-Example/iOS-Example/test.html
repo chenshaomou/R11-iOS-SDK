@@ -239,9 +239,20 @@
             return
         }
         console.log('注册事件(不带参数) begin')
-        jsBridge.on('onResume', function(r){
-            document.getElementById("content").innerHTML = "onResume 事件...<br/>"
+        window.jsBridge.on('testOn', function(r){
+            document.getElementById("content").innerHTML = "testOn 事件... r = " + r + "<br/>"
         })
+    }
+    
+    // 发送事件(带参数)
+    function eventSendArgs() {
+        if(!deviceReady){
+            return
+        }
+        console.log('发送事件(带参数) begin')
+        var sendBridge = jsBridgeUIWV || window.jsBridge
+        var _result = sendBridge.send('testEvent', {'height': 100})
+        console.log('发送事件(带参数) end，原生返回结果：' + _result)
     }
     
     // 发送事件(不带参数)
@@ -250,18 +261,11 @@
             return
         }
         console.log('发送事件(不带参数) begin')
-        var _result = jsBridge.send('testEvent')
+        var sendBridge = jsBridgeUIWV || window.jsBridge
+        var _result = sendBridge.send('testEvent')
         console.log('发送事件(不带参数) end，原生返回结果：' + _result)
     }
-    // 发送事件(带参数)
-    function eventSendArgs() {
-        if(!deviceReady){
-            return
-        }
-        console.log('发送事件(带参数) begin')
-        var _result = jsBridge.send('testEvent', {'height': 100})
-        console.log('发送事件(带参数) end，原生返回结果：' + _result)
-    }
+    
     // 取消事件()
     function eventOff() {
         if(!deviceReady){

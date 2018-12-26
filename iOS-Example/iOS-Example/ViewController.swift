@@ -19,7 +19,9 @@ class ViewController: UIViewController {
         self.view.translatesAutoresizingMaskIntoConstraints = false
         
         if let path = Bundle.main.path(forResource: "test", ofType: "html"){
-            rwv = Rainboweleven.loadLocalURL(path)
+            // rwv = Rainboweleven.loadLocalURL(path)
+            rwv = RWebView(frame: UIScreen.main.bounds, type: .UIWebView)
+            rwv?.loadLocalURL(url: path)
             self.view.addSubview(rwv!)
         }
        
@@ -39,20 +41,27 @@ class ViewController: UIViewController {
         
         bt.addTarget(self, action: #selector(didClickNativeCallJSButton(button:)), for: UIControl.Event.touchUpInside)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receiveEvent(notify:)), name: NSNotification.Name("testEvent"), object: nil)
     }
     
     @objc func didClickNativeCallJSButton(button:UIButton){
         //
-        rwv?.callHandler(method:"contentappend",arguments: ["foo":"bar"], completionHandler: { (result, error) in
-            if let _result = result{
-                NSLog("return result is \(_result)")
-            }
-        })
+//        rwv?.callHandler(method:"contentappend",arguments: ["foo":"bar"], completionHandler: { (result, error) in
+//            if let _result = result{
+//                NSLog("return result is \(_result)")
+//            }
+//        })
+        let params = ["a" : 1]
+        NotificationCenter.default.post(name: NSNotification.Name("testOn"), object: nil, userInfo: params)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func receiveEvent(notify: NSNotification) {
+        
     }
 }
 
