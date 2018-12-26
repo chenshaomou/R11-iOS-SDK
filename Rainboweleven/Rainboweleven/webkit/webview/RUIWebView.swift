@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JavaScriptCore
 
 internal class RUIWebView: UIWebView ,RWebViewProtocol {
     
@@ -22,6 +23,21 @@ internal class RUIWebView: UIWebView ,RWebViewProtocol {
     
     let id = UUID.init().uuidString
     
+    let bridge = JSBridge()
+    
+    var ctx: JSContext?
+    
+    var jsSource = ""
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.delegate = self
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     func loadLocalURL(url: String, hash: String?) {
         
         //注册事件监听
@@ -30,6 +46,11 @@ internal class RUIWebView: UIWebView ,RWebViewProtocol {
         let fileUrl = URL(fileURLWithPath: url)
         let request = URLRequest(url: fileUrl)
         self.loadRequest(request)
+        do {
+          self.jsSource = try String(contentsOf: fileUrl, encoding: String.Encoding.utf8)
+        } catch {
+            // ...
+        }
     }
     
     func loadRemoteURL(url: String, hash: String? = nil) {
@@ -81,4 +102,36 @@ internal class RUIWebView: UIWebView ,RWebViewProtocol {
         }
     }
     
+}
+
+@objc protocol JSBridgeProtocol : JSExport {
+    
+    func send(_ name: String, _ args: [String: AnyObject])
+}
+
+@objc class JSBridge : NSObject, JSBridgeProtocol {
+    
+    weak var controller: UIViewController?
+    weak var jsContext: JSContext?
+    
+    func send(_ name: String, _ args: [String: AnyObject]) {
+        NotificationCenter.default.post(name: NSNotification.Name(name), object: nil, userInfo: args)
+    }
+}
+
+extension RUIWebView : UIWebViewDelegate {
+    
+    func webViewDidFinishLoad(_ webView: UIWebView) {
+        
+        if let ctx = webView.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as? JSContext {
+            self.ctx = ctx
+            self.bridge.jsContext = ctx
+            self.ctx?.setObject(self.bridge, forKeyedSubscript: "jsBridge" as NSCopying & NSObjectProtocol)
+            self.ctx?.evaluateScript(self.jsSource)
+        }
+    }
+    
+    func test() {
+        print("test ...")
+    }
 }

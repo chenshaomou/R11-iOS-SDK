@@ -19,7 +19,9 @@ class ViewController: UIViewController {
         self.view.translatesAutoresizingMaskIntoConstraints = false
         
         if let path = Bundle.main.path(forResource: "test", ofType: "html"){
-            rwv = Rainboweleven.loadLocalURL(path)
+            // rwv = Rainboweleven.loadLocalURL(path)
+            rwv = RWebView(frame: UIScreen.main.bounds, type: .UIWebView)
+            rwv?.loadLocalURL(url: path)
             self.view.addSubview(rwv!)
         }
        
@@ -39,6 +41,7 @@ class ViewController: UIViewController {
         
         bt.addTarget(self, action: #selector(didClickNativeCallJSButton(button:)), for: UIControlEvents.touchUpInside)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.receiveEvent(notify:)), name: NSNotification.Name("testEvent"), object: nil)
     }
     
     @objc func didClickNativeCallJSButton(button:UIButton){
@@ -53,6 +56,10 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    @objc func receiveEvent(notify: NSNotification) {
+        
     }
 }
 
