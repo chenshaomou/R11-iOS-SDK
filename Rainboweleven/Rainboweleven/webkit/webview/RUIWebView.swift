@@ -67,7 +67,7 @@ internal class RUIWebView: UIWebView ,RWebViewProtocol {
     }
     
     func evaluteJavaScriptSafey(javaScript: String, theCompletionHandler: @escaping ((Any?, Error?) -> Void)) {
-        
+        self.ctx?.evaluateScript(javaScript)
     }
     
     func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
@@ -111,10 +111,11 @@ internal class RUIWebView: UIWebView ,RWebViewProtocol {
 
 @objc class JSBridge : NSObject, JSBridgeProtocol {
     
-    weak var controller: UIViewController?
+    weak var wv: UIWebView?
     weak var jsContext: JSContext?
     
     func send(_ name: String, _ args: [String: AnyObject]) {
+        //
         NotificationCenter.default.post(name: NSNotification.Name(name), object: nil, userInfo: args)
     }
 }
@@ -122,12 +123,24 @@ internal class RUIWebView: UIWebView ,RWebViewProtocol {
 extension RUIWebView : UIWebViewDelegate {
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
+        if let _ = self.ctx { return }
         
         if let ctx = webView.value(forKeyPath: "documentView.webView.mainFrame.javaScriptContext") as? JSContext {
             self.ctx = ctx
             self.bridge.jsContext = ctx
-            self.ctx?.setObject(self.bridge, forKeyedSubscript: "jsBridge" as NSCopying & NSObjectProtocol)
+            self.bridge.wv = webView
+            self.ctx?.setObject(self.bridge, forKeyedSubscript: "jsBridgeUIWV" as NSCopying & NSObjectProtocol)
             self.ctx?.evaluateScript(self.jsSource)
+            self.ctx?.exceptionHandler = { (context, exception) in
+                if let e = exception {
+                    print("exception = \(e)")
+                }
+            }
+        }
+        
+        let js = RWebView.initializedScriptForUIWV + RWebkitPluginsHub.shared.getJSBridgeBuiltInScript()
+        if let res = webView.stringByEvaluatingJavaScript(from: js) {
+            print("res = \(res)")
         }
     }
     

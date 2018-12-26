@@ -46,11 +46,13 @@ class ViewController: UIViewController {
     
     @objc func didClickNativeCallJSButton(button:UIButton){
         //
-        rwv?.callHandler(method:"contentappend",arguments: ["foo":"bar"], completionHandler: { (result, error) in
-            if let _result = result{
-                NSLog("return result is \(_result)")
-            }
-        })
+//        rwv?.callHandler(method:"contentappend",arguments: ["foo":"bar"], completionHandler: { (result, error) in
+//            if let _result = result{
+//                NSLog("return result is \(_result)")
+//            }
+//        })
+        let params = ["a" : 1]
+        NotificationCenter.default.post(name: NSNotification.Name("testOn"), object: nil, userInfo: params)
     }
 
     override func didReceiveMemoryWarning() {
