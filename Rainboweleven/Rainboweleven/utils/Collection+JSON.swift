@@ -11,7 +11,7 @@ import Foundation
 /// 工具类，将字典与数组 与 JSON字符串想和转换
 extension Dictionary {
     
-    internal func jsonString() -> String {
+    public func jsonString() -> String {
         
         if let jsonData = try? JSONSerialization .data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted){
             if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8){
@@ -24,7 +24,7 @@ extension Dictionary {
 
 extension Array {
     
-    internal func jsonString() -> String {
+    public func jsonString() -> String {
         if let jsonData = try? JSONSerialization .data(withJSONObject: self, options: JSONSerialization.WritingOptions.prettyPrinted){
             if let jsonString = String(data: jsonData, encoding: String.Encoding.utf8){
                 return jsonString
@@ -36,7 +36,7 @@ extension Array {
 
 extension String {
     
-    internal func seriailized() -> Dictionary<String, Any>{
+    public func seriailized() -> Dictionary<String, Any>{
         
         if let _data = self.data(using: String.Encoding.utf8){
             
