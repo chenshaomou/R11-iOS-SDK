@@ -2,7 +2,7 @@
 
 ## 项目支持Carthage引入
 ```SHELL
-github "chenshaomou/R11-iOS-SDK" "0.0.3"
+github "chenshaomou/R11-iOS-SDK" "0.0.4"
 ```
 
 ## Carthage安装
@@ -10,7 +10,29 @@ github "chenshaomou/R11-iOS-SDK" "0.0.3"
 $ brew update
 $ brew install carthage
 ```
-# Native API
+## UIWebView / WKWebView 支持
+
++ 默认 iOS8 以上的采用WKWebView的内核
++ 自定义需要初始化的时候配置内核参数
+
+``` Swift
+let webView = RWebView(frame: UIScreen.main.bounds, type: .UIWebView)
+```
+
++ 获取内嵌webView对象
+
+``` Swift
+let uiwebView = webView.uiwebView
+let wkwebView = webView.wkwebView
+```
+
++ UIWebView 与WKWebView 所有API一直，譬如发送通知事件到原生层
+
+``` js
+jsbridge.send('testEvent', {'test': 'hello'})
+```
+
+## Native API
 ### 获取jsbridge对象
 + 获取SDK对象（单例），这个时候进行初始化事件和插件：jsbridge=getInstance/share
 + 初始化sdk插件，不要让用户显式调用：jsbridge.initPlugins()
@@ -36,11 +58,13 @@ $ brew install carthage
 ***
 
 # JavaScript API
+
 ## 当用SDK的webview打开的时候，SDK的webview将会给window自动绑定一个jsbridge的对象
-+ 注册插件可以让原生调用：jsbridge.register(module:String,method:String,callfn:function(jsobject))
-+ 同步调用原生的插件：jsbridge.call(module:String,method:String,params:jsobject)
-+ 异步调用原生的插件：jsbridge.call(module:String,method:String,params:jsobject,callback:function(jsobject))
-+ 异步调用原生的插件（基于promise）：jsbridge.promise(module:String,method:String,params:jsobject)
+
+- 注册插件可以让原生调用：jsbridge.register(module:String,method:String,callfn:function(jsobject))
+- 同步调用原生的插件：jsbridge.call(module:String,method:String,params:jsobject)
+- 异步调用原生的插件：jsbridge.call(module:String,method:String,params:jsobject,callback:function(jsobject))
+- 异步调用原生的插件（基于promise）：jsbridge.promise(module:String,method:String,params:jsobject)
 
 ## 非自定义的插件（我们提供的插件）有直接生成的对象可以调用，如存储组件
 - 同步调用存储的插件：jsbridge.call(‘store’,’set’,jsobject)
