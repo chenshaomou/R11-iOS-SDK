@@ -351,7 +351,7 @@
     }
     // 测试 UIWebView同步
     function uiwebViewSync() {
-      var sendBridge = jsBridgeUIWV || window.jsBridge
+      var sendBridge = window.jsBridge
       var res = sendBridge.test()
       alert(res)
     }
