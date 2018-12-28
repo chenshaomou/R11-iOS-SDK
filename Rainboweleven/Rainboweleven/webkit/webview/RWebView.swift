@@ -48,6 +48,22 @@ open class RWebView: UIView,RWebViewProtocol {
         }
     }
     
+    weak open var theUIDelegate: WKUIDelegate? {
+        didSet {
+            if let rwv = wv as? RWKWebView {
+                rwv.theUIDelegate = theUIDelegate
+            }
+        }
+    }
+    
+    weak open var theNavigationDelegate : WKNavigationDelegate? {
+        didSet {
+            if let rwv = wv as? RWKWebView {
+                rwv.theNavigationDelegate = theNavigationDelegate
+            }
+        }
+    }
+    
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setUpWebView()
