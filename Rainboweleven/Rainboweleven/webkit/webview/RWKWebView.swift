@@ -47,6 +47,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
         
         super.init(frame: frame, configuration: configuration)
         self.uiDelegate = self
+        self.navigationDelegate = self
         
         //注册事件监听
         NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNotification(notification:)), name: nil, object: nil)
