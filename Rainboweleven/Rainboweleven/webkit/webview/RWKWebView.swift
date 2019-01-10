@@ -144,7 +144,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
             return
         }
         
-        print("defaultText = \(defaultText ?? "")")
+        // print("defaultText = \(defaultText ?? "")")
         
         guard let jsonDict = defaultText?.seriailized() else { return }
         let args = jsonDict["params"] ?? []
