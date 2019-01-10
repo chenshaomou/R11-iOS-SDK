@@ -68,12 +68,12 @@ public class NetworkModule {
                 switch (result) {
                 case .success(let response):
                     let _string = String(data: response.data, encoding: .utf8) ?? ""
-                    print("Success \n")
-                    print("\(_string) \n")
+//                    print("Success \n")
+//                    print("\(_string) \n")
                     p.result = "{\"config\":\(args),\"data\":\(_string)}"
                 case .failure(let response):
-                    print("fail \n")
-                    print("\(response.error.localizedDescription) \n")
+//                    print("fail \n")
+//                    print("\(response.error.localizedDescription) \n")
                     p.result = ["error": ["response":["config":jsonDic],"message":response.error.localizedDescription]].jsonString()
                 }
             }
