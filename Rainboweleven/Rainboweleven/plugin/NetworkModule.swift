@@ -19,7 +19,9 @@ public class NetworkModule{
             }
             // 获取请求参数
             let jsonDic = json.seriailized()
-            let url = (jsonDic["url"] as? String) ?? "";
+            var url = (jsonDic["url"] as? String) ?? "";
+            // url trimed
+            url = url.replacingOccurrences(of: " ", with: "")
             let method = (jsonDic["method"] as? String) ?? "get";
             
             let _header = jsonDic["headers"] as? [String: Any] ?? [String : Any]()
