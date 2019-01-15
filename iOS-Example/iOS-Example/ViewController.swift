@@ -20,7 +20,7 @@ class ViewController: UIViewController {
         
         if let path = Bundle.main.path(forResource: "test", ofType: "html"){
             // rwv = Rainboweleven.loadLocalURL(path)
-            rwv = RWebView(frame: UIScreen.main.bounds, type: .UIWebView)
+            rwv = RWebView(frame: UIScreen.main.bounds, type: .WKWebView)
             rwv?.loadLocalURL(url: path)
             let uiwebView = rwv?.uiwebView
             let wkwebView = rwv?.wkwebView
