@@ -27,7 +27,7 @@ public class DocumentHandler: UIViewController, UIDocumentInteractionControllerD
         if (!_urlString.starts(with: "/Documents")) {
             _urlString = "/Documents" + _urlString
         }
-        let path = NSHomeDirectory() + urlString
+        let path = NSHomeDirectory() + _urlString
         let url = URL(fileURLWithPath: path)
         //
         self.documentVC = UIDocumentInteractionController(url: url)
