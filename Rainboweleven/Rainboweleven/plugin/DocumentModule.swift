@@ -36,9 +36,9 @@ public class DocumentModule {
             }
             // 拼接文件沙盒路径
             // 文件名拼接处理
-            var path = NSHomeDirectory() + "/Documents/" + url
+            var path = NSHomeDirectory() + "/" + url
             if (url.starts(with: "/")) {
-                path =  NSHomeDirectory() + "/Documents" + url
+                path =  NSHomeDirectory()  + url
             }
             print("DocumentModule open path === > \(path)")
             // 调用文件处理工具弹出提示窗

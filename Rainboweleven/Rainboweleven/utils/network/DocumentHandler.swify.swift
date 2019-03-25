@@ -20,6 +20,13 @@ public class DocumentHandler: UIViewController, UIDocumentInteractionControllerD
     func openFile(urlString: String, callBack: @escaping DocumentCallBack) {
         print("DocumentHandler --- > open file urlString = \(urlString)")
         //
+        var _urlString = urlString
+        if (!_urlString.starts(with: "/")) {
+            _urlString = "/" + _urlString
+        }
+        if (!_urlString.starts(with: "/Documents")) {
+            _urlString = "/Documents" + _urlString
+        }
         let path = NSHomeDirectory() + urlString
         let url = URL(fileURLWithPath: path)
         //
