@@ -23,9 +23,9 @@ class ViewController: UIViewController {
             // rwv = Rainboweleven.loadLocalURL(path)
             rwv = RWebView(frame: UIScreen.main.bounds, type: .WKWebView)
             rwv?.loadLocalURL(url: path)
-            rwv?.theNavigationDelegate = self
-            // let uiwebView = rwv?.uiwebView
-            // let wkwebView = rwv?.wkwebView
+             rwv?.theNavigationDelegate = self
+             let uiwebView = rwv?.uiwebView
+             let wkwebView = rwv?.wkwebView
             self.view.addSubview(rwv!)
         }
        

@@ -58,8 +58,8 @@
 <!--                <div class="btn" onclick="callASynStringArgs()">异步调用原生插件打开(参数,字符串)</div>-->
 <!--                <div class="btn" onclick="callASyn()">异步调用插件(不带参数)</div>-->
 <!--                <div class="btn" onclick="callASynArgs()">异步调用原生插件(参数,字典)</div>-->
-<!--                <div class="btn" onclick="callASynArgsDown()">异步调用原生插件下载(参数,字典)</div>-->
-<!--                <div class="btn" onclick="callASynArgsOpen()">异步调用原生插件打开文档(参数,字典)</div>-->
+                <div class="btn" onclick="callASynArgsDown()">异步调用原生插件下载(参数,字典)</div>
+                <div class="btn" onclick="callASynArgsOpen()">异步调用原生插件打开文档(参数,字典)</div>
 <!--                <div class="btn" onclick="callASynStoreObj()">异步调用原生插件对象(store对象,字典)</div>-->
 <!--                <div class="btn" onclick="eventOn()">注册事件(不带参数)</div>-->
 <!--                <div class="btn" onclick="eventSend()">发送事件(不带参数)</div>-->
@@ -79,7 +79,7 @@
             </div>
         </div>
         <!-- 插入广告 -->
-        <iframe id="content"src="http://3g.club.xywy.com/static/20170307/127326432.htm?jid=1"width="100%"frameborder="no"></iframe>
+<!--        <iframe id="content"src="http://3g.club.xywy.com/static/20170307/127326432.htm?jid=1"width="100%"frameborder="no"></iframe>-->
     </body>
     
     <script type="text/javascript">
@@ -203,7 +203,8 @@
         // http://61.139.73.62:9092/Education/Documents/飞行部管理手册第二版（2016-03-29）.pdf
         // http://61.139.73.62:9092/Admin/UserControl/upload/Impo1425740.pdf
         // http://61.139.73.62:9092/Education/Documents/A320模拟机训练课件.part1.rar
-        var url = "http://61.139.73.62:9092/Education/Documents/A320模拟机训练课件.part1.rar"
+        // http://61.139.73.62:9093/Admin/UserControl/upload/Impo1450810.xlsx
+        var url = "http://61.139.73.62:9092/Admin/UserControl/upload/Impo1425740.pdf"
         jsBridge.call('network', 'download', {'url': url}, function (r) {
               var _show = JSON.parse(r)
               console.log(_show.downloading)
@@ -225,7 +226,7 @@
         if(!deviceReady){
             return
         }
-        jsBridge.call('document', 'open', {'url': '/Documents/A320模拟机训练课件.part1.rar'}, function (r) {
+        jsBridge.call('document', 'open', {'url': '/Documents/Impo1425740.pdf'}, function (r) {
                       var _show = JSON.parse(r)
                       console.log(_show.downloading)
                       document.getElementById("content").innerHTML= document.getElementById("content").innerHTML + (_show.data.present || _show.data.url ||_show.error.msg)
@@ -379,10 +380,10 @@
     </script>
     
     <!-- 插入 百度广告 -->
-    <script type="text/javascript">
-        var cpro_id = "u2557760";
-        </script>
-    <script src="http://cpro.baidustatic.com/cpro/ui/cm.js" type="text/javascript"></script>
+<!--    <script type="text/javascript">-->
+<!--        var cpro_id = "u2557760";-->
+<!--        </script>-->
+<!--    <script src="http://cpro.baidustatic.com/cpro/ui/cm.js" type="text/javascript"></script>-->
     
 </html>
 

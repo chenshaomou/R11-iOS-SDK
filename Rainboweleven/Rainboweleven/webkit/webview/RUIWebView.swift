@@ -105,7 +105,7 @@ internal class RUIWebView: UIWebView ,RWebViewProtocol {
         }
         
         switch notification.name {
-        case NSNotification.Name.UIApplicationDidBecomeActive:
+        case UIApplication.didBecomeActiveNotification:
             //
             let script = String.init(format:RWebView.jsEventTigger, "onResume", "")
             self.evaluteJavaScriptSafey(javaScript: script, theCompletionHandler: { (any, error) in })

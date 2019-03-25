@@ -20,7 +20,8 @@ public class DocumentHandler: UIViewController, UIDocumentInteractionControllerD
     func openFile(urlString: String, callBack: @escaping DocumentCallBack) {
         print("DocumentHandler --- > open file urlString = \(urlString)")
         //
-        let url = URL(fileURLWithPath: urlString)
+        let path = NSHomeDirectory() + urlString
+        let url = URL(fileURLWithPath: path)
         //
         self.documentVC = UIDocumentInteractionController(url: url)
         //
@@ -41,5 +42,9 @@ public class DocumentHandler: UIViewController, UIDocumentInteractionControllerD
     //
     public func documentInteractionControllerDidDismissOpenInMenu(_ controller: UIDocumentInteractionController) {
         print("DocumentHandler | DocumentInteractionControllerDidDismissOpenInMenu : \(controller)")
+    }
+    //
+    public func documentInteractionController(_ controller: UIDocumentInteractionController, didEndSendingToApplication application: String?) {
+        //
     }
 }

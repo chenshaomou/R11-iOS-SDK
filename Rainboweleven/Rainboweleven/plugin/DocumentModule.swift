@@ -35,7 +35,11 @@ public class DocumentModule {
                 p.result = resJson.jsonString()
             }
             // 拼接文件沙盒路径
-            let path = NSHomeDirectory() + "/Documents/" + url
+            // 文件名拼接处理
+            var path = NSHomeDirectory() + "/Documents/" + url
+            if (url.starts(with: "/")) {
+                path =  NSHomeDirectory() + "/Documents" + url
+            }
             print("DocumentModule open path === > \(path)")
             // 调用文件处理工具弹出提示窗
             DocumentModule.documentHandler.openFile(urlString: url, callBack: callback)
