@@ -55,8 +55,12 @@ class ViewController: UIViewController {
 //                NSLog("return result is \(_result)")
 //            }
 //        })
-        let params = ["a" : 1]
-        NotificationCenter.default.post(name: NSNotification.Name("testOn"), object: nil, userInfo: params)
+//        let params = ["a" : 1]
+//        NotificationCenter.default.post(name: NSNotification.Name("testOn"), object: nil, userInfo: params)
+        if let url = URL(string: "http://61.139.73.62:9093/Admin/UserControl/upload/Impo1450810.xlsx") {
+            UIApplication.shared.openURL(url)
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
