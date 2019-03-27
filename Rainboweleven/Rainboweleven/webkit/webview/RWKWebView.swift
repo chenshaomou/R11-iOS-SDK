@@ -85,7 +85,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
         }
         
         // 频发执行这里会导致崩溃，先屏蔽日后再查明原因解决
-//        var delay = 0.0
+        let delay = 0.0
         
 //        if (now - groupExecuteLastTime) < 50, groupExecuteOnPending == false{
 //            delay = groupExecuteInterval
