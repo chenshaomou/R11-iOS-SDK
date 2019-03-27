@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		923497D0224B2AC0006F2EEA /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923497CF224B2AC0006F2EEA /* TestViewController.swift */; };
 		92B3924720648FCD0084D498 /* Rainboweleven.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 92B3924620648FCD0084D498 /* Rainboweleven.framework */; };
 		92B3924820648FCD0084D498 /* Rainboweleven.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 92B3924620648FCD0084D498 /* Rainboweleven.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B66F967E1F9D85B10092018C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F967D1F9D85B10092018C /* AppDelegate.swift */; };
@@ -33,7 +32,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		923497CF224B2AC0006F2EEA /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		92B3924620648FCD0084D498 /* Rainboweleven.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Rainboweleven.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B66F967A1F9D85B10092018C /* iOS-Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS-Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B66F967D1F9D85B10092018C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -84,7 +82,6 @@
 				B66F96861F9D85B10092018C /* LaunchScreen.storyboard */,
 				B66F96891F9D85B10092018C /* Info.plist */,
 				B6E92C791F9EDD280044A349 /* test.html */,
-				923497CF224B2AC0006F2EEA /* TestViewController.swift */,
 			);
 			path = "iOS-Example";
 			sourceTree = "<group>";
@@ -165,7 +162,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B66F96801F9D85B10092018C /* ViewController.swift in Sources */,
-				923497D0224B2AC0006F2EEA /* TestViewController.swift in Sources */,
 				B66F967E1F9D85B10092018C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

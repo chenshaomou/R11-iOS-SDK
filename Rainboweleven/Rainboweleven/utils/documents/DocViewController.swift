@@ -12,33 +12,35 @@ public class DocViewController: UIViewController , UIDocumentInteractionControll
     
     public var url:URL? = nil
     
+    public let officeType = ["doc", "docx", "xls", "xlsx", "pdf", "ppt"]
+    
     override public func viewDidLoad() {
+        //
         super.viewDidLoad()
-        
+        //
         if let fileUrl = url {
-            
-            let  documentVC = UIDocumentInteractionController(url: fileUrl)
+            let documentVC = UIDocumentInteractionController(url: fileUrl)
             documentVC.delegate = self
             documentVC.presentPreview(animated: true)
+        } else {
+            self.dismiss(animated: false, completion: nil)
         }
+        
     }
     
     
     public func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
-        
+        //
         return self
-    }
-    //
-    public func documentInteractionControllerDidDismissOpenInMenu(_ controller: UIDocumentInteractionController) {
-        print("DocumentHandler | DocumentInteractionControllerDidDismissOpenInMenu : \(controller)")
     }
     
     public func documentInteractionControllerDidEndPreview(_ controller: UIDocumentInteractionController) {
-        let res = ["successed": false,
+        // 文档用其他应用打开则则发送通知
+        let res = ["successed": true,
                    "data": []] as [String : Any]
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "OpenDocument"), object: nil, userInfo: ["result" : res])
         
         self.dismiss(animated: true, completion: nil)
     }
-
+    
 }

@@ -84,11 +84,13 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
             return
         }
         
-        var delay = 0.0
-        if (now - groupExecuteLastTime) < 50, groupExecuteOnPending == false{
-            delay = groupExecuteInterval
-            groupExecuteOnPending = true
-        }
+        // 频发执行这里会导致崩溃，先屏蔽日后再查明原因解决
+//        var delay = 0.0
+        
+//        if (now - groupExecuteLastTime) < 50, groupExecuteOnPending == false{
+//            delay = groupExecuteInterval
+//            groupExecuteOnPending = true
+//        }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + delay/1000.0 , execute: {[weak self] in
             
@@ -109,9 +111,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
                         // print("JSBridge: run callback js success ; execute cache = \(exec)")
                     }
                     
-                    if theCompletionHandler != nil {
-                        theCompletionHandler(any,error)
-                    }
+                    theCompletionHandler(any,error)
                 })
                 
                 strongSelf.groupExecuteOnPending = false
