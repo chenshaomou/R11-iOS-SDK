@@ -12,6 +12,7 @@
 		8F630C852057C6250033C33A /* EventsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F630C842057C6250033C33A /* EventsModule.swift */; };
 		8F630C872058A8970033C33A /* StoreModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F630C862058A8970033C33A /* StoreModule.swift */; };
 		8F630C8A205A5ACD0033C33A /* NetworkModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F630C89205A5ACD0033C33A /* NetworkModule.swift */; };
+		923497CE224B27A9006F2EEA /* DocViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 923497CD224B27A9006F2EEA /* DocViewController.swift */; };
 		92794A662063BD290033E469 /* NetworkActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A592063BD290033E469 /* NetworkActivityIndicator.swift */; };
 		92794A672063BD290033E469 /* Networking+Private.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A5A2063BD290033E469 /* Networking+Private.swift */; };
 		92794A682063BD290033E469 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92794A5B2063BD290033E469 /* Networking.swift */; };
@@ -47,6 +48,7 @@
 		8F630C862058A8970033C33A /* StoreModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreModule.swift; sourceTree = "<group>"; };
 		8F630C89205A5ACD0033C33A /* NetworkModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModule.swift; sourceTree = "<group>"; };
 		921813782063B05100922F69 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = "../iOS-Example/Carthage/Build/iOS/Alamofire.framework"; sourceTree = "<group>"; };
+		923497CD224B27A9006F2EEA /* DocViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocViewController.swift; sourceTree = "<group>"; };
 		92794A592063BD290033E469 /* NetworkActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkActivityIndicator.swift; sourceTree = "<group>"; };
 		92794A5A2063BD290033E469 /* Networking+Private.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Networking+Private.swift"; sourceTree = "<group>"; };
 		92794A5B2063BD290033E469 /* Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
@@ -90,6 +92,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		923497CC224B275C006F2EEA /* documents */ = {
+			isa = PBXGroup;
+			children = (
+				B4D8F5CE2148BA20008CF2C0 /* DocumentHandler.swify.swift */,
+				923497CD224B27A9006F2EEA /* DocViewController.swift */,
+			);
+			path = documents;
+			sourceTree = "<group>";
+		};
 		92794A582063BD290033E469 /* network */ = {
 			isa = PBXGroup;
 			children = (
@@ -107,7 +118,6 @@
 				92794A632063BD290033E469 /* FakeRequest.swift */,
 				92794A642063BD290033E469 /* FormDataPart.swift */,
 				92794A652063BD290033E469 /* Networking.h */,
-				B4D8F5CE2148BA20008CF2C0 /* DocumentHandler.swify.swift */,
 			);
 			path = network;
 			sourceTree = "<group>";
@@ -115,6 +125,7 @@
 		929BE5FD2005ACC600E2DEA7 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				923497CC224B275C006F2EEA /* documents */,
 				92794A582063BD290033E469 /* network */,
 				929BE5FE2005ACDD00E2DEA7 /* Collection+JSON.swift */,
 				92B8242C21919B3200871A83 /* Number+Extension.swift */,
@@ -325,6 +336,7 @@
 				92CA5AA020074F7000D5D05C /* RUIWebView.swift in Sources */,
 				92794A692063BD290033E469 /* Helpers.swift in Sources */,
 				92794A712063BD290033E469 /* FormDataPart.swift in Sources */,
+				923497CE224B27A9006F2EEA /* DocViewController.swift in Sources */,
 				8F630C852057C6250033C33A /* EventsModule.swift in Sources */,
 				92CA5AA62007539A00D5D05C /* RWebkitPlugin.swift in Sources */,
 				92794A6A2063BD290033E469 /* Result.swift in Sources */,
