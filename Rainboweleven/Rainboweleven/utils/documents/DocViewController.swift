@@ -12,8 +12,6 @@ public class DocViewController: UIViewController , UIDocumentInteractionControll
     
     public var url:URL? = nil
     
-    public let officeType = ["doc", "docx", "xls", "xlsx", "pdf", "ppt"]
-    
     override public func viewDidLoad() {
         //
         super.viewDidLoad()

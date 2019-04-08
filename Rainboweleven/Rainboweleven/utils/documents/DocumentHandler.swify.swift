@@ -18,7 +18,7 @@ public class DocumentHandler: UIViewController, UIDocumentInteractionControllerD
     
     var docmentVC: UIDocumentInteractionController?
     
-    public let officeType = ["doc", "docx", "xls", "xlsx", "pdf", "ppt"]
+    public let officeType = ["doc", "docx", "xls", "xlsx", "pdf", "ppt", "pptx"]
     
     // 打开文件
     func openFile(urlString: String, callBack: @escaping DocumentCallBack) {
