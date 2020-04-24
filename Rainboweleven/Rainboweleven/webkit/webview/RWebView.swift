@@ -9,17 +9,17 @@
 import UIKit
 import WebKit
 
-public protocol RWebViewProtocol {
+@objc public protocol RWebViewProtocol: NSObjectProtocol {
     
-    func loadRemoteURL(url: String,hash: String?) -> Void
+    @objc func loadRemoteURL(url: String,hash: String?) -> Void
     
-    func loadLocalURL(url: String,hash: String?) -> Void
+    @objc func loadLocalURL(url: String,hash: String?) -> Void
     
-    var scrollView: UIScrollView { get }
+    @objc var scrollView: UIScrollView { get }
     
-    func evaluteJavaScriptSafey(javaScript : String, theCompletionHandler: @escaping ((Any?, Error?) -> Swift.Void))
+    @objc func evaluteJavaScriptSafey(javaScript : String, theCompletionHandler: @escaping ((Any?, Error?) -> Swift.Void))
     
-    func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)?)
+    @objc func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)?)
 }
 
 public enum RWebKitType{
@@ -27,28 +27,28 @@ public enum RWebKitType{
     case WKWebView
 }
 
-open class RWebView: UIView,RWebViewProtocol {
+@objc public class RWebView: UIView,RWebViewProtocol {
  
     internal var wv:RWebViewProtocol!
-    open var scrollView: UIScrollView{
+    @objc public var scrollView: UIScrollView{
         get{
             return wv.scrollView
         }
     }
     // 可指定WebKit类型
-    open var customWebKit: RWebKitType?
-    open var uiwebView: UIWebView? {
+    public var customWebKit: RWebKitType?
+    @objc public var uiwebView: UIWebView? {
         get {
             return wv as? UIWebView
         }
     }
-    open var wkwebView: WKWebView? {
+    @objc public var wkwebView: WKWebView? {
         get {
             return wv as? WKWebView
         }
     }
     
-    weak open var theUIDelegate: WKUIDelegate? {
+    @objc weak public var theUIDelegate: WKUIDelegate? {
         didSet {
             if let rwv = wv as? RWKWebView {
                 rwv.theUIDelegate = theUIDelegate
@@ -56,7 +56,7 @@ open class RWebView: UIView,RWebViewProtocol {
         }
     }
     
-    weak open var theNavigationDelegate : WKNavigationDelegate? {
+    @objc weak public var theNavigationDelegate : WKNavigationDelegate? {
         didSet {
             if let rwv = wv as? RWKWebView {
                 rwv.theNavigationDelegate = theNavigationDelegate
@@ -64,12 +64,12 @@ open class RWebView: UIView,RWebViewProtocol {
         }
     }
     
-    public required init?(coder aDecoder: NSCoder) {
+    @objc public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setUpWebView()
     }
     
-    public override init(frame: CGRect) {
+    @objc public override init(frame: CGRect) {
         super.init(frame: frame)
         setUpWebView()
     }
@@ -77,6 +77,16 @@ open class RWebView: UIView,RWebViewProtocol {
     public init(frame: CGRect, type: RWebKitType) {
         super.init(frame: frame)
         self.customWebKit = type
+        setUpWebView()
+    }
+    
+    @objc public init(frame: CGRect, type: NSString) {
+        super.init(frame: frame)
+        if type.isEqual("WKWebView") {
+            self.customWebKit = .WKWebView
+        } else {
+            self.customWebKit = .UIWebView
+        }
         setUpWebView()
     }
     
@@ -108,25 +118,25 @@ open class RWebView: UIView,RWebViewProtocol {
         self.addSubview(uv)
     }
     
-    open var webView: RWebViewProtocol{
+    public var webView: RWebViewProtocol{
         get{
             return wv
         }
     }
     
-    public func loadRemoteURL(url: String, hash: String? = nil) {
+    @objc public func loadRemoteURL(url: String, hash: String? = nil) {
         wv.loadRemoteURL(url:url, hash: hash)
     }
     
-    public func loadLocalURL(url: String, hash: String? = nil) {
+    @objc public func loadLocalURL(url: String, hash: String? = nil) {
         wv.loadLocalURL(url:url, hash: hash)
     }
     
-    public func evaluteJavaScriptSafey(javaScript: String, theCompletionHandler: @escaping ((Any?, Error?) -> Void)) {
+    @objc public func evaluteJavaScriptSafey(javaScript: String, theCompletionHandler: @escaping ((Any?, Error?) -> Void)) {
         wv.evaluteJavaScriptSafey(javaScript: javaScript, theCompletionHandler: theCompletionHandler)
     }
     
-    public func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
+    @objc public func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
         wv.callHandler(method: method,arguments: arguments, completionHandler: completionHandler)
     }
 }

@@ -50,7 +50,7 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
         self.navigationDelegate = self
         
         //注册事件监听
-        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNotification(notification:)), name: nil, object: nil)
+        // NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNotification(notification:)), name: nil, object: nil)
     }
     
     required init?(coder: NSCoder) {
@@ -211,7 +211,7 @@ extension RWKWebView{
         if let userInfo = notification.userInfo, let _webViewId = userInfo["webviewid"] as? String, _webViewId == self.id {
             return
         }
-        
+
         switch notification.name {
         case UIApplication.didBecomeActiveNotification:
             let script = String.init(format:RWebView.jsEventTigger, "onResume", "")
@@ -223,12 +223,13 @@ extension RWKWebView{
         default:
             var param: String = ""
             if let userInfo:[String: NSObject] = notification.userInfo as? [String: NSObject]{
-                if JSONSerialization.isValidJSONObject(userInfo){
-                    let dictData = try? JSONSerialization.data(withJSONObject: userInfo, options: [])
-                    param = String(data: dictData!, encoding: String.Encoding.utf8)!
-                }
-            }
-            let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, param)
+                 if JSONSerialization.isValidJSONObject(userInfo){
+                     let dictData = try? JSONSerialization.data(withJSONObject: userInfo, options: [])
+                     param = String(data: dictData!, encoding: String.Encoding.utf8)!
+                 }
+             }
+             let script = String.init(format:RWebView.jsEventTigger, notification.name.rawValue, param)
+
             self.evaluteJavaScriptSafey(javaScript: script, theCompletionHandler: { (any, error) in })
             break
         }
