@@ -200,6 +200,14 @@ class RWKWebView: WKWebView ,RWebViewProtocol,WKUIDelegate,WKNavigationDelegate{
         }
     }
     
+    func openNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNotification(notification:)), name: nil, object: nil)
+    }
+    
+    func offNotification() {
+        NotificationCenter.default.removeObserver(self);
+    }
+    
 }
 
 // MARK: - 向js广播消息处理

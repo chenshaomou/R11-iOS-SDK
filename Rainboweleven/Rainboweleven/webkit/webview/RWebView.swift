@@ -20,6 +20,10 @@ import WebKit
     @objc func evaluteJavaScriptSafey(javaScript : String, theCompletionHandler: @escaping ((Any?, Error?) -> Swift.Void))
     
     @objc func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)?)
+    
+    @objc func openNotification()
+    
+    @objc func offNotification()
 }
 
 public enum RWebKitType{
@@ -138,5 +142,13 @@ public enum RWebKitType{
     
     @objc public func callHandler(method:String,arguments:[String:Any]?,completionHandler:((Any?, Error?) -> Swift.Void)? = nil){
         wv.callHandler(method: method,arguments: arguments, completionHandler: completionHandler)
+    }
+    
+    public func openNotification() {
+        
+    }
+    
+    public func offNotification() {
+        
     }
 }

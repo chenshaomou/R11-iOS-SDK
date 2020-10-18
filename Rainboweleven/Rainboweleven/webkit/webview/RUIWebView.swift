@@ -128,6 +128,14 @@ internal class RUIWebView: UIWebView ,RWebViewProtocol {
         }
     }
     
+    func openNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didReceiveNotification(notification:)), name: nil, object: nil)
+    }
+    
+    func offNotification() {
+        NotificationCenter.default.removeObserver(self);
+    }
+    
 }
 
 //mark: - 桥接原生对象
